@@ -18,7 +18,7 @@ npm install jwchat -S
 
 ```js
 import Chat from 'jwchat';
-import 'jwchat/lib/JChat.css';
+import 'jwchat/lib/JwChat.css';
 
 Vue.use(Chat)
 ```
