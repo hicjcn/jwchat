@@ -4,6 +4,8 @@
 **一款基于Vue和ElementUI极简的聊天框组件**
 本项目是一款极简的数据驱动为主的聊天框组件
 
+![](./document/img/20200425215318.png)
+
 #### 安装
 
 ```base
@@ -12,7 +14,7 @@ npm install jwchat -S
 
 #### 引用
 
-* [api](./document/api.md)
+* [文档](./document/api.md)
 
 ```js
 import Chat from 'jwchat';

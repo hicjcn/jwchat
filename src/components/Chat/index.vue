@@ -15,8 +15,7 @@ import EnterBox from './enterBox.vue'
 import chatList from './chatList.vue'
 import tools from './tools.vue'
 export default {
-  name: "JChat",
-  filters: {},
+  name: "JwChat",
   components: { EnterBox, chatList, tools },
   props: {
     taleList: {
@@ -99,8 +98,6 @@ export default {
       this.setScroll()
     }
   },
-  created () { },
-  mounted () { }
 }
 </script>
 <style  scoped>

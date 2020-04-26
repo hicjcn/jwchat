@@ -62,11 +62,11 @@ export default {
   padding: 0;
   margin: 0;
 }
-width: 100vw;
-height: 100vh;
-overflow: hidden;
-background-image: linear-gradient(to bottom right, #7a88ff, #7affaf);
 body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: linear-gradient(to bottom right, #7a88ff, #7affaf);
 }
 #app {
   height: 100vh;

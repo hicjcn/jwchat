@@ -1,18 +1,38 @@
 ## 基本语法
 
+---
+
 ``` xml
-<JChat :taleList="taleList" @enter="bindEnter" v-model="inputMsg" :toolConfig="tool" />
+<JwChat :taleList="taleList" @enter="bindEnter" v-model="inputMsg" :toolConfig="tool" />
 ```
-
-会配置出一个 550*500 大小的窗口 如图：
-
-![](./img/20200425215318.png)
 
 
 
 ## 参数配置
 
-* `taleList[Array]` 需要渲染的会话数据
+---
+
+### Attribute
+
+| 参数       | 说明           | 类型   | 可选值 | 默认值 |
+| ---------- | :------------- | ------ | ------ | ------ |
+| v-model    | 输入框中的文字 | String | -      | ""     |
+| taleList   | 会话内容       | Array  | -      | []     |
+| toolConfig | 工具烂配置     | Object | -      | {}     |
+| width      | 聊天框宽度     | string | -      | 550px  |
+| height     | 聊天框高度     | string | -      | 500px  |
+
+### Methods
+
+| 参数  | 说明                               | 参数           |
+| ----- | ---------------------------------- | -------------- |
+| enter | 输入框点击就发送或者回车触发的事件 | 输入框中的文字 |
+|       |                                    |                |
+
+
+
+*  ####  `taleList`
+
 
 ``` json
 // 格式
@@ -39,25 +59,7 @@
 // img 用户头像
 ```
 
-
-* `@enter[Function]` 输入框点击就发送或者回车触发的事件
-
-``` js
-   bindEnter () {
-        const msg = this.inputMsg
-        if (!msg) return;
-        const msgObj = {
-          "date": "2020/05/20 23:19:07",
-          "text": { "text": msg },
-          "mine": true,
-          "name": "JwChat",
-          "img": "image/one.jpeg"
-        }
-        this.taleList.push(msgObj)
-      },
-```
-
-* `toolConfig[Object]` 控制工具栏显示内容
+* #### `toolConfig` 
 
 ``` js
 {
@@ -70,6 +72,3 @@
      alert(type)
  }    
 ```
-
-* `width` 和`height` 配置组件大小 默认 `550*500`
-

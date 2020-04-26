@@ -1,6 +1,6 @@
 {
   "name": "jwchat",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "vue chat commponent",
   "main": "lib/JChat.umd.min.js",
   "private": false,
@@ -14,7 +14,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib --name JChat --dest lib src/components/index.js"
+    "lib": "vue-cli-service build --target lib --name JwChat --dest lib src/components/index.js"
   },
   "dependencies": {
     "core-js": "^3.6.4",

@@ -9,8 +9,7 @@
 
 <script>
 export default {
-  name: 'JChatEnterbox',
-  components: {},
+  name: 'JwChat_enterbox',
   props: {
     placeholder: {
       type: String,
@@ -26,7 +25,6 @@ export default {
       currentMsg: this.msg
     }
   },
-  computed: {},
   watch: {
     value: {
       handler () {
@@ -53,8 +51,6 @@ export default {
       })
     }
   },
-  created () { },
-  mounted () { }
 }
 </script>
 <style scoped>

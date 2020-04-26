@@ -55,7 +55,7 @@
 
 <script>
 export default {
-  name: 'JChatList',
+  name: 'JwChat_list',
   filters: {
     setWidth (value) {
       let width = value
@@ -86,7 +86,6 @@ export default {
       audioSrc: ''
     }
   },
-  components: {},
   watch: {
     load (newval) {
       if (newval) {
@@ -97,7 +96,6 @@ export default {
       }
     }
   },
-  computed: {},
   methods: {
     //处理排版
     handleDetail (html = '') {
@@ -165,8 +163,6 @@ export default {
       done();
     },
   },
-  created () { },
-  mounted () { }
 }
 </script>
 <style>

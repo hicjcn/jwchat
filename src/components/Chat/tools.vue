@@ -13,8 +13,7 @@
 
 <script>
 export default {
-  name: "JChatTool",
-  components: {},
+  name: "JwChat_tools",
   props: {
     tools: {
       type: Object,
@@ -35,15 +34,11 @@ export default {
       },
     }
   },
-  watch: {},
-  computed: {},
   methods: {
     bindButton (type) {
       this.tools.callback && this.tools.callback(type)
     }
   },
-  created () { },
-  mounted () { }
 }
 </script>
 <style  scoped>
