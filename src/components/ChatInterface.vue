@@ -1,7 +1,7 @@
 <template>
-  <div class="ChatPage">
+  <div class="ChatPage" :style="faceSize">
     <div class="header">
-      <img :src="config.img" class="header_cover" alt />
+      <img v-if="config.img" :src="config.img" class="header_cover" alt />
       <div class="header-info">
         <p class="web__logo-name">{{config.name}}</p>
         <p class="web__logo-dept">{{config.dept}}</p>
@@ -22,6 +22,7 @@
 <script>
 import Chat from '@/components/Chat'
 export default {
+  name: "JwChat_cover",
   filters: {},
   components: {
     Chat
@@ -30,9 +31,9 @@ export default {
     config: {
       type: Object,
       default: () => ({
-        img: 'img/685744412305270.jpg',
-        name: '昵称',
-        dept: '个性签名'
+        img: 'image/cover.png',
+        name: 'JwChat',
+        dept: '最简单、最便捷'
       })
     },
     taleList: {
@@ -43,10 +44,10 @@ export default {
     },
     height: {
       type: String,
-      default: "600"
+      default: "570"
     },
     width: {
-      default: "500"
+      default: "750"
     },
     value: {
       default: ''
@@ -102,7 +103,7 @@ export default {
   },
   methods: {
     enter (msg) {
-      this.$emit('submit', msg)
+      this.$emit('enter', msg)
     }
   },
   created () { },
@@ -157,9 +158,6 @@ export default {
 .ChatPage .main {
   display: flex;
   height: calc(100% - 60px);
-}
-.ChatPage .main .chatBox {
-  /* width: 80%; */
 }
 .ChatPage .main .rightBox {
   box-shadow: 0 -3px 3px 0 rgba(0, 0, 0, 0.1);

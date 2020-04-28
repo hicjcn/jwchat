@@ -121,10 +121,11 @@ export default {
   line-height: 17px;
   -webkit-appearance: none;
 }
-
+.web__msg-menu {
+  text-align: right;
+}
 .web__msg-submit {
-  float: right;
-  display: block;
+  display: inline-block;
   outline: none;
   cursor: pointer;
   text-align: center;

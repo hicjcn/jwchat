@@ -4,7 +4,7 @@
       <chatList :list="taleList" @load="loadDone" />
     </div>
     <div class="toolBox">
-      <tools :tools="toolConfig" />
+      <tools :tools="toolConfig" class="tools" />
       <EnterBox @submit="enter" v-model="msg" />
     </div>
   </div>
@@ -107,14 +107,14 @@ export default {
   overflow: hidden;
 }
 .taleBox {
-  height: calc(100% - 150px - 12px);
+  height: calc(100% - 140px);
   min-height: 100px;
   padding: 6px;
   overflow: auto;
   overflow-x: hidden;
 }
 .toolBox {
-  height: 150px;
+  height: 140px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 </style>

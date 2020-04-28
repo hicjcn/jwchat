@@ -2,6 +2,8 @@
 
 ---
 
+![](./document/img/20200425215318.png)
+
 ``` xml
 <JwChat :taleList="taleList" @enter="bindEnter" v-model="inputMsg" :toolConfig="tool" />
 ```

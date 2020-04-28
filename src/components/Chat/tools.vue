@@ -44,8 +44,11 @@ export default {
 <style  scoped>
 .web__tools {
   text-align: left;
-  padding: 8px;
+  padding-left: 8px;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 30px;
 }
 i {
   margin-right: 12px;

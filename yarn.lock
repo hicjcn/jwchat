@@ -4731,6 +4731,15 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
+jwchat@^0.1.11:
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/jwchat/-/jwchat-0.1.11.tgz#07b8ff680bd05be5d2027d1f9a6f85f908acb60d"
+  integrity sha512-cuR0ggTJ7gxL76kO6sVBhzWlzieTv6HEY+I9LR11i+YrX0dqbHcpqO2VZ7ZyX7TqcQ8ZclEqc96LuowivNw7VQ==
+  dependencies:
+    core-js "^3.6.4"
+    element-ui "^2.13.1"
+    vue "^2.6.11"
+
 killable@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/killable/download/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"
