@@ -47,6 +47,13 @@ export default {
           "name": "只盼流星不盼雨",
           "img": "image/two.jpeg"
         },
+         {
+          "date": "2020/04/25 21:19:07",
+          "text": { "text": "<img data-src='image/three.jpeg'/>" },
+          "mine": false,
+          "name": "只盼流星不盼雨",
+          "img": "image/two.jpeg"
+        },
         {
           "date": "2020/04/16 21:19:07",
           "text": { "text": "我不饿" },

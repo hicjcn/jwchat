@@ -99,6 +99,7 @@ export default {
   methods: {
     //处理排版
     handleDetail (html = '') {
+      console.log(html)
       let result = html;
       setTimeout(() => {
         const list = this.$refs.content;

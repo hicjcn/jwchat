@@ -102,6 +102,7 @@ export default {
 </script>
 <style  scoped>
 .chatPage {
+  background-image: url(/image/bg.webp);
   margin: 0 auto;
   background: #fff;
   overflow: hidden;
