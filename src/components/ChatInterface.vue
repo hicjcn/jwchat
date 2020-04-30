@@ -10,7 +10,14 @@
     </div>
     <div class="main">
       <div class="chatBox">
-        <Chat :taleList="taleList" @enter="enter" v-model="msg" :toolConfig="toolConfig" />
+        <Chat
+          :taleList="taleList"
+          @enter="enter"
+          v-model="msg"
+          :toolConfig="toolConfig"
+          :width="chatWidth"
+          :height="chatHeight"
+        />
       </div>
       <div class="rightBox">
         <slot></slot>
@@ -23,7 +30,6 @@
 import Chat from '@/components/Chat'
 export default {
   name: "JwChat_cover",
-  filters: {},
   components: {
     Chat
   },
@@ -78,15 +84,17 @@ export default {
     },
   },
   watch: {
-    height (newval) {
-      if (newval) {
-        this.chatHeight = newval - 90
-      }
+    height: {
+      handler () {
+        this.chatHeight = this.height - 90 + ''
+      },
+      immediate: true
     },
-    width (newval) {
-      if (newval) {
-        this.chatWidth = newval * .8
-      }
+    width: {
+      handler () {
+        this.chatWidth = this.width * .7 + ''
+      },
+      immediate: true
     },
     value: {
       handler () {
@@ -105,9 +113,7 @@ export default {
     enter (msg) {
       this.$emit('enter', msg)
     }
-  },
-  created () { },
-  mounted () { }
+  }
 }
 </script>
 

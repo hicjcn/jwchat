@@ -4,7 +4,7 @@
       <chatList :list="taleList" @load="loadDone" />
     </div>
     <div class="toolBox">
-      <tools :tools="toolConfig" class="tools" />
+      <tools :tools="toolConfig" class="tools" @emoji="bindEmoji" />
       <EnterBox @submit="enter" v-model="msg" />
     </div>
   </div>
@@ -61,8 +61,10 @@ export default {
       immediate: true
     },
     msg: {
-      handler () {
-        this.$emit('input', this.msg);
+      handler (newVal) {
+        if (newVal) {
+          this.$emit('input', this.msg);
+        }
       },
       immediate: true
     }
@@ -82,6 +84,9 @@ export default {
     }
   },
   methods: {
+    bindEmoji (emoji) {
+      this.msg += emoji
+    },
     loadDone (boolean) {
       if (boolean) {
         this.setScroll()
@@ -102,7 +107,6 @@ export default {
 </script>
 <style  scoped>
 .chatPage {
-  background-image: url(/image/bg.webp);
   margin: 0 auto;
   background: #fff;
   overflow: hidden;

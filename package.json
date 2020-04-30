@@ -20,7 +20,8 @@
     "core-js": "^3.6.4",
     "element-ui": "^2.13.1",
     "jwchat": "^0.1.11",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "wechat-emoji-parser": "^1.0.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.3.0",
