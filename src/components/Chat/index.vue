@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     bindEmoji (emoji) {
-      this.msg += emoji
+      this.msg = emoji
     },
     loadDone (boolean) {
       if (boolean) {

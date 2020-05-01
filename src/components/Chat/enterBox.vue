@@ -21,7 +21,6 @@ export default {
   },
   data () {
     return {
-      visible: false,
       currentMsg: this.msg
     }
   },

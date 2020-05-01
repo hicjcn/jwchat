@@ -4740,6 +4740,17 @@ jwchat@^0.1.11:
     element-ui "^2.13.1"
     vue "^2.6.11"
 
+jwchat@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/jwchat/-/jwchat-0.1.2.tgz#337fb313a3903fad860c19d72cf600320b893cad"
+  integrity sha512-DixenhdRIOJLlfbQpMSK/NQyrB9/ABPbJAEfqH2oNjgEsW4xNOQwYXmRCvoxrEQFusK2pw6pi8UqSioZ4jRSfw==
+  dependencies:
+    core-js "^3.6.4"
+    element-ui "^2.13.1"
+    jwchat "^0.1.11"
+    vue "^2.6.11"
+    wechat-emoji-parser "^1.0.4"
+
 killable@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/killable/download/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"

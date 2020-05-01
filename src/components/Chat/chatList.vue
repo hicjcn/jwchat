@@ -54,6 +54,8 @@
 </template>
 
 <script>
+import emojiParser from 'wechat-emoji-parser'
+
 export default {
   name: 'JwChat_list',
   filters: {
@@ -101,6 +103,8 @@ export default {
     handleDetail (html = '') {
       // console.log(html)
       let result = html;
+      result = emojiParser(result).replace(/(<img src)/g, '<img data-class="iconBox" data-src')
+
       setTimeout(() => {
         const list = this.$refs.content;
         list.forEach(ele => {
@@ -180,6 +184,14 @@ export default {
   border-radius: 5px;
   cursor: pointer;
   display: block;
+}
+.web__msg--img[data-class=iconBox] {
+  max-width: 24px;
+  min-width: unset;
+  border: none;
+  margin: 0;
+  vertical-align: bottom;
+  display: inline-block;
 }
 </style>
 <style  scoped>

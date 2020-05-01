@@ -1,9 +1,11 @@
 // 导入组件
 import Chat from './Chat'
+import ChatPage from './ChatInterface'
 
 // 以数组结构保存组件，便于遍历
 const components = [
   Chat,
+  ChatPage
 ]
 
 // 定义 install 方法

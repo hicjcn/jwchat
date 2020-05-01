@@ -2,9 +2,11 @@
 
 #### 介绍
 **一款基于Vue和ElementUI极简的聊天框组件**
-本项目是一款极简的数据驱动为主的聊天框组件
+本项目是一款极简的数据驱动为主的聊天框组件。
+新增表情包可自动匹配微信表情。
+新增聊天窗口配置组件，可以自由配置 顶部状态栏 和 右侧信息栏
 
-![](./document/img/20200429.gif)
+![](./document/img/20200501.gif)
 
 #### 安装
 
@@ -48,7 +50,8 @@
 
    ![](./document/img/20200425215318.png)
 
-* [chat组件文档](./document/api.md)
+* [chat组件文档](./document/chat.md)
+* [chatIndex组件文档](./document/chatIndex.md)
 
 ## 参数配置
 

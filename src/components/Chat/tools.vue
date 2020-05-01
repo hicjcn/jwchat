@@ -31,7 +31,6 @@
 
 <script>
 import emoji from '@/utils/emoji'
-// import emojiParser from 'wechat-emoji-parser'
 export default {
   name: "JwChat_tools",
   props: {
@@ -57,7 +56,6 @@ export default {
   },
   methods: {
     selectEmit (type) {
-      // const emoji = emojiParser(type)
       this.$emit('emoji', type)
       this.$refs.popover.doClose()
     },

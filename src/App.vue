@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <!-- <JwChat :taleList="list" @enter="bindEnter" v-model="inputMsg" :toolConfig="tool" /> -->
+    <!-- <JwChat-index :taleList="list" @enter="bindEnter" v-model="inputMsg" :toolConfig="tool" /> -->
     <ChatPage :taleList="list" @enter="bindEnter" v-model="inputMsg" :toolConfig="tool">
       <div class="rightSlot">
         <div class="notice">

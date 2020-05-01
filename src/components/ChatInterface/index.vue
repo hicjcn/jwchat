@@ -29,7 +29,7 @@
 <script>
 import Chat from '@/components/Chat'
 export default {
-  name: "JwChat_cover",
+  name: "JwChat-index",
   components: {
     Chat
   },
