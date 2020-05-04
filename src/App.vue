@@ -42,7 +42,7 @@ export default {
         },
         {
           "date": "2020/04/25 21:19:07",
-          "text": { "text": "起床不" },
+          "text": { "text": "<audio data-src='https://www.w3school.com.cn/i/horse.mp3'/>" },
           "mine": false,
           "name": "只盼流星不盼雨",
           "img": "image/two.jpeg"
@@ -56,7 +56,7 @@ export default {
         },
         {
           "date": "2020/04/16 21:19:07",
-          "text": { "text": "我不饿" },
+          "text": { "text": "<video data-src='https://www.w3school.com.cn/i/movie.mp4' controls='controls' />" },
           "mine": true,
           "name": "JwChat",
           "img": "image/three.jpeg"

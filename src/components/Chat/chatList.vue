@@ -5,7 +5,7 @@
         <div
           class="web__main-item"
           v-for="(item,index) in list"
-          :key="index"
+          :key="loding(index)"
           :class="{'web__main-item--mine':item.mine}"
         >
           <div class="web__main-user">
@@ -99,12 +99,20 @@ export default {
     }
   },
   methods: {
+    loding (index) {
+      const size = this.list.length
+      if (index == size - 1) {
+        setTimeout(() => {
+          this.load = true
+        }, 200);
+      }
+      return index
+    },
     //处理排版
     handleDetail (html = '') {
       // console.log(html)
       let result = html;
       result = emojiParser(result).replace(/(<img src)/g, '<img data-class="iconBox" data-src')
-
       setTimeout(() => {
         const list = this.$refs.content;
         list.forEach(ele => {
@@ -113,29 +121,34 @@ export default {
             if (child.getAttribute('data-flag') != 0) {
               child.setAttribute('data-flag', 0)
               child.onclick = () => {
-                this.handleEvent(child.dataset)
+                this.handleEvent(child)
               };
               if (child.tagName === 'IMG') {
                 child.className = 'web__msg--img'
+                const icon = child.getAttribute('data-class')
+                if (icon !== 'iconBox') child.type = "IMG"
                 child.src = child.getAttribute('data-src')
               } else if (child.tagName === 'VIDEO') {
+                child.type = "VIDEO"
                 child.className = 'web__msg--video'
                 child.src = child.getAttribute('data-src')
               } else if (child.tagName === 'AUDIO') {
+                child.type = "AUDIO"
                 child.className = 'web__msg--audio'
                 child.controls = 'controls';
                 child.src = child.getAttribute('data-src')
               } else if (child.tagName === 'FILE') {
+                child.type = "FILE"
                 child.className = 'web__msg--file'
                 child.innerHTML = `<h2>File</h2><span>${child.getAttribute('data-name')}</span>`
               } else if (child.tagName === 'MAP') {
+                child.type = "MAP"
                 child.className = 'web__msg--file web__msg--map'
                 child.innerHTML = `<h2>Map</h2><span>${child.getAttribute('data-longitude')} , ${child.getAttribute('data-latitude')}<br />${child.getAttribute('data-address')}</span>`
               }
             }
           }
         });
-        this.load = true
       }, 0)
       return result;
     },
@@ -185,7 +198,7 @@ export default {
   cursor: pointer;
   display: block;
 }
-.web__msg--img[data-class=iconBox] {
+.web__msg--img[data-class="iconBox"] {
   max-width: 24px;
   min-width: unset;
   border: none;
@@ -228,7 +241,7 @@ export default {
   position: absolute;
   left: 60px;
   top: -2px;
-  width: 500px;
+  /* width: 500px; */
   line-height: 24px;
   font-size: 12px;
   white-space: nowrap;
@@ -243,6 +256,7 @@ export default {
 }
 
 .web__main-text {
+  max-width: 75%;
   position: relative;
   line-height: 22px;
   margin-top: 25px;

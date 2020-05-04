@@ -5,10 +5,7 @@
         <div class="emjioBox">
           <ul class="emjio">
             <li v-for="item in Object.keys(emoji)" :key="item" @click="selectEmit(item)">
-              <a
-                v-if="emoji[item]&&emoji[item].position"
-                :style="`display: inline-block;background: url(/emoji/${emoji[item].panel}-r.png) no-repeat;width: 28px;height: 28px; background-position:${emoji[item].position};`"
-              ></a>
+              <a v-if="emoji[item]&&emoji[item].position" :style="emojiStyle(item)"></a>
               <a v-else-if="emoji[item].length<5">{{emoji[item]}}</a>
               <img v-else :src="emoji[item]" />
             </li>
@@ -61,7 +58,17 @@ export default {
     },
     bindButton (type) {
       this.tools.callback && this.tools.callback(type)
-    }
+    },
+    emojiStyle (item) {
+      const emoji = this.emoji[item]
+      if (!emoji) return {}
+      const url = `/emoji/${emoji.panel}-r.png`
+      return {
+        display: 'inline-block',
+        background: `url(${url})  no-repeat;width: 28px;height: 28px`,
+        'background-position': emoji.position
+      }
+    },
   },
 }
 </script>
