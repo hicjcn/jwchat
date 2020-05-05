@@ -1,11 +1,21 @@
 // 导入组件
 import Chat from './Chat'
 import ChatPage from './ChatInterface'
+import Icon from './Icon'
+import UserItem from './UserItem'
+import Empty from './Empty'
+import RightList from './RightList'
+import QuickTalk from './QuickTalk'
 
 // 以数组结构保存组件，便于遍历
 const components = [
   Chat,
-  ChatPage
+  ChatPage,
+  Icon,
+  UserItem,
+  Empty,
+  RightList,
+  QuickTalk,
 ]
 
 // 定义 install 方法

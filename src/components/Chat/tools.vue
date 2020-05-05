@@ -11,15 +11,17 @@
             </li>
           </ul>
         </div>
-        <i slot="reference" class="emjioIcon" />
+        <JwChat-icon slot="reference" type="icon-xiaolian" />
       </el-popover>
-      <template v-for="item in tools.show">
-        <i
+      <template v-for="item in showkeys()">
+        <span
           v-if="toolConfig[item]"
           :key="item"
-          :class="toolConfig[item]"
+          :style="item=='history'&&'flex-grow: 100;text-align: right;'"
           @click="bindButton(item)"
-        >{{toolConfig[item]?'':item}}</i>
+        >
+          <JwChat-icon :type="toolConfig[item]" />
+        </span>
         <i :key="item" v-else :class="item" @click="bindButton(item)"></i>
       </template>
     </div>
@@ -45,13 +47,24 @@ export default {
     return {
       emoji,
       toolConfig: {
-        'img': 'el-icon-picture-outline',
-        'video': 'el-icon-video-camera',
-        'file': 'el-icon-folder-opened'
+        'file': 'icon-wenjian',
+        'video': 'icon-shipin',
+        'img': 'icon-xiangce',
+        'hongbao': 'icon-hongbao',
+        'more': 'icon-gengduo',
+        'history': 'icon-lishi',
       },
+      'img': 'icon-xiangce',
     }
   },
   methods: {
+    showkeys () {
+      let keys = Object.keys(this.toolConfig)
+      if (this.tools.show) {
+        keys = this.tools.show
+      }
+      return keys
+    },
     selectEmit (type) {
       this.$emit('emoji', type)
       this.$refs.popover.doClose()
@@ -65,24 +78,19 @@ export default {
       const url = `/emoji/${emoji.panel}-r.png`
       return {
         display: 'inline-block',
-        background: `url(${url})  no-repeat;width: 28px;height: 28px`,
-        'background-position': emoji.position
+        background: `url(${url})  no-repeat`,
+        width: `28px`,
+        height: `28px`,
+        'background-position': emoji.position,
       }
     },
   },
 }
 </script>
+
 <style  scoped>
 .toolsBox {
   position: relative;
-}
-.emjioIcon {
-  vertical-align: middle;
-  padding-right: 20px;
-  height: 20px;
-  display: inline-block;
-  background: url(/icon/icon-desktop@2x.png) -23px -1px / 44px no-repeat;
-  background-position: -23px -1px;
 }
 .web__tools {
   text-align: left;

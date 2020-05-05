@@ -1,16 +1,12 @@
 <template>
   <div class="ChatPage" :style="faceSize">
     <div class="header">
-      <img v-if="config.img" :src="config.img" class="header_cover" alt />
-      <div class="header-info">
-        <p class="web__logo-name">{{config.name}}</p>
-        <p class="web__logo-dept">{{config.dept}}</p>
-      </div>
+      <JwChat-item :cover="config.img" :name="config.name" :dept="config.dept" @click="bindClick" />
       <slot name="header"></slot>
     </div>
     <div class="main">
       <div class="chatBox">
-        <Chat
+        <JwChat
           :taleList="taleList"
           @enter="enter"
           v-model="msg"
@@ -27,19 +23,16 @@
 </template>
 
 <script>
-import Chat from '@/components/Chat'
 export default {
   name: "JwChat-index",
-  components: {
-    Chat
-  },
   props: {
     config: {
       type: Object,
       default: () => ({
         img: 'image/cover.png',
         name: 'JwChat',
-        dept: '最简单、最便捷'
+        dept: '最简单、最便捷',
+        callback: Function
       })
     },
     taleList: {
@@ -110,6 +103,9 @@ export default {
     }
   },
   methods: {
+    bindClick (type) {
+      this.$emit('bindCover', type)
+    },
     enter (msg) {
       this.$emit('enter', msg)
     }
@@ -127,11 +123,13 @@ export default {
   background-color: #409eff;
   display: flex;
   margin: 0 auto;
+  padding-left: 12px;
   align-items: center;
   height: 60px;
   position: relative;
+  color: #fff;
 }
-.ChatPage .header .header_cover {
+/* .ChatPage .header .header_cover {
   border-radius: 50%;
   width: 35px;
   height: 35px;
@@ -159,7 +157,7 @@ export default {
 
 .ChatPage .header .header-info p:last-child {
   font-size: 12px;
-}
+} */
 
 .ChatPage .main {
   display: flex;
