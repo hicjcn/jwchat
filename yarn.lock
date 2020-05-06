@@ -4731,7 +4731,7 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-jwchat@^0.1.11:
+jwchat@^0.1.2:
   version "0.1.11"
   resolved "https://registry.yarnpkg.com/jwchat/-/jwchat-0.1.11.tgz#07b8ff680bd05be5d2027d1f9a6f85f908acb60d"
   integrity sha512-cuR0ggTJ7gxL76kO6sVBhzWlzieTv6HEY+I9LR11i+YrX0dqbHcpqO2VZ7ZyX7TqcQ8ZclEqc96LuowivNw7VQ==
@@ -4740,14 +4740,14 @@ jwchat@^0.1.11:
     element-ui "^2.13.1"
     vue "^2.6.11"
 
-jwchat@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/jwchat/-/jwchat-0.1.2.tgz#337fb313a3903fad860c19d72cf600320b893cad"
-  integrity sha512-DixenhdRIOJLlfbQpMSK/NQyrB9/ABPbJAEfqH2oNjgEsW4xNOQwYXmRCvoxrEQFusK2pw6pi8UqSioZ4jRSfw==
+jwchat@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/jwchat/-/jwchat-0.2.0.tgz#b3395d546ea2356ade2939a426a5e29bed2dce90"
+  integrity sha512-TGSJSWU1CvYDIHWOXKUiz/9p4xSs448Qm1U4tz6d/cNtB1jfc82b7TKOFJdx/qMuAmwCwKPOpbSVXLFvIGJRVg==
   dependencies:
     core-js "^3.6.4"
     element-ui "^2.13.1"
-    jwchat "^0.1.11"
+    jwchat "^0.1.2"
     vue "^2.6.11"
     wechat-emoji-parser "^1.0.4"
 

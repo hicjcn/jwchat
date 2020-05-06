@@ -3,15 +3,14 @@ import App from './App.vue'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import JwChat from '@/components'
+// import JwChat from '@/components'
 
 Vue.use(ElementUI)
 
-Vue.use(JwChat)
 
-// import JwChat from 'jwchat';
-// import 'jwchat/lib/JwChat.css';
-// Vue.use(JwChat)
+import JwChat from 'jwchat';
+import 'jwchat/lib/JwChat.css';
+Vue.use(JwChat)
 
 Vue.config.productionTip = false
 

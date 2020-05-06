@@ -6,7 +6,7 @@
 新增表情包可自动匹配微信表情。
 新增聊天窗口配置组件，可以自由配置 顶部状态栏 和 右侧信息栏
 
-![](./document/img/20200501.gif)
+![](./document/img/20200505.gif)
 
 #### 安装
 
@@ -45,13 +45,23 @@
 3. 在 `*.vue` 中引入
 
    ``` vue
-   <JwChat :taleList="taleList" @enter="bindEnter" v-model="inputMsg" :toolConfig="tool" />
+   <JwChat-index
+         :taleList="list"
+      @enter="bindEnter"
+         @bindCover="bindCover"
+         v-model="inputMsg"
+         :toolConfig="tool"
+       />
    ```
+   
+   ![](./document/img/20200505214642.png)
 
-   ![](./document/img/20200425215318.png)
+### **组件文档**
 
-* [chat组件文档](./document/chat.md)
 * [chatIndex组件文档](./document/chatIndex.md)
+* [chat组件文档](./document/chat.md)
+* [rightbox](./document/rightbox.md)
+* [talk](./document/talk.md)
 
 ## 参数配置
 

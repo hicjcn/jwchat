@@ -20,7 +20,7 @@
 | ---------- | :------------- | ------ | ------ | ------ |
 | v-model    | 输入框中的文字 | String | -      | ""     |
 | taleList   | 会话内容       | Array  | -      | []     |
-| toolConfig | 工具烂配置     | Object | -      | {}     |
+| toolConfig | 工具栏配置     | Object | -      | {}     |
 | width      | 聊天框宽度     | string | -      | 550px  |
 | height     | 聊天框高度     | string | -      | 500px  |
 
