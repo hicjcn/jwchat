@@ -23,12 +23,12 @@
             <p>{{i}}</p>
           </el-col>
           <el-col :span="(showDelete==false?5-2:5)" style="text-algin:right;">
-            <i class="el-icon-circle-check" title="发送" @click="emit({select: i})" />
+            <i class="el-icon-circle-check" title="发送" @click="emit({key:'select',value: i})" />
             <i
               class="el-icon-circle-close"
               title="删除"
               v-if="showDelete"
-              @click="emit({delIndex: k})"
+              @click="emit({key:'delIndex',value: k})"
             />
           </el-col>
         </el-row>
@@ -39,7 +39,7 @@
       <el-input
         :rows="3"
         show-word-limit
-        maxlength="600"
+        :maxlength="maxlength"
         placeholder="请输入快捷回复语"
         v-model="itemQuick"
         type="textarea"
@@ -60,18 +60,20 @@ export default {
     config: Object
   },
   data () {
+    const { maxlength = 300 } = this.config
     return {
       activeIndex: '1',
       visible: false,
       itemQuick: '',
+      maxlength
     }
   },
-  watch: {},
   computed: {
     showAddBtn () {
       let showBtn = true
       let visible = 'visible'
-      this.config && this.config.showAdd && (showBtn = this.config.showAdd)
+      const { showAdd = true } = this.config
+      showBtn = showAdd
       if (!showBtn) {
         visible = 'hidden'
       }
@@ -90,7 +92,6 @@ export default {
     },
     showDelete () {
       let show = true
-      console.log(this.config)
       const { showDeleteBtn } = this.config || {}
       if (showDeleteBtn === false) {
         show = false
@@ -109,21 +110,20 @@ export default {
     },
     handleSelect (index) {
       this.activeIndex = index
-      this.emit({ navIndex: index })
+      this.emit({ key: 'navIndex', value: index })
     },
     AddQuickFn () {
-      this.emit({ 'addTalk': this.itemQuick })
+      this.emit({ key: 'addTalk', value: this.itemQuick })
       this.visible = false
       this.$nextTick(() => {
         this.itemQuick = ""
       })
     },
     emit (play) {
+      console.log(this.config)
       this.$emit('event', play)
     }
-  },
-  created () { },
-  mounted () { }
+  }
 }
 </script>
 <style scoped>
@@ -184,8 +184,5 @@ li i {
 i:hover {
   color: #409eff;
   cursor: pointer;
-}
-li i:nth-child(2) {
-  /* margin-left: 0.2rem; */
 }
 </style>

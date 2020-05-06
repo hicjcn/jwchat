@@ -9,7 +9,7 @@
       <div>{{info.listTip}} ({{info.list.length}})</div>
       <ul>
         <li v-for="item in info.list" :key="item.name">
-          <JwChat-item size="25" :cover="item.img" :name="item.name" @click="bindClick" />
+          <JwChat-item size="25" :config="item" @click="bindClick" />
         </li>
       </ul>
     </div>

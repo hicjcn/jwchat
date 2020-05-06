@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- <JwChat-count :config="{time:1500,regulator:50}" :num="5000" /> -->
     <JwChat-index
       :taleList="list"
       @enter="bindEnter"
@@ -7,8 +8,8 @@
       v-model="inputMsg"
       :toolConfig="tool"
     >
-      <!-- <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" /> -->
-      <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" />
+      <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
+      <!-- <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" /> -->
     </JwChat-index>
   </div>
 </template>
@@ -49,7 +50,7 @@ export default {
         },
       ],
       tool: {
-        // show: ['file', 'img'],
+        show: ['file', 'history', 'img'],
         callback: this.toolEvent
       },
       rightConfig: {
@@ -72,7 +73,8 @@ export default {
       },
       quickConfig: {
         nav: ['快捷回复', '超级回复'],
-        showAddBtn: true,
+        showAdd: true,
+        maxlength: 200,
         showHeader: true,
         showDeleteBtn: true,
       },

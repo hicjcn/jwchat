@@ -9,14 +9,13 @@ export default {
   name: 'JwChat-empty',
   props: {
     size: {
-      type: String,
       default: '5rem',
     }
   },
   computed: {
     sizeStyle () {
       let size = this.size
-      if (size.match(/\d$/)) {
+      if (`${size}`.match(/\d$/)) {
         size += 'px'
       }
       return {

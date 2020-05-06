@@ -1,8 +1,8 @@
 
-import widget from './index.vue'
+import Right from './index.vue'
 
-widget.install = function (Vue) {
-  Vue.component(widget.name, widget)
+Right.install = function (Vue) {
+  Vue.component(Right.name, Right)
 }
 
-export default widget
+export default Right

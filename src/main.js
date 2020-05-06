@@ -7,9 +7,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI)
 
-
-import JwChat from 'jwchat';
-import 'jwchat/lib/JwChat.css';
+import JwChat from '../lib/JwChat.common';
+import '../lib/JwChat.css';
 Vue.use(JwChat)
 
 Vue.config.productionTip = false

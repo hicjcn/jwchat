@@ -60,8 +60,9 @@
 
 * [chatIndex组件文档](./document/chatIndex.md)
 * [chat组件文档](./document/chat.md)
-* [rightbox](./document/rightbox.md)
-* [talk](./document/talk.md)
+* [rightbox(仿qq群右侧)](./document/rightbox.md)
+* [talk快捷回复](./document/talk.md)
+* [user单个用户展示](./document/user.md)
 
 ## 参数配置
 

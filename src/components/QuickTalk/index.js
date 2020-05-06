@@ -1,8 +1,8 @@
 
-import widget from './index.vue'
+import Talk from './index.vue'
 
-widget.install = function (Vue) {
-  Vue.component(widget.name, widget)
+Talk.install = function (Vue) {
+  Vue.component(Talk.name, Talk)
 }
 
-export default widget
+export default Talk

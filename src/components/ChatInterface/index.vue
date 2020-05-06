@@ -1,7 +1,7 @@
 <template>
   <div class="ChatPage" :style="faceSize">
     <div class="header">
-      <JwChat-item :cover="config.img" :name="config.name" :dept="config.dept" @click="bindClick" />
+      <JwChat-item :config="config" @click="bindClick" />
       <slot name="header"></slot>
     </div>
     <div class="main">
@@ -32,7 +32,7 @@ export default {
         img: 'image/cover.png',
         name: 'JwChat',
         dept: '最简单、最便捷',
-        callback: Function
+        callback: () => { }
       })
     },
     taleList: {
@@ -104,7 +104,10 @@ export default {
   },
   methods: {
     bindClick (type) {
-      this.$emit('bindCover', type)
+      const { callback } = this.config || {}
+      if (callback) {
+        callback(type)
+      }
     },
     enter (msg) {
       this.$emit('enter', msg)
@@ -129,35 +132,6 @@ export default {
   position: relative;
   color: #fff;
 }
-/* .ChatPage .header .header_cover {
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  margin: 0 12px;
-  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
-}
-.ChatPage .header .header-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.ChatPage .header .header-info p {
-  margin: 0;
-  color: #fff;
-  margin: 0;
-  padding: 0;
-  width: 175px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  text-align: left;
-  white-space: nowrap;
-  font-size: 13px;
-}
-
-.ChatPage .header .header-info p:last-child {
-  font-size: 12px;
-} */
 
 .ChatPage .main {
   display: flex;

@@ -1,7 +1,7 @@
-import Widget from './index.vue'
+import Item from './index.vue'
 
-Widget.install = function (Vue) {
-  Vue.component(Widget.name, Widget)
+Item.install = function (Vue) {
+  Vue.component(Item.name, Item)
 }
 
-export default Widget
+export default Item

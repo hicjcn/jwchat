@@ -1,9 +1,15 @@
 <template>
   <div class="item">
-    <img v-if="cover" :src="cover" :style="coverSize" class="cover" @click="bindClick('cover')" />
+    <img
+      v-if="config.img"
+      :src="config.img"
+      :style="coverSize"
+      class="cover"
+      @click="bindClick({ key:'cover', value: config.img })"
+    />
     <div class="info">
-      <p class="name" @click="bindClick('name')">{{name}}</p>
-      <p class="dept" @click="bindClick('dept')">{{dept}}</p>
+      <p class="name" @click="bindClick({ key:'name', value: config.name })">{{config.name}}</p>
+      <p class="dept" @click="bindClick({ key:'dept', value: config.dept })">{{config.dept}}</p>
     </div>
   </div>
 </template>
@@ -12,22 +18,24 @@
 export default {
   name: 'JwChat-item',
   props: {
-    cover: String,
-    name: {
-      type: String,
-      default: 'JwChat',
+    config: {
+      type: Object,
+      default: () => ({
+        img: '',
+        name: 'JwChat',
+        dept: '',
+      }),
       required: true
     },
-    dept: String,
     size: {
-      String: String,
-      default: '35px'
+      default: 35
     }
   },
   computed: {
+
     coverSize () {
       let size = this.size
-      if (size.match(/\d$/)) {
+      if (`${size}`.match(/\d$/)) {
         size += 'px'
       }
       return {

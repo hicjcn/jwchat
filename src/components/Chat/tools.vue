@@ -31,14 +31,14 @@
 <script>
 import emoji from '@/utils/emoji'
 export default {
-  name: "JwChat_tools",
+  name: "JwChat-tools",
   props: {
     tools: {
       type: Object,
       default: () => {
         return {
-          show: Object.keys(this.toolConfig),
-          callback: Function
+          show: [],
+          callback: () => { }
         }
       }
     }
@@ -54,14 +54,24 @@ export default {
         'more': 'icon-gengduo',
         'history': 'icon-lishi',
       },
-      'img': 'icon-xiangce',
     }
   },
   methods: {
     showkeys () {
       let keys = Object.keys(this.toolConfig)
-      if (this.tools.show) {
-        keys = this.tools.show
+      const { show = [] } = this.tools || {}
+      if (show.length > 0) {
+        let _key = []
+        let h = false
+        show.forEach(i => {
+          if (i === 'history') {
+            h = true
+          } else {
+            _key.push(i)
+          }
+        })
+        if (h) _key.push('history')
+        keys = _key
       }
       return keys
     },
@@ -73,15 +83,14 @@ export default {
       this.tools.callback && this.tools.callback(type)
     },
     emojiStyle (item) {
-      const emoji = this.emoji[item]
-      if (!emoji) return {}
-      const url = `/emoji/${emoji.panel}-r.png`
+      const emojiitem = this.emoji[item]
+      if (!emojiitem) return {}
       return {
         display: 'inline-block',
-        background: `url(${url})  no-repeat`,
+        background: `url('https://res.wx.qq.com/a/wx_fed/webwx/res/static/img/6AfH8-r.png')  no-repeat`,
         width: `28px`,
         height: `28px`,
-        'background-position': emoji.position,
+        'background-position': emojiitem.position,
       }
     },
   },
@@ -109,15 +118,14 @@ i:hover {
   color: #76b1f9;
 }
 .emjioBox {
-  /* position: absolute;
-  bottom: 35px;
-  left: 12px; */
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04); */
   background: #fff;
   height: 150px;
   width: 300px;
   overflow: auto;
   text-align: left;
+}
+.emjioBox .emjio {
+  padding: 0;
 }
 .emjioBox li {
   display: inline-block;
