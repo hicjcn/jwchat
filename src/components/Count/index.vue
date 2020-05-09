@@ -28,6 +28,11 @@ export default {
       }
     }
   },
+  watch: {
+    num () {
+      this.NumAutoPlusAnimation()
+    }
+  },
   methods: {
     NumAutoPlusAnimation () {
       const that = this

@@ -1,16 +1,38 @@
 <template>
   <div id="app">
-    <!-- <JwChat-count :config="{time:1500,regulator:50}" :num="5000" /> -->
-    <JwChat-index
+    <JwChat-count :config="{time:1500,regulator:50}" :num="num" />
+
+    <JwChat-card
+      :data="[
+        { label: 'nickName', value: 'JwChat', icon: 'el-icon-user' },
+        { label: '住址', value: '内蒙古-乌兰察布市-内蒙古-内蒙古' },
+        { label: '电话号', value: '18600******' },
+        { label: '身份证号', value: '1233135153' },
+        { label: '身份证号', value: '1233135153' },
+        { label: '身份证号', value: '1233135153' },
+        { label: '身份证号', value: '1233135153' },
+        { label: '身份证号', value: '1233135153' },
+        { label: '身份证号', value: '1233135153' },
+      ]"
+      :config=" {
+        width: 25,
+        height: 60,
+        coverStyle: { width: '150px' },
+        icon: 'el-icon-star-off',
+        cover: '/image/two.jpeg'
+      }"
+    />
+    <JwChat
       :taleList="list"
       @enter="bindEnter"
       @bindCover="bindCover"
       v-model="inputMsg"
       :toolConfig="tool"
+      v-if="0"
     >
       <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
       <!-- <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" /> -->
-    </JwChat-index>
+    </JwChat>
   </div>
 </template>
 
@@ -18,6 +40,7 @@
 export default {
   data () {
     return {
+      num: 5000,
       inputMsg: '',
       list: [
         {
@@ -113,6 +136,9 @@ export default {
     bindTalk (play) {
       console.log('talk', play)
     },
+    changeNum () {
+      this.num += 1
+    }
   }
 }
 </script>
@@ -121,9 +147,7 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  /* display: flex; */
   flex-direction: column;
-  /* justify-content: center; */
 }
 </style>
 <style>

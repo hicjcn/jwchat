@@ -73,10 +73,10 @@ export default {
     setStyle () {
       let height = this.height
       let width = this.width
-      if (height.match(/\d$/)) {
+      if (`${height}`.match(/\d$/)) {
         height += 'px'
       }
-      if (width.match(/\d$/)) {
+      if (`${width}`.match(/\d$/)) {
         width += 'px'
       }
       const style = { height, width }

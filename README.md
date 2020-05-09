@@ -63,6 +63,7 @@
 * [rightbox(仿qq群右侧)](./document/rightbox.md)
 * [talk快捷回复](./document/talk.md)
 * [user单个用户展示](./document/user.md)
+* [用户资料卡](./document/usercard.md)
 
 ## 参数配置
 

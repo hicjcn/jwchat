@@ -120,7 +120,6 @@ export default {
       })
     },
     emit (play) {
-      console.log(this.config)
       this.$emit('event', play)
     }
   }
