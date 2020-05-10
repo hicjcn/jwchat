@@ -57,6 +57,9 @@ export default {
   height: 100%;
   width: 100%;
 }
+li{
+  list-style: none;
+}
 .notice {
   height: 30%;
   text-align: left;

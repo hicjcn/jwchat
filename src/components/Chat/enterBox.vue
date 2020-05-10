@@ -54,7 +54,7 @@ export default {
 </script>
 <style scoped>
 .web__msg {
-  padding: 10px 10px;
+  padding: 0 10px;
   height: auto;
   overflow: hidden;
 }

@@ -22,6 +22,9 @@
   yarn add jwchat
   ```
 
+### 文档
+[**官方文档**](https://codegi.gitee.io/jwchatdoc/)
+
 #### 使用
 
 1. 因为本组件是基于 `element-ui` 开发。首先需要引入  `element-ui`。

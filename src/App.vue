@@ -2,7 +2,7 @@
   <div id="app">
     <JwChat-count :config="{time:1500,regulator:50}" :num="num" />
 
-    <JwChat-card
+    <!-- <JwChat-card
       :data="[
         { label: 'nickName', value: 'JwChat', icon: 'el-icon-user' },
         { label: '住址', value: '内蒙古-乌兰察布市-内蒙古-内蒙古' },
@@ -21,18 +21,17 @@
         icon: 'el-icon-star-off',
         cover: '/image/two.jpeg'
       }"
-    />
-    <JwChat
+    />-->
+    <JwChat-index
+      :config="config"
       :taleList="list"
       @enter="bindEnter"
-      @bindCover="bindCover"
       v-model="inputMsg"
       :toolConfig="tool"
-      v-if="0"
     >
       <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
       <!-- <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" /> -->
-    </JwChat>
+    </JwChat-index>
   </div>
 </template>
 
@@ -48,28 +47,28 @@ export default {
           "text": { "text": "起床不" },
           "mine": false,
           "name": "留恋人间不羡仙",
-          "img": "image/one.jpeg"
+          "img": "/image/one.jpeg"
         },
         {
           "date": "2020/04/25 21:19:07",
           "text": { "text": "<audio data-src='https://www.w3school.com.cn/i/horse.mp3'/>" },
           "mine": false,
           "name": "只盼流星不盼雨",
-          "img": "image/two.jpeg"
+          "img": "/image/two.jpeg"
         },
         {
           "date": "2020/04/25 21:19:07",
-          "text": { "text": "<img data-src='image/three.jpeg'/>" },
+          "text": { "text": "<img data-src='/image/three.jpeg'/>" },
           "mine": false,
           "name": "只盼流星不盼雨",
-          "img": "image/two.jpeg"
+          "img": "/image/two.jpeg"
         },
         {
           "date": "2020/04/16 21:19:07",
           "text": { "text": "<video data-src='https://www.w3school.com.cn/i/movie.mp4' controls='controls' />" },
           "mine": true,
           "name": "JwChat",
-          "img": "image/three.jpeg"
+          "img": "/image/three.jpeg"
         },
       ],
       tool: {
@@ -108,7 +107,13 @@ export default {
         '快捷回复4',
         '快捷回复5',
         '快捷回复6',
-      ]
+      ],
+      config: {
+        img: '/image/cover.png',
+        name: 'JwChat',
+        dept: '最简单、最便捷',
+        callback: this.bindCover
+      },
     }
   },
   methods: {
