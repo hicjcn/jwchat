@@ -22,9 +22,6 @@
   yarn add jwchat
   ```
 
-### 文档
-[**官方文档**](https://codegi.gitee.io/jwchatdoc/)
-
 #### 使用
 
 1. 因为本组件是基于 `element-ui` 开发。首先需要引入  `element-ui`。
@@ -49,89 +46,16 @@
 
    ``` vue
    <JwChat-index
-         :taleList="list"
-      @enter="bindEnter"
-         @bindCover="bindCover"
-         v-model="inputMsg"
-         :toolConfig="tool"
-       />
+        :taleList="list"
+        @enter="bindEnter"
+        v-model="inputMsg"
+        :toolConfig="tool"
+    />
    ```
    
-   ![](./document/img/20200505214642.png)
+#### 文档
+* [**官方文档**](https://codegi.gitee.io/jwchatdoc/)
 
-### **组件文档**
-
-* [chatIndex组件文档](./document/chatIndex.md)
-* [chat组件文档](./document/chat.md)
-* [rightbox(仿qq群右侧)](./document/rightbox.md)
-* [talk快捷回复](./document/talk.md)
-* [user单个用户展示](./document/user.md)
-* [用户资料卡](./document/usercard.md)
-
-## 参数配置
-
----
-
-### Attribute
-
-| 参数       | 说明           | 类型   | 可选值 | 默认值 |
-| ---------- | :------------- | ------ | ------ | ------ |
-| v-model    | 输入框中的文字 | String | -      | ""     |
-| taleList   | 会话内容       | Array  | -      | []     |
-| toolConfig | 工具烂配置     | Object | -      | {}     |
-| width      | 聊天框宽度     | string | -      | 550px  |
-| height     | 聊天框高度     | string | -      | 500px  |
-
-### Methods
-
-| 参数  | 说明                               | 参数           |
-| ----- | ---------------------------------- | -------------- |
-| enter | 输入框点击就发送或者回车触发的事件 | 输入框中的文字 |
-|       |                                    |                |
-
-
-
-*  ####  `taleList`
-
-
-``` json
-// 格式
-[
-    {
-        "date": "2020/04/25 21:19:07",
-        "text": { "text": "起床不" },
-        "mine": false,
-        "name": "只盼流星不盼雨",
-        "img": "image/two.jpeg"
-    },
-    {
-        "date": "2020/04/16 21:19:07",
-        "text": { "text": "我不饿" },
-        "mine": true,
-        "name": "留恋人间不羡仙",
-        "img": "image/three.jpeg"
-    },
-]
-
-// data 用来展示时间数据
-// text 用来展示本条会话内容
-// mine 本条数据是否是我发的
-// img 用户头像
-```
-
-* #### `toolConfig` 
-
-``` js
-{
-    // file img video 现在只配置了三个图标
-    show: ['file', 'img'],
-    callback: this.toolEvent
-}
-    
- toolEvent (type/* 当前点击的按钮类型 */) {
-     alert(type)
- }    
-```
 
 #### 参与贡献
 
@@ -147,4 +71,4 @@
 
 #### 交流学习
 
-* 球球群 ：235689934
+* QQ群 ：235689934
