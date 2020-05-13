@@ -1,27 +1,7 @@
 <template>
   <div id="app">
-    <JwChat-count :config="{time:1500,regulator:50}" :num="num" />
+    <!-- <JwChat-count :config="{time:1500,regulator:50}" :num="num" /> -->
 
-    <!-- <JwChat-card
-      :data="[
-        { label: 'nickName', value: 'JwChat', icon: 'el-icon-user' },
-        { label: '住址', value: '内蒙古-乌兰察布市-内蒙古-内蒙古' },
-        { label: '电话号', value: '18600******' },
-        { label: '身份证号', value: '1233135153' },
-        { label: '身份证号', value: '1233135153' },
-        { label: '身份证号', value: '1233135153' },
-        { label: '身份证号', value: '1233135153' },
-        { label: '身份证号', value: '1233135153' },
-        { label: '身份证号', value: '1233135153' },
-      ]"
-      :config=" {
-        width: 25,
-        height: 60,
-        coverStyle: { width: '150px' },
-        icon: 'el-icon-star-off',
-        cover: '/image/two.jpeg'
-      }"
-    />-->
     <JwChat-index
       :config="config"
       :taleList="list"
@@ -29,8 +9,8 @@
       v-model="inputMsg"
       :toolConfig="tool"
     >
-      <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
-      <!-- <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" /> -->
+      <!-- <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" /> -->
+      <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" />
     </JwChat-index>
   </div>
 </template>
@@ -72,7 +52,7 @@ export default {
         },
       ],
       tool: {
-        show: ['file', 'history', 'img'],
+        // show: ['file', 'history', 'img'],
         callback: this.toolEvent
       },
       rightConfig: {
@@ -156,6 +136,9 @@ export default {
 }
 </style>
 <style>
+.active {
+  color: red;
+}
 * {
   padding: 0;
   margin: 0;

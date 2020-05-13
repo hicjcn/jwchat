@@ -14,7 +14,6 @@
 <script>
 export default {
   name: 'JwChat-card',
-  components: {},
   props: {
     config: {
       type: Object,

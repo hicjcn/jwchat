@@ -11,16 +11,17 @@
             </li>
           </ul>
         </div>
-        <JwChat-icon slot="reference" type="icon-xiaolian" />
+        <JwChat-icon slot="reference" type="icon-xiaolian" titele="表情" />
       </el-popover>
       <template v-for="item in showkeys()">
         <span
           v-if="toolConfig[item]"
           :key="item"
           :style="item=='history'&&'flex-grow: 100;text-align: right;'"
-          @click="bindButton(item)"
         >
-          <JwChat-icon :type="toolConfig[item]" />
+          <span @click="bindButton(item)">
+            <JwChat-icon :type="toolConfig[item]" />
+          </span>
         </span>
         <i :key="item" v-else :class="item" @click="bindButton(item)"></i>
       </template>

@@ -33,10 +33,8 @@ export default {
     },
     currentMsg: {
       handler (newval) {
-        if (newval) {
-          const msg = newval.trim()
-          this.$emit('input', msg)
-        }
+        const msg = newval.trim()
+        this.$emit('input', msg)
       },
       immediate: true
     }

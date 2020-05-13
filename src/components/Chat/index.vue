@@ -61,10 +61,8 @@ export default {
       immediate: true
     },
     msg: {
-      handler (newVal) {
-        if (newVal) {
-          this.$emit('input', this.msg);
-        }
+      handler () {
+        this.$emit('input', this.msg);
       },
       immediate: true
     }
