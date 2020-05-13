@@ -13,6 +13,7 @@
           :toolConfig="toolConfig"
           :width="chatWidth"
           :height="chatHeight"
+          @clickTalk="$emit('clickTalk',$event)"
         />
       </div>
       <div class="rightBox">

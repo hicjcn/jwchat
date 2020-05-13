@@ -19,6 +19,7 @@
   "dependencies": {
     "core-js": "^3.6.4",
     "element-ui": "^2.13.1",
+    "iscroll": "^5.2.0",
     "jwchat": "^0.2.3",
     "vue": "^2.6.11",
     "wechat-emoji-parser": "^1.0.4"

@@ -1,5 +1,5 @@
 <template>
-  <div class="body">
+  <div>
     <div :style="pageConfig.width|setWidth">
       <div class="web__main" ref="main">
         <div
@@ -9,8 +9,8 @@
           :class="{'web__main-item--mine':item.mine}"
         >
           <div class="web__main-user">
-            <img :src="item.img" />
-            <cite>
+            <img :src="item.img" @click="bindClick('img',item)" />
+            <cite @click="bindClick('nickname',item)">
               {{item.name}}
               <i>{{item.date}}</i>
             </cite>
@@ -99,6 +99,9 @@ export default {
     }
   },
   methods: {
+    bindClick (type, data) {
+      this.$emit('click', { type, data })
+    },
     loding (index) {
       const size = this.list.length
       if (index == size - 1) {
@@ -228,6 +231,7 @@ export default {
 
 .web__main-user {
   position: absolute;
+  cursor: pointer;
   left: 3px;
 }
 

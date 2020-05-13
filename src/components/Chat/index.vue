@@ -1,7 +1,7 @@
 <template>
   <div class="chatPage" :style="setStyle">
-    <div class="taleBox" ref="taleNode">
-      <chatList :list="taleList" @load="loadDone" />
+    <div class="taleBox" ref="scrollNode">
+      <chatList :list="taleList" @load="loadDone" @click="bindEvent" />
     </div>
     <div class="toolBox">
       <tools :tools="toolConfig" class="tools" @emoji="bindEmoji" />
@@ -45,7 +45,7 @@ export default {
   },
   data () {
     return {
-      msg: ''
+      msg: '',
     }
   },
   watch: {
@@ -82,6 +82,9 @@ export default {
     }
   },
   methods: {
+    bindEvent (play) {
+      this.$emit('clickTalk', play)
+    },
     bindEmoji (emoji) {
       this.msg = emoji
     },
@@ -90,10 +93,10 @@ export default {
         this.setScroll()
       }
     },
-    setScroll (count = this.$refs.taleNode.scrollHeight) {
+    setScroll (count = this.$refs.scrollNode.scrollHeight) {
       //滚动条一直处于下方
       this.$nextTick(() => {
-        this.$refs.taleNode.scrollTop = count
+        this.$refs.scrollNode.scrollTop = count
       })
     },
     enter (msg) {
@@ -103,9 +106,10 @@ export default {
   },
 }
 </script>
-<style  scoped>
+<style lang="scss" scoped>
 .chatPage {
   margin: 0 auto;
+  position: relative;
   background: #fff;
   overflow: hidden;
 }

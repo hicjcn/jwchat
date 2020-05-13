@@ -8,6 +8,7 @@
       @enter="bindEnter"
       v-model="inputMsg"
       :toolConfig="tool"
+      @clickTalk="talkEvent"
     >
       <!-- <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" /> -->
       <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" />
@@ -52,7 +53,7 @@ export default {
         },
       ],
       tool: {
-        // show: ['file', 'history', 'img'],
+        show: ['file', 'history', 'img', ['文件1', '', '美图']],
         callback: this.toolEvent
       },
       rightConfig: {
@@ -97,6 +98,9 @@ export default {
     }
   },
   methods: {
+    talkEvent (play) {
+      console.log(play)
+    },
     bindEnter () {
       const msg = this.inputMsg
       if (!msg) return;

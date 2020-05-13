@@ -11,16 +11,16 @@
             </li>
           </ul>
         </div>
-        <JwChat-icon slot="reference" type="icon-xiaolian" titele="表情" />
+        <JwChat-icon slot="reference" type="icon-xiaolian" title="表情" />
       </el-popover>
-      <template v-for="item in showkeys()">
+      <template v-for="(item,k) in showkeys()">
         <span
           v-if="toolConfig[item]"
           :key="item"
           :style="item=='history'&&'flex-grow: 100;text-align: right;'"
         >
           <span @click="bindButton(item)">
-            <JwChat-icon :type="toolConfig[item]" />
+            <JwChat-icon :type="toolConfig[item].icon" :title="setTitle(item,k)" />
           </span>
         </span>
         <i :key="item" v-else :class="item" @click="bindButton(item)"></i>
@@ -48,13 +48,14 @@ export default {
     return {
       emoji,
       toolConfig: {
-        'file': 'icon-wenjian',
-        'video': 'icon-shipin',
-        'img': 'icon-xiangce',
-        'hongbao': 'icon-hongbao',
-        'more': 'icon-gengduo',
-        'history': 'icon-lishi',
+        'file': { icon: 'icon-wenjian', title: '文件' },
+        'video': { icon: 'icon-shipin', title: '视频' },
+        'img': { icon: 'icon-xiangce', title: '图片' },
+        'hongbao': { icon: 'icon-hongbao', title: '红包' },
+        'more': { icon: 'icon-gengduo', title: '更多' },
+        'history': { icon: 'icon-lishi', title: '历史' },
       },
+      newTitle: null
     }
   },
   methods: {
@@ -65,6 +66,10 @@ export default {
         let _key = []
         let h = false
         show.forEach(i => {
+          if (this.isArray(i)) {
+            this.newTitle = i
+            return
+          }
           if (i === 'history') {
             h = true
           } else {
@@ -75,6 +80,19 @@ export default {
         keys = _key
       }
       return keys
+    },
+    setTitle (key, index) {
+      let title = ''
+      if (this.newTitle) {
+        title = this.newTitle[index] || ''
+      }
+      if (!title) {
+        title = this.toolConfig[key].title
+      }
+      return title
+    },
+    isArray (target) {
+      return Object.prototype.toString.call(target) === '[object Array]';
     },
     selectEmit (type) {
       this.$emit('emoji', type)
