@@ -80,7 +80,7 @@ export default {
   watch: {
     height: {
       handler () {
-        this.chatHeight = this.height - 90 + ''
+        this.chatHeight = this.height - 60 + ''
       },
       immediate: true
     },

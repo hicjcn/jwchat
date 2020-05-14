@@ -10,6 +10,10 @@
     "chat"
   ],
   "author": "Bian",
+  "keywords": [
+    "vue",
+    "IM"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -53,5 +57,10 @@
     "> 1%",
     "last 2 versions",
     "not dead"
+  ],
+  "files": [
+    "lib",
+    "README.md",
+    "LICENSE"
   ]
 }

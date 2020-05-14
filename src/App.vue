@@ -1,7 +1,17 @@
 <template>
   <div id="app">
-    <!-- <JwChat-count :config="{time:1500,regulator:50}" :num="num" /> -->
-
+    <JwChat-count
+      :config="{
+        time:1500,
+        regulator:50,
+        unit:'人',
+        title:'接入：',
+        color:['','red','#fff'],
+        size:['2rem','','']
+      }"
+      :num="num"
+    />
+    <el-button @click="change">change</el-button>
     <JwChat-index
       :config="config"
       :taleList="list"
@@ -98,6 +108,9 @@ export default {
     }
   },
   methods: {
+    change () {
+      this.num++
+    },
     talkEvent (play) {
       console.log(play)
     },
