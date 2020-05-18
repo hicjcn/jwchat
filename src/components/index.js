@@ -8,6 +8,7 @@ import RightList from './RightList'
 import QuickTalk from './QuickTalk'
 import Count from './Count'
 import UserCard from './UserCard'
+import LoginBox from './LoginBox'
 // import EChart from './EChart'
 
 // 以数组结构保存组件，便于遍历
@@ -21,6 +22,7 @@ const components = [
   QuickTalk,
   Count,
   UserCard,
+  LoginBox,
   // EChart,
 ]
 

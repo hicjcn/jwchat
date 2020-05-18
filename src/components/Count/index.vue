@@ -8,6 +8,7 @@
 
 <script>
 export default {
+  size: Number,
   name: 'JwChat-count',
   props: {
     num: Number,
@@ -15,7 +16,6 @@ export default {
       regulator: Number,
       time: Number,
       color: String,
-      size: Number,
       unit: String,
       title: String,
       width: String,
@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     style () {
-      const { color = ["#000"], size = ["2rem"], width = "14rem", height='3rem' } = this.config || {}
+      const { color = ["#000"], size = ["2rem"], width = "13rem", height='3rem' } = this.config || {}
       return {
         color: color[0],
         fontSize: size[0],
@@ -117,13 +117,13 @@ export default {
   &::before {
     content: " ";
     position: absolute;
-    width: 10px;
+    width: 5px;
     background: #ffe68d;
     height: 200%;
     opacity: 0.6;
     left: 0;
     transform: rotate(25deg);
-    animation: move 1500ms ease-out infinite normal;
+    animation: move 1300ms ease-out infinite normal;
   }
   @keyframes move {
     0% {
