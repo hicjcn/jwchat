@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <!-- <JwChat-count
+    <JwChat-count
       :config="{
         time:1500,
         regulator:50,
@@ -10,7 +10,8 @@
         size:['2rem','','']
       }"
       :num="num"
-    />-->
+    />
+    <JwChat-login/>
     <!-- <el-button @click="change">change</el-button> -->
     <JwChat-index
       :config="config"

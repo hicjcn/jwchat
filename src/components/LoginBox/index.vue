@@ -170,7 +170,7 @@ $light_gray: #eee;
   margin: 0 auto;
   min-width: 600px;
   padding: 1rem 0;
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

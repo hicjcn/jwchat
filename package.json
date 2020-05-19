@@ -1,6 +1,6 @@
 {
   "name": "jwchat",
-  "version": "0.2.35",
+  "version": "0.2.37",
   "description": "vue chat commponent",
   "main": "lib/JwChat.umd.min.js",
   "private": false,
@@ -24,7 +24,7 @@
     "core-js": "^3.6.4",
     "element-ui": "^2.13.1",
     "iscroll": "^5.2.0",
-    "jwchat": "^0.2.3",
+    "jwchat": "^0.2.37",
     "vue": "^2.6.11",
     "wechat-emoji-parser": "^1.0.4"
   },
