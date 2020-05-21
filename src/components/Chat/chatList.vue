@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div :style="pageConfig.width|setWidth">
+  <div class="wrapper" :style="boxSize">
+    <div class="scroller">
       <div class="web__main" ref="main">
         <div
           class="web__main-item"
@@ -17,7 +17,7 @@
           </div>
           <div class="web__main-text">
             <div class="web__main-arrow"></div>
-            <span v-html="handleDetail(item.text.text)" ref="content"></span>
+            <span v-html="handleDetail(item.text.text)" ref="content" style="display:inline-block;"></span>
             <ul class="web__main-list" v-if="item.text.list">
               <li
                 @click="handleItemMsg(citem)"
@@ -55,6 +55,7 @@
 
 <script>
 import emojiParser from 'wechat-emoji-parser'
+import IScroll from 'iscroll'
 
 export default {
   name: 'JwChat_list',
@@ -77,6 +78,13 @@ export default {
     list: {
       type: Array,
       default: () => ([])
+    },
+    config: {
+      type: Object,
+      default: () => ({
+        width: '525px',
+        height: '382px'
+      })
     }
   },
   data () {
@@ -85,20 +93,44 @@ export default {
       show: false,
       imgSrc: '',
       videoSrc: '',
-      audioSrc: ''
+      audioSrc: '',
+      scroll: null,
+      scrollPosition: 0,
     }
   },
   watch: {
     load (newval) {
       if (newval) {
-        this.$emit('load', true)
+        this.scrollBottom()
+
         this.$nextTick(() => {
           this.load = false
         })
       }
     }
   },
+  computed: {
+    boxSize () {
+      let { height = '382px', width = '525px' } = this.config || {}
+      if (`${height}`.match(/\d$/)) {
+        height += 'px'
+      }
+      if (`${width}`.match(/\d$/)) {
+        width += 'px'
+      }
+      const style = { height, width }
+      return style
+    },
+  },
   methods: {
+    scrollBottom () {
+      if (this.scroll) {
+        setTimeout(() => {
+          this.scroll.refresh()
+          this.scroll.scrollTo(0, this.scroll.maxScrollY, 200)
+        }, 800);
+      }
+    },
     bindClick (type, data) {
       this.$emit('click', { type, data })
     },
@@ -131,6 +163,7 @@ export default {
                 const icon = child.getAttribute('data-class')
                 if (icon !== 'iconBox') child.type = "IMG"
                 child.src = child.getAttribute('data-src')
+                child.onload = this.scrollBottom
               } else if (child.tagName === 'VIDEO') {
                 child.type = "VIDEO"
                 child.className = 'web__msg--video'
@@ -139,12 +172,15 @@ export default {
                 child.type = "AUDIO"
                 child.className = 'web__msg--audio'
                 child.controls = 'controls';
+                child.onload = this.scrollBottom
                 child.src = child.getAttribute('data-src')
               } else if (child.tagName === 'FILE') {
                 child.type = "FILE"
                 child.className = 'web__msg--file'
+                child.onload = this.scrollBottom
                 child.innerHTML = `<h2>File</h2><span>${child.getAttribute('data-name')}</span>`
               } else if (child.tagName === 'MAP') {
+                child.onload = this.scrollBottom
                 child.type = "MAP"
                 child.className = 'web__msg--file web__msg--map'
                 child.innerHTML = `<h2>Map</h2><span>${child.getAttribute('data-longitude')} , ${child.getAttribute('data-latitude')}<br />${child.getAttribute('data-address')}</span>`
@@ -184,6 +220,20 @@ export default {
       done();
     },
   },
+  mounted () {
+    // setTimeout(() => {
+    this.scroll = new IScroll('.wrapper', {
+      click: true,
+      scrollbars: true,
+      mouseWheel: true,
+      interactiveScrollbars: true,
+      hijackInternalLinks: true,
+      // useTransform: false,
+    });
+    // this.scroll.refresh()
+    // this.scroll.scrollTo(0, this.scroll.maxScrollY, 200)
+    // }, 1000);
+  }
 }
 </script>
 <style>
@@ -211,6 +261,45 @@ export default {
 }
 </style>
 <style  scoped>
+.wrapper {
+  position: relative;
+  width: 525px;
+  height: 382px;
+  overflow: hidden;
+
+  /* Prevent native touch events on Windows */
+  -ms-touch-action: none;
+
+  /* Prevent the callout on tap-hold and text selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  /* Prevent text resize on orientation change, useful for web-apps */
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+  -o-text-size-adjust: none;
+  text-size-adjust: none;
+}
+.scroller {
+  position: absolute;
+  width: calc(100% - 1.5rem);
+  padding: 0.5rem;
+  padding-right: 1.5rem;
+
+  /* Prevent elements to be highlighted on tap */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  /* Put the scroller into the HW Compositing layer right from the start */
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+}
 .web__main-item {
   position: relative;
   font-size: 0;

@@ -1,7 +1,7 @@
 <template>
   <div class="chatPage" :style="setStyle">
     <div class="taleBox" ref="scrollNode">
-      <chatList :list="taleList" @load="loadDone" @click="bindEvent" />
+      <chatList :list="taleList" @click="bindEvent" :config="{width,height:talkHeight}" />
     </div>
     <div class="toolBox">
       <tools :tools="toolConfig" class="tools" @emoji="bindEmoji" />
@@ -79,7 +79,15 @@ export default {
       }
       const style = { height, width }
       return style
-    }
+    },
+    talkHeight () {
+      let height = this.height
+      if (`${height}`.match(/\d$/)) {
+        height -= 140
+      } else
+        height = `calc(${height} - 140px)`
+      return height
+    },
   },
   methods: {
     bindEvent (play) {
@@ -88,20 +96,8 @@ export default {
     bindEmoji (emoji) {
       this.msg = emoji
     },
-    loadDone (boolean) {
-      if (boolean) {
-        this.setScroll()
-      }
-    },
-    setScroll (count = this.$refs.scrollNode.scrollHeight) {
-      //滚动条一直处于下方
-      this.$nextTick(() => {
-        this.$refs.scrollNode.scrollTop = count
-      })
-    },
     enter (msg) {
       this.$emit('enter', msg)
-      this.setScroll()
     }
   },
 }
@@ -116,9 +112,7 @@ export default {
 .taleBox {
   height: calc(100% - 140px);
   min-height: 100px;
-  padding: 6px;
-  overflow: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 .toolBox {
   height: 140px;

@@ -1,18 +1,20 @@
 <template>
   <div class="toolsBox">
     <div class="web__tools">
-      <el-popover placement="top-start" trigger="click" ref="popover">
-        <div class="emjioBox">
-          <ul class="emjio">
-            <li v-for="item in Object.keys(emoji)" :key="item" @click="selectEmit(item)">
-              <a v-if="emoji[item]&&emoji[item].position" :style="emojiStyle(item)"></a>
-              <a v-else-if="emoji[item].length<5">{{emoji[item]}}</a>
-              <img v-else :src="emoji[item]" />
-            </li>
-          </ul>
-        </div>
-        <JwChat-icon slot="reference" type="icon-xiaolian" title="表情" />
-      </el-popover>
+      <dl v-if="showEmoji()">
+        <el-popover placement="top-start" trigger="click" ref="popover">
+          <div class="emjioBox">
+            <ul class="emjio">
+              <li v-for="item in Object.keys(emoji)" :key="item" @click="selectEmit(item)">
+                <a v-if="emoji[item]&&emoji[item].position" :style="emojiStyle(item)"></a>
+                <a v-else-if="emoji[item].length<5">{{emoji[item]}}</a>
+                <img v-else :src="emoji[item]" />
+              </li>
+            </ul>
+          </div>
+          <JwChat-icon slot="reference" type="icon-xiaolian" title="表情" />
+        </el-popover>
+      </dl>
       <template v-for="(item,k) in showkeys()">
         <span
           v-if="toolConfig[item]"
@@ -39,6 +41,7 @@ export default {
       default: () => {
         return {
           show: [],
+          showEmoji: true,
           callback: () => { }
         }
       }
@@ -59,6 +62,10 @@ export default {
     }
   },
   methods: {
+    showEmoji () {
+      const { showEmoji = true } = this.tools || {}
+      return showEmoji
+    },
     showkeys () {
       let keys = Object.keys(this.toolConfig)
       const { show = [] } = this.tools || {}
