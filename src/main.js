@@ -12,7 +12,7 @@ Vue.use(ElementUI)
 // import 'jwchat/lib/JwChat.css';
 
 import JwChat from '../lib/JwChat.common';
-import '../lib/JwChat.css';
+// import '../lib/JwChat.css';
 Vue.use(JwChat)
 
 Vue.config.productionTip = false

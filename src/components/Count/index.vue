@@ -44,7 +44,9 @@ export default {
     },
     numberStyle () {
       const { color = ["#000"], size = ["2rem"] } = this.config || {}
-      const obj = {}
+      const obj = {
+        textAlign: 'center'
+      }
       if (color[1]) obj.color = color[1]
       if (size[1]) obj.fontSize = size[1]
       return obj
@@ -123,7 +125,7 @@ export default {
     opacity: 0.6;
     left: 0;
     transform: rotate(25deg);
-    animation: move 1300ms ease-out infinite normal;
+    // animation: move 1300ms ease-out infinite normal;
   }
   @keyframes move {
     0% {
