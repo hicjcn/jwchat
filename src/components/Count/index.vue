@@ -43,11 +43,7 @@ export default {
       return unit
     },
     numberStyle () {
-<<<<<<< Updated upstream
-      const { color = ["#000"], size = ["2rem"] } = this.config || {}
-=======
       const { color = [""], size = [""] } = this.config || {}
->>>>>>> Stashed changes
       const obj = {
         textAlign: 'center'
       }
