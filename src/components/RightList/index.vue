@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="notice" style="resolve">
-      <JwChat-empty v-if="!info.notice" size="8rem" />
+      <JwChat-empty class="empty" v-if="!info.notice" size="8rem" />
       <P style="padding-left:0.2rem">{{info.tip}}</P>
       <p style="font-size:0.8rem;margin-top:0.5rem;padding:0 .2rem">{{info.notice}}</p>
     </div>
@@ -50,12 +50,14 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style scoped lang="scss">
 .wrapper {
   padding: 0px;
-  margin: 0px;
   height: 100%;
-  width: 100%;
+  max-width: 100%;
+  width: 0;
+  min-width: 220px;
+  margin: 0 auto;
 }
 li{
   list-style: none;
@@ -64,6 +66,11 @@ li{
   height: 30%;
   text-align: left;
   position: relative;
+  .empty{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 .userList {
   height: 70%;

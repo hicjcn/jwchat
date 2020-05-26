@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="wrapper">
     <JwChat-index
       :config="config"
       :taleList="list"
@@ -125,9 +125,6 @@ export default {
     },
     bindTalk (play) {
       console.log('talk', play)
-    },
-    changeNum () {
-      this.num += 1
     }
   }
 }

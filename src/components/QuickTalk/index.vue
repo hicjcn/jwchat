@@ -148,12 +148,15 @@ export default {
 }
 .addBtn:focus {
   outline: none;
+  text-align: center;
 }
 .wrapper {
-  margin: 0;
   padding: 0;
   height: 100%;
-  width: 100%;
+  width: 0;
+  max-width: 100%;
+  min-width: 220px;
+  margin: 0 auto;
   text-align: left;
   position: relative;
 }

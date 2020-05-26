@@ -15,10 +15,10 @@ export default {
     config: {
       regulator: Number,
       time: Number,
-      color: String,
+      color: Array,
       unit: String,
       title: String,
-      width: String,
+      width: Array,
       height: String,
     }
   },
@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     style () {
-      const { color = ["#000"], size = ["2rem"], width = "13rem", height='3rem' } = this.config || {}
+      const { color = [""], size = ["2rem"], width = "", height='' } = this.config || {}
       return {
         color: color[0],
         fontSize: size[0],
@@ -43,7 +43,11 @@ export default {
       return unit
     },
     numberStyle () {
+<<<<<<< Updated upstream
       const { color = ["#000"], size = ["2rem"] } = this.config || {}
+=======
+      const { color = [""], size = [""] } = this.config || {}
+>>>>>>> Stashed changes
       const obj = {
         textAlign: 'center'
       }
@@ -52,7 +56,7 @@ export default {
       return obj
     },
     unitStyle () {
-      const { color = ["#000"], size = ["2rem"] } = this.config || {}
+      const { color = [""], size = [""] } = this.config || {}
       const obj = {}
       if (color[2]) obj.color = color[2]
       if (size[2]) obj.fontSize = size[2]
@@ -109,34 +113,11 @@ export default {
   display: flex;
   justify-items: center;
   align-items: center;
-  width: 500px;
   margin: 0 auto;
 
   .title {
     margin-right: 0.2rem;
-  }
-
-  &::before {
-    content: " ";
-    position: absolute;
-    width: 5px;
-    background: #ffe68d;
-    height: 200%;
-    opacity: 0.6;
-    left: 0;
-    transform: rotate(25deg);
-    // animation: move 1300ms ease-out infinite normal;
-  }
-  @keyframes move {
-    0% {
-      left: -10%;
-    }
-    100% {
-      left: 150%;
-    }
-    120% {
-      left: 150%;
-    }
+    text-align: center;
   }
 }
 </style>

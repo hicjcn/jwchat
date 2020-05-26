@@ -54,7 +54,7 @@ export default {
   props: {
     width: {
       type: String,
-      default: '600px'
+      default: '100vw'
     },
     config: {
       type: Object,
@@ -168,18 +168,17 @@ $light_gray: #eee;
 .login-container {
   background: $bg;
   margin: 0 auto;
-  min-width: 600px;
   padding: 1rem 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  width: 100%;
+  height: 100%;
   border-radius: 0.5rem;
   .login-form {
-    position: relative;
+    position: absolute;
     width: 520px;
-    margin: 0 auto;
-    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .svg-container {

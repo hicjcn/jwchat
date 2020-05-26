@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" :style="boxSize">
+  <div class="wrapper" :style="boxSize" ref="scroller">
     <div class="scroller">
       <div class="web__main" ref="main">
         <div
@@ -222,7 +222,8 @@ export default {
   },
   mounted () {
     // setTimeout(() => {
-    this.scroll = new IScroll('.wrapper', {
+    const dom = this.$refs.scroller
+    this.scroll = new IScroll(dom, {
       click: true,
       scrollbars: true,
       mouseWheel: true,
@@ -261,6 +262,9 @@ export default {
 }
 </style>
 <style  scoped>
+.wrapper>>>.iScrollVerticalScrollbar.iScrollLoneScrollbar{
+  z-index: 1 !important;
+}
 .wrapper {
   position: relative;
   width: 525px;

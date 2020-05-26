@@ -1,5 +1,5 @@
 <template>
-  <div class="empty">
+  <div class="empty" :style="sizeBox">
     <JwChat-icon type="icon-empty" :style="sizeStyle" />
   </div>
 </template>
@@ -13,25 +13,35 @@ export default {
     }
   },
   computed: {
+    sizeBox () {
+      let size = this.size
+      if (`${size}`.match(/\d$/)) {
+        size += 'px'
+      }
+      return {
+        width: size,
+      }
+    },
     sizeStyle () {
       let size = this.size
       if (`${size}`.match(/\d$/)) {
         size += 'px'
       }
       return {
-        fontSize: size,
+        fontSize: `calc(${size} / 2)`,
       }
     }
   },
 }
 </script>
-<style scoped>
+<style scoped  lang="scss">
 .empty {
   width: 100%;
   height: 100%;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
+  position: relative;
 }
 </style>
