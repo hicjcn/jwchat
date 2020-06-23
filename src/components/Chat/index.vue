@@ -1,10 +1,16 @@
 <template>
   <div class="chatPage" :style="setStyle">
     <div class="taleBox" ref="scrollNode">
-      <chatList :list="taleList" @click="bindEvent" :config="{width,height:talkHeight}" />
+      <chatList
+        :list="taleList"
+        @click="bindEvent"
+        :config="{width,height:talkHeight,scrollToButton}"
+      />
     </div>
     <div class="toolBox">
-      <tools :tools="toolConfig" class="tools" @emoji="bindEmoji" />
+      <tools :tools="toolConfig" class="tools" @emoji="bindEmoji">
+        <slot name="tools" slot="tools" />
+      </tools>
       <EnterBox @submit="enter" v-model="msg" />
     </div>
   </div>
@@ -46,6 +52,7 @@ export default {
   data () {
     return {
       msg: '',
+      scrollToButton: false
     }
   },
   watch: {
@@ -65,6 +72,13 @@ export default {
         this.$emit('input', this.msg);
       },
       immediate: true
+    },
+    scrollToButton (newVal) {
+      if (newVal) {
+        setTimeout(() => {
+          this.scrollToButton = false
+        }, 0);
+      }
     }
   },
   computed: {
@@ -94,10 +108,13 @@ export default {
       this.$emit('clickTalk', play)
     },
     bindEmoji (emoji) {
-      this.msg = emoji
+      this.msg += emoji
     },
     enter (msg) {
       this.$emit('enter', msg)
+    },
+    toButton () {
+      this.scrollToButton = !this.scrollToButton
     }
   },
 }

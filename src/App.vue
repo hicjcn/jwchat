@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="wrapper">
-    <JwChat-index
+    <itemTalk />
+    <JwChat
       :config="config"
       :taleList="list"
       @enter="bindEnter"
@@ -10,46 +11,20 @@
     >
       <!-- <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" /> -->
       <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" />
-    </JwChat-index>
+      <b slot="tools">H</b>
+    </JwChat>
   </div>
 </template>
 
 <script>
+import itemTalk from '@/components/Chat/itemTalk'
 export default {
+  components: { itemTalk },
   data () {
     return {
       num: 5000,
       inputMsg: '',
-      list: [
-        {
-          "date": "2020/04/25 21:19:07",
-          "text": { "text": "起床不" },
-          "mine": false,
-          "name": "留恋人间不羡仙",
-          "img": "/image/one.jpeg"
-        },
-        {
-          "date": "2020/04/25 21:19:07",
-          "text": { "text": "<audio data-src='https://www.w3school.com.cn/i/horse.mp3'/>" },
-          "mine": false,
-          "name": "只盼流星不盼雨",
-          "img": "/image/two.jpeg"
-        },
-        {
-          "date": "2020/04/25 21:19:07",
-          "text": { "text": "<img data-src='/image/three.jpeg'/>" },
-          "mine": false,
-          "name": "只盼流星不盼雨",
-          "img": "/image/two.jpeg"
-        },
-        {
-          "date": "2020/04/16 21:19:07",
-          "text": { "text": "<video data-src='https://www.w3school.com.cn/i/movie.mp4' controls='controls' />" },
-          "mine": true,
-          "name": "JwChat",
-          "img": "/image/three.jpeg"
-        },
-      ],
+      list: [],
       tool: {
         show: ['file', 'history', 'img', ['文件1', '', '美图']],
         callback: this.toolEvent
@@ -114,8 +89,8 @@ export default {
       }
       this.list.push(msgObj)
     },
-    toolEvent (type) {
-      console.log('tools', type)
+    toolEvent (type, plyload) {
+      console.log('tools', type, plyload)
     },
     bindCover (type) {
       console.log('header', type)
@@ -126,6 +101,38 @@ export default {
     bindTalk (play) {
       console.log('talk', play)
     }
+  },
+  mounted () {
+    this.list = [
+      {
+        "date": "2020/04/25 21:19:07",
+        "text": { "text": "起床不" },
+        "mine": false,
+        "name": "留恋人间不羡仙",
+        "img": "/image/one.jpeg"
+      },
+      {
+        "date": "2020/04/25 21:19:07",
+        "text": { "text": "<audio data-src='https://www.w3school.com.cn/i/horse.mp3'/>" },
+        "mine": false,
+        "name": "只盼流星不盼雨",
+        "img": "/image/two.jpeg"
+      },
+      {
+        "date": "2020/04/25 21:19:07",
+        "text": { "text": "<img data-src='/image/three.jpeg'/>" },
+        "mine": false,
+        "name": "只盼流星不盼雨",
+        "img": "/image/two.jpeg"
+      },
+      {
+        "date": "2020/04/16 21:19:07",
+        "text": { "text": "<video data-src='https://www.w3school.com.cn/i/movie.mp4' controls='controls' />" },
+        "mine": true,
+        "name": "JwChat",
+        "img": "/image/three.jpeg"
+      },
+    ]
   }
 }
 </script>

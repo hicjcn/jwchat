@@ -5,7 +5,7 @@
         <div
           class="web__main-item"
           v-for="(item,index) in list"
-          :key="loding(index)"
+          :key="index"
           :class="{'web__main-item--mine':item.mine}"
         >
           <div class="web__main-user">
@@ -17,48 +17,24 @@
           </div>
           <div class="web__main-text">
             <div class="web__main-arrow"></div>
-            <span v-html="handleDetail(item.text.text)" ref="content" style="display:inline-block;"></span>
-            <ul class="web__main-list" v-if="item.text.list">
-              <li
-                @click="handleItemMsg(citem)"
-                v-for="(citem,cindex) in item.text.list"
-                :key="cindex"
-              >{{citem.text}}</li>
-            </ul>
+            <itemTalk v-if="item.text.text" :text="item.text.text" />
           </div>
         </div>
       </div>
     </div>
-    <el-dialog
-      :visible.sync="show"
-      width="40%"
-      append-to-body
-      :before-close="handleClose"
-      class="web__dialog"
-    >
-      <img :src="imgSrc" v-if="imgSrc" style="width:100%;object-fit: cover;" />
-      <video
-        :src="videoSrc"
-        v-if="videoSrc"
-        style="width:100%;object-fit: cover;"
-        controls="controls"
-      ></video>
-      <audio
-        :src="audioSrc"
-        v-if="audioSrc"
-        style="width:100%;object-fit: cover;"
-        controls="controls"
-      ></audio>
-    </el-dialog>
+    <div class="downBtn" v-if="!isBottom" @click="scrollBottom">
+      <span v-if="unread">{{unread}}</span>
+    </div>
   </div>
 </template>
 
 <script>
-import emojiParser from 'wechat-emoji-parser'
-import IScroll from 'iscroll'
+import Scroll from '@/utils/scroll'
+import itemTalk from './itemTalk'
 
 export default {
   name: 'JwChat_list',
+  components: { itemTalk },
   filters: {
     setWidth (value) {
       let width = value
@@ -90,22 +66,34 @@ export default {
   data () {
     return {
       load: false,
-      show: false,
-      imgSrc: '',
-      videoSrc: '',
-      audioSrc: '',
       scroll: null,
-      scrollPosition: 0,
+      scrollTimer: null,
+      unread: 0,
     }
   },
   watch: {
     load (newval) {
       if (newval) {
-        this.scrollBottom()
-
-        this.$nextTick(() => {
+        setTimeout(() => {
+          this.scroll && this.scroll.refresh()
           this.load = false
+        }, 1000);
+      }
+    },
+    list (newval) {
+      if (newval) {
+        this.$nextTick(() => {
+          console.log('ok')
+          setTimeout(() => {
+            this.load = true
+            this.childnodeLoad()
+          }, 300);
         })
+      }
+    },
+    'config.scrollToButton' (newval) {
+      if (newval) {
+        this.scrollBottom()
       }
     }
   },
@@ -121,12 +109,15 @@ export default {
       const style = { height, width }
       return style
     },
+    isBottom () {
+      return this.scroll && this.scroll.isBottom
+    },
   },
   methods: {
     scrollBottom () {
       if (this.scroll) {
+        this.scroll.refresh()
         setTimeout(() => {
-          this.scroll.refresh()
           this.scroll.scrollTo(0, this.scroll.maxScrollY, 200)
         }, 800);
       }
@@ -134,106 +125,71 @@ export default {
     bindClick (type, data) {
       this.$emit('click', { type, data })
     },
-    loding (index) {
-      const size = this.list.length
-      if (index == size - 1) {
-        setTimeout(() => {
-          this.load = true
-        }, 200);
-      }
-      return index
-    },
-    //处理排版
-    handleDetail (html = '') {
-      // console.log(html)
-      let result = html;
-      result = emojiParser(result).replace(/(<img src)/g, '<img data-class="iconBox" data-src')
-      setTimeout(() => {
-        const list = this.$refs.content;
-        list.forEach(ele => {
-          for (let i = 0; i < ele.children.length; i++) {
-            const child = ele.children[i];
-            if (child.getAttribute('data-flag') != 0) {
-              child.setAttribute('data-flag', 0)
-              child.onclick = () => {
-                this.handleEvent(child)
-              };
-              if (child.tagName === 'IMG') {
-                child.className = 'web__msg--img'
-                const icon = child.getAttribute('data-class')
-                if (icon !== 'iconBox') child.type = "IMG"
-                child.src = child.getAttribute('data-src')
-                child.onload = this.scrollBottom
-              } else if (child.tagName === 'VIDEO') {
-                child.type = "VIDEO"
-                child.className = 'web__msg--video'
-                child.src = child.getAttribute('data-src')
-              } else if (child.tagName === 'AUDIO') {
-                child.type = "AUDIO"
-                child.className = 'web__msg--audio'
-                child.controls = 'controls';
-                child.onload = this.scrollBottom
-                child.src = child.getAttribute('data-src')
-              } else if (child.tagName === 'FILE') {
-                child.type = "FILE"
-                child.className = 'web__msg--file'
-                child.onload = this.scrollBottom
-                child.innerHTML = `<h2>File</h2><span>${child.getAttribute('data-name')}</span>`
-              } else if (child.tagName === 'MAP') {
-                child.onload = this.scrollBottom
-                child.type = "MAP"
-                child.className = 'web__msg--file web__msg--map'
-                child.innerHTML = `<h2>Map</h2><span>${child.getAttribute('data-longitude')} , ${child.getAttribute('data-latitude')}<br />${child.getAttribute('data-address')}</span>`
-              }
-            }
+    createScroll () {
+      const that = this
+      const dom = this.$refs.scroller
+      this.scroll = new Scroll(dom, {
+        click: true,
+        scrollbars: true,
+        mouseWheel: true,
+        preventDefault: false,
+        interactiveScrollbars: true,
+        hijackInternalLinks: true,
+        // useTransform: false,
+      });
+      // copy code
+      dom.addEventListener(('ontouchstart' in window) ? 'touchstart' : 'mousedown', function (e) {
+        e.stopPropagation();
+        var target = e.target;
+        // while (target.nodeType != 1) target = target.parentNode;
+        if (target.tagName === "SPAN") {
+          var clipBoardContent = target.innerText;
+          if (!clipBoardContent) return;
+          const input = document.createElement('input');
+          document.body.appendChild(input);
+          input.setAttribute('value', clipBoardContent);
+          input.select();
+          if (document.execCommand('copy')) {
+            document.execCommand('copy');
+            that.$message({
+              message: '复制成功',
+              type: 'success'
+            });
           }
-        });
-      }, 0)
-      return result;
-    },
-    //处理事件
-    handleEvent (params) {
-      const callback = () => {
-        if (params.type === 'IMG') {
-          this.imgSrc = params.src;
-          this.show = true;
-        } else if (params.type === 'VIDEO') {
-          this.videoSrc = params.src;
-          this.show = true;
-        } else if (params.type === 'AUDIO') {
-          this.audioSrc = params.src;
-          this.show = true;
-        } else if (params.type === 'FILE') {
-          window.open(params.src)
+          document.body.removeChild(input);
         }
-      }
-      if (typeof this.beforeOpen === 'function') {
-        this.beforeOpen(params, callback)
-      } else {
-        callback();
-      }
+      })
+      // scroll done callback
+      this.scroll.on('scrollEnd', function () {
+        that.scroll.savePosition()
+        that.scroll.read()
+        that.unread = that.scroll.unread
+      });
+      this.scroll.on('scroll', function () {
+        console.log(1)
+      })
     },
-    handleClose (done) {
-      this.imgSrc = undefined;
-      this.videoSrc = undefined;
-      this.audioSrc = undefined;
-      done();
+    childnodeLoad () {
+      const parent = this.$refs.main
+      if (!parent) return
+      const childs = parent.children
+      childs.forEach(i => {
+        const top = i.offsetTop
+        this.scroll.setPosition(top, i)
+        this.unread = this.scroll.unread
+      })
+    },
+    scrollRefresh () {
+      setTimeout(() => {
+        this.scroll && this.scroll.refresh()
+        this.scrollRefresh()
+      }, 1000);
+      return
     },
   },
   mounted () {
-    // setTimeout(() => {
-    const dom = this.$refs.scroller
-    this.scroll = new IScroll(dom, {
-      click: true,
-      scrollbars: true,
-      mouseWheel: true,
-      interactiveScrollbars: true,
-      hijackInternalLinks: true,
-      // useTransform: false,
-    });
-    // this.scroll.refresh()
-    // this.scroll.scrollTo(0, this.scroll.maxScrollY, 200)
-    // }, 1000);
+    this.createScroll()
+    this.scrollRefresh()
   }
 }
 </script>
@@ -261,9 +217,41 @@ export default {
   display: inline-block;
 }
 </style>
-<style  scoped>
-.wrapper>>>.iScrollVerticalScrollbar.iScrollLoneScrollbar{
+<style  scoped lang="scss">
+.wrapper >>> .iScrollVerticalScrollbar.iScrollLoneScrollbar {
   z-index: 1 !important;
+}
+.downBtn {
+  position: absolute;
+  cursor: pointer;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  bottom: 2rem;
+  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  &::before {
+    content: "V";
+    position: absolute;
+    background: rgba(204, 204, 204, 0.2);
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    border-radius: 50%;
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  span {
+    background: #409eff;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.7rem;
+    border-radius: 0.5rem;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 .wrapper {
   position: relative;

@@ -27,6 +27,7 @@
         </span>
         <i :key="item" v-else :class="item" @click="bindButton(item)"></i>
       </template>
+      <slot name="tools" />
     </div>
   </div>
 </template>
@@ -106,7 +107,22 @@ export default {
       this.$refs.popover.doClose()
     },
     bindButton (type) {
-      this.tools.callback && this.tools.callback(type)
+      if (!this.tools.callback) return console.warn('callback not find')
+      if (type === 'file') {
+        this.openFile(type, this.tools.callback)
+      } else {
+        this.tools.callback(type)
+      }
+    },
+    openFile (type, callback) {
+      var input = document.createElement("input")
+      input.type = "file"
+      input.multiple = 'multiple'
+      input.click();
+      input.onchange = function () {
+        var file = input.files
+        callback(type, file)
+      }
     },
     emojiStyle (item) {
       const emojiitem = this.emoji[item]

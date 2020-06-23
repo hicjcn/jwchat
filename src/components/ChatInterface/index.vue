@@ -2,7 +2,7 @@
   <div class="ChatPage" :style="faceSize">
     <div class="header">
       <JwChat-item :config="config" @click="bindClick" />
-      <slot name="header"></slot>
+      <slot name="header" />
     </div>
     <div class="main">
       <div class="chatBox">
@@ -14,10 +14,12 @@
           :width="chatWidth"
           :height="chatHeight"
           @clickTalk="$emit('clickTalk',$event)"
-        />
+        >
+          <slot name="tools" slot="tools" />
+        </JwChat>
       </div>
       <div class="rightBox">
-        <slot></slot>
+        <slot />
       </div>
     </div>
   </div>
