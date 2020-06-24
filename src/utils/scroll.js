@@ -61,9 +61,11 @@ class Scroll extends IScroll {
     const currentTop = Math.abs(y)
     let result = -1
     this.domPotision.forEach((i, j) => {
-      const { top: t } = i
-      if (result < 0 && currentTop < t) {
+      const { top: t, node } = i
+      const size = node.offsetHeight
+      if (result < 0 && currentTop < t + size) {
         result = j
+        if (currentTop > t) result += 1
       }
     })
     return result

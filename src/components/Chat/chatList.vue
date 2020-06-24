@@ -69,6 +69,8 @@ export default {
       scroll: null,
       scrollTimer: null,
       unread: 0,
+      beforeTitle: '',
+      titleTimer: '',
     }
   },
   watch: {
@@ -83,7 +85,6 @@ export default {
     list (newval) {
       if (newval) {
         this.$nextTick(() => {
-          console.log('ok')
           setTimeout(() => {
             this.load = true
             this.childnodeLoad()
@@ -95,7 +96,18 @@ export default {
       if (newval) {
         this.scrollBottom()
       }
-    }
+    },
+    unread (newval) {
+      if (newval) {
+        console.log(this.beforeTitle)
+        this.beforeTitle && this.resetTitle(this.beforeTitle)
+        this.saveTitle()
+        this.changeTitle()
+        this.showBrowser()
+      } else {
+        this.resetTitle(this.beforeTitle)
+      }
+    },
   },
   computed: {
     boxSize () {
@@ -165,9 +177,9 @@ export default {
         that.scroll.read()
         that.unread = that.scroll.unread
       });
-      this.scroll.on('scroll', function () {
-        console.log(1)
-      })
+      // this.scroll.on('scroll', function () {
+      //   console.log(1)
+      // })
     },
     childnodeLoad () {
       const parent = this.$refs.main
@@ -186,6 +198,43 @@ export default {
       }, 1000);
       return
     },
+    saveTitle () {
+      const { title } = document
+      this.beforeTitle = title
+    },
+    resetTitle (title) {
+      document.title = title
+      clearTimeout(this.titleTimer)
+    },
+    changeTitle () {
+      const that = this
+      let flage = 0;
+      change()
+
+      function change () {
+        let title = "【未读】"
+        if (flage) {
+          title = "【" + that.unread + "条】"
+        }
+        flage = !flage
+        // console.log(flage, title)
+        that.titleTimer = setTimeout(() => {
+          that.resetTitle(title + that.beforeTitle)
+          change()
+        }, 1000);
+      }
+    },
+    showBrowser () {
+      if (window.Notification && Notification.permission !== "denied") {
+        const { unread } = this
+        Notification.requestPermission(function (status) {
+          if (status === "granted")
+            new Notification('新消息', {
+              body: `您总共有${unread}条消息未读。`
+            });
+        });
+      }
+    },
   },
   mounted () {
     this.createScroll()
@@ -194,6 +243,9 @@ export default {
 }
 </script>
 <style>
+.iScrollVerticalScrollbar.iScrollLoneScrollbar {
+  z-index: 1 !important;
+}
 .web__msg--img,
 .web__msg--video,
 .web__msg--file {
@@ -236,6 +288,7 @@ export default {
     width: 2rem;
     height: 2rem;
     line-height: 2rem;
+    text-align: center;
     border-radius: 50%;
     top: 60%;
     left: 50%;

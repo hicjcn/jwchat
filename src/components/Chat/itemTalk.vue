@@ -117,9 +117,7 @@ export default {
     },
     parseText (text) {
       if (!text) return
-      const html = emojiParser(text).replace(/<img src/g,'<img data-class="iconBox" src')
-      console.log(html)
-
+      const html = emojiParser(text).replace(/<img src/g, '<img data-class="iconBox" src')
       return html
     },
     //处理排版
