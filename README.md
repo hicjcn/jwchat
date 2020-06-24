@@ -38,7 +38,8 @@
    Vue.use(ElementUI);
    
    import Chat from 'jwchat';
-   import 'jwchat/lib/JwChat.css';
+   /* 在 0.2.041 之前的版本需要引入 css */
+   // import 'jwchat/lib/JwChat.css';
    Vue.use(Chat)
    ```
 
