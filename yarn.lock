@@ -4954,18 +4954,6 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-jwchat@^0.2.37, jwchat@^0.2.40:
-  version "0.2.40"
-  resolved "https://registry.yarnpkg.com/jwchat/-/jwchat-0.2.40.tgz#8c76e1fed10b7d91c0edbe89262c3e1140383d2e"
-  integrity sha512-OM0ZJU1pZjaNNUAG91yqHPc8ee9GurMKqvkVzNpBjUrgiaqlqZrJmrtsXtD9+AdNGzoMvBZygeQzqdVwlJzpEQ==
-  dependencies:
-    core-js "^3.6.4"
-    element-ui "^2.13.1"
-    iscroll "^5.2.0"
-    jwchat "^0.2.37"
-    vue "^2.6.11"
-    wechat-emoji-parser "^1.0.4"
-
 killable@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/killable/-/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"
@@ -8616,10 +8604,10 @@ websocket-extensions@>=0.1.1:
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
   integrity sha512-nqHUnMXmBzT0w570r2JpJxfiSD1IzoI+HGVdd3aZ0yNi3ngvQ4jv1dtHt5VGxfI2yj5yqImPhOK4vmIh2xMbGg==
 
-wechat-emoji-parser@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/wechat-emoji-parser/-/wechat-emoji-parser-1.0.4.tgz#9b66e179da7048a9b99b52f301a17939f5ad9636"
-  integrity sha512-MwXcWVVcADvPNgSOrxV7rz8rVzkOeqh+OKLF4BfXCyWV1lYRqehIKC7+8da9bGJvG45qmxU921+6FaluzsaYAQ==
+wechat-emoji-parser@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/wechat-emoji-parser/-/wechat-emoji-parser-1.1.1.tgz#cc2600168ec8de60387cc8f5dc041065df09d115"
+  integrity sha512-FOB3KIhyEYmYledm/gnyHitL+sq1SGvDPpUE1AYxougmcd1/ibGHld/J+GDC+8DtgxsmGpY5f30gTFX0zwtTJQ==
 
 which-module@^2.0.0:
   version "2.0.0"
