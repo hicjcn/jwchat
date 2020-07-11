@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="wrapper">
     <itemTalk />
-    <JwChat
+    <JwChat-index
       :config="config"
       :taleList="list"
       @enter="bindEnter"
@@ -12,7 +12,7 @@
       <!-- <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" /> -->
       <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" />
       <b slot="tools">H</b>
-    </JwChat>
+    </JwChat-index>
   </div>
 </template>
 
