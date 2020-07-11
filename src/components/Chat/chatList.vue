@@ -99,7 +99,6 @@ export default {
     },
     unread (newval) {
       if (newval) {
-        console.log(this.beforeTitle)
         this.beforeTitle && this.resetTitle(this.beforeTitle)
         this.saveTitle()
         this.changeTitle()

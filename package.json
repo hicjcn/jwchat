@@ -9,7 +9,9 @@
     "vue",
     "chat"
   ],
-  "author": "Bian",
+  "homepage": "https://codegi.gitee.io/jwchatdoc",
+  "unpkg": "lib/JwChat.umd.js",
+  "author": "Bian <389701057@qq.com>",
   "keywords": [
     "vue",
     "IM"
