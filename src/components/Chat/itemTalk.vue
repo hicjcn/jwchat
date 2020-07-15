@@ -1,25 +1,25 @@
 <template>
   <span class="wrapper">
-    <span class="web__msg--audio" v-if="getTag(text) === 'span'" v-html="parseText(text)" />
+    <span class="web__msg--audio" v-if="getTag === 'span'" v-html="parseText()" />
     <img
       class="web__msg--img"
-      v-if="getTag(text) === 'img'"
-      :src="getData(text).src"
+      v-if="getTag === 'img'"
+      :src="getData.src"
       alt
-      @click="showDialog({tag:'img',text})"
+      @click="showDialog({tag:'img'})"
     />
     <video
       class="web__msg--video"
-      v-if="getTag(text) === 'video'"
-      :src="getData(text).src"
+      v-if="getTag === 'video'"
+      :src="getData.src"
       controls="controls"
-      @click="showDialog({tag:'video',text})"
+      @click="showDialog({tag:'video'})"
     />
     <audio
       class="web__msg--audio"
-      v-if="getTag(text) === 'audio'"
+      v-if="getTag === 'audio'"
       style="width:20rem;height:20px;"
-      :src="getData(text).src"
+      :src="getData.src"
       controls="controls"
     />
 
@@ -63,8 +63,9 @@ export default {
       audioSrc: '',
     }
   },
-  methods: {
-    getTag (str = "") {
+  computed: {
+    getTag () {
+      const str = this.text || ""
       let tag = 'span'
       let type = ''
 
@@ -75,7 +76,8 @@ export default {
       }
       return tag
     },
-    getData (str) {
+    getData () {
+      const str = this.text || ""
       const dom = document.createElement('div')
       dom.innerHTML = str
       const target = dom.firstChild
@@ -87,13 +89,16 @@ export default {
         controls
       }
     },
+  },
+  methods: {
     handleClose (done) {
       this.imgSrc = undefined;
       this.videoSrc = undefined;
       this.audioSrc = undefined;
       done();
     },
-    showDialog ({ tag, text }) {
+    showDialog ({ tag }) {
+      const { text } = this
       const { src } = this.getData(text)
       const callback = () => {
         if (tag === 'img') {
@@ -115,9 +120,10 @@ export default {
         callback();
       }
     },
-    parseText (text) {
+    parseText () {
+      const { text } = this
       if (!text) return
-      const html = emojiParser(text).replace(/<img src/g, '<img data-class="iconBox" src')
+      const html = emojiParser(text).replace(/<img src/g, '<img data-class="iconBox" src').replace(/\n/g,'<br/>')
       return html
     },
     //处理排版

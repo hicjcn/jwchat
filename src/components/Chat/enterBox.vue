@@ -41,7 +41,9 @@ export default {
   },
   methods: {
     //用户主动发送
-    handleSend () {
+    handleSend (e) {
+      const shiftKey = e.shiftKey
+      if (shiftKey) return
       this.$emit('submit', this.currentMsg);
       this.$nextTick(() => {
         this.currentMsg = ''

@@ -11,6 +11,7 @@
           @enter="enter"
           v-model="msg"
           :toolConfig="toolConfig"
+          :scrollType="scrollType"
           :width="chatWidth"
           :height="chatHeight"
           @clickTalk="$emit('clickTalk',$event)"
@@ -56,7 +57,10 @@ export default {
     },
     toolConfig: {
       type: Object
-    }
+    },
+    scrollType: {
+      default: "noroll"
+    },
   },
   data () {
     return {

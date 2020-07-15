@@ -4,7 +4,7 @@
       <chatList
         :list="taleList"
         @click="bindEvent"
-        :config="{width,height:talkHeight,scrollToButton}"
+        :config="{width,height:talkHeight,scrollToButton,scrollType}"
       />
     </div>
     <div class="toolBox">
@@ -39,6 +39,9 @@ export default {
       default: '550px'
     },
     value: {
+      default: ''
+    },
+    scrollType: {
       default: ''
     },
     toolConfig: {
@@ -109,6 +112,7 @@ export default {
     },
     bindEmoji (emoji) {
       this.msg += emoji
+      console.log(this.msg)
     },
     enter (msg) {
       this.$emit('enter', msg)

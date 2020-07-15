@@ -61,7 +61,7 @@ export default {
         width: '525px',
         height: '382px'
       })
-    }
+    },
   },
   data () {
     return {
@@ -88,6 +88,9 @@ export default {
           setTimeout(() => {
             this.load = true
             this.childnodeLoad()
+            if (this.scrollType === 'scroll') {
+              this.scrollBottom()
+            }
           }, 300);
         })
       }
@@ -122,6 +125,10 @@ export default {
     },
     isBottom () {
       return this.scroll && this.scroll.isBottom
+    },
+    scrollType () {
+      const { scrollType: type = "noroll" } = this.config
+      return type
     },
   },
   methods: {
@@ -181,6 +188,7 @@ export default {
       // })
     },
     childnodeLoad () {
+      if (this.scrollType === 'scroll') return
       const parent = this.$refs.main
       if (!parent) return
       const childs = parent.children
