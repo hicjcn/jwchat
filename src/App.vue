@@ -1,19 +1,20 @@
 <template>
   <div id="app" class="wrapper">
     <itemTalk />
-    <JwChat-index
+    <JwChat
       :config="config"
       :taleList="list"
       @enter="bindEnter"
       v-model="inputMsg"
       :toolConfig="tool"
-      scrollType="scroll"
+      scrollType="norell"
       @clickTalk="talkEvent"
+      @loadHistory="bindLoadHistory"
     >
-      <!-- <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" /> -->
-      <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" />
+      <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
+      <!-- <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" /> -->
       <b slot="tools">H</b>
-    </JwChat-index>
+    </JwChat>
   </div>
 </template>
 
@@ -28,12 +29,17 @@ export default {
       list: [],
       tool: {
         show: ['file', 'history', 'img', ['文件1', '', '美图']],
+        showEmoji: false,
         callback: this.toolEvent
       },
       rightConfig: {
         listTip: '当前在线',
         // notice: '【公告】这是一款高度自由的聊天组件，基于AVue、Vue、Element-ui开发。点个赞再走吧 ',
         list: [
+          {
+            name: 'JwChat',
+            "img": "image/three.jpeg"
+          },
           {
             name: 'JwChat',
             "img": "image/three.jpeg"
@@ -72,6 +78,20 @@ export default {
     }
   },
   methods: {
+    bindLoadHistory () {
+      const history = new Array(3).fill().map((i, j) => {
+        return {
+          "date": "2020/05/20 23:19:07",
+          "text": { "text": j + new Date() },
+          "mine": false,
+          "name": "JwChat",
+          "img": "image/three.jpeg"
+        }
+      })
+      let list = history.concat(this.list)
+      this.list = list
+      console.log('加载历史', list, history)
+    },
     change () {
       this.num++
     },

@@ -8,7 +8,7 @@
     <div class="userList">
       <div>{{info.listTip}} ({{info.list.length}})</div>
       <ul>
-        <li v-for="item in info.list" :key="item.name">
+        <li v-for="(item,k) in info.list" :key="k">
           <JwChat-item size="25" :config="item" @click="bindClick" />
         </li>
       </ul>
@@ -59,14 +59,14 @@ export default {
   min-width: 220px;
   margin: 0 auto;
 }
-li{
+li {
   list-style: none;
 }
 .notice {
   height: 30%;
   text-align: left;
   position: relative;
-  .empty{
+  .empty {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);

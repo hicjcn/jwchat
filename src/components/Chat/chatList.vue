@@ -1,11 +1,12 @@
 <template>
   <div class="wrapper" :style="boxSize" ref="scroller">
+    <div v-if="historyLoding" @click="$emit('loadHistory')">{{historyConfig.title}}</div>
     <div class="scroller">
       <div class="web__main" ref="main">
         <div
           class="web__main-item"
-          v-for="(item,index) in list"
-          :key="index"
+          v-for="(item) in list"
+          :key="JSON.stringify(item.text)"
           :class="{'web__main-item--mine':item.mine}"
         >
           <div class="web__main-user">
@@ -61,16 +62,17 @@ export default {
         width: '525px',
         height: '382px'
       })
-    },
+    }
   },
   data () {
     return {
       load: false,
       scroll: null,
       scrollTimer: null,
-      unread: 0,
       beforeTitle: '',
       titleTimer: '',
+      loadHistory: false,
+      historyLoding: false,
     }
   },
   watch: {
@@ -86,8 +88,18 @@ export default {
       if (newval) {
         this.$nextTick(() => {
           setTimeout(() => {
+            let reset = false
+            if (this.historyLoding) {
+              reset = true
+              this.closeTopTip()
+              this.$nextTick(() => {
+                this.scroll.toBeforePosition()
+              })
+            }
             this.load = true
             this.childnodeLoad()
+
+            if (reset) { this.scroll.resetTop() }
             if (this.scrollType === 'scroll') {
               this.scrollBottom()
             }
@@ -123,6 +135,10 @@ export default {
       const style = { height, width }
       return style
     },
+    historyConfig () {
+      const { historyConfig: { title = "查看更多", callback, activate = false } } = this.config
+      return { title, callback, activate }
+    },
     isBottom () {
       return this.scroll && this.scroll.isBottom
     },
@@ -130,6 +146,10 @@ export default {
       const { scrollType: type = "noroll" } = this.config
       return type
     },
+    unread () {
+      const { unread = 0 } = this.scroll || {}
+      return unread
+    }
   },
   methods: {
     scrollBottom () {
@@ -179,13 +199,28 @@ export default {
       })
       // scroll done callback
       this.scroll.on('scrollEnd', function () {
+        // console.log('scroll')
+        that.scrollTop()
+        if (that.historyLoding) return
         that.scroll.savePosition()
         that.scroll.read()
-        that.unread = that.scroll.unread
       });
-      // this.scroll.on('scroll', function () {
-      //   console.log(1)
-      // })
+    },
+    scrollTop () {
+      const { isTop } = this.scroll
+      if (isTop) {
+        if (this.loadHistory) {
+          this.historyLoding = true
+        }
+        else
+          this.loadHistory = true
+        return
+      }
+      this.closeTopTip()
+    },
+    closeTopTip () {
+      this.loadHistory = false
+      this.historyLoding = false
     },
     childnodeLoad () {
       if (this.scrollType === 'scroll') return
@@ -195,7 +230,6 @@ export default {
       childs.forEach(i => {
         const top = i.offsetTop
         this.scroll.setPosition(top, i)
-        this.unread = this.scroll.unread
       })
     },
     scrollRefresh () {
@@ -224,7 +258,6 @@ export default {
           title = "【" + that.unread + "条】"
         }
         flage = !flage
-        // console.log(flage, title)
         that.titleTimer = setTimeout(() => {
           that.resetTitle(title + that.beforeTitle)
           change()

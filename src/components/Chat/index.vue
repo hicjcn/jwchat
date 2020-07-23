@@ -4,6 +4,7 @@
       <chatList
         :list="taleList"
         @click="bindEvent"
+        @loadHistory="$emit('loadHistory')"
         :config="{width,height:talkHeight,scrollToButton,scrollType}"
       />
     </div>
@@ -112,13 +113,16 @@ export default {
     },
     bindEmoji (emoji) {
       this.msg += emoji
-      console.log(this.msg)
     },
     enter (msg) {
       this.$emit('enter', msg)
     },
     toButton () {
       this.scrollToButton = !this.scrollToButton
+    },
+    loadHistoryHandler (status) {
+      console.log('状态', status)
+      this.$emit('loadHistory')
     }
   },
 }
