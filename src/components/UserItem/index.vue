@@ -5,11 +5,11 @@
       :src="config.img"
       :style="coverSize"
       class="cover"
-      @click="bindClick({ key:'cover', value: config.img })"
+      @click="bindClick({ key:'cover', value: config })"
     />
     <div class="info">
-      <p class="name" @click="bindClick({ key:'name', value: config.name })">{{config.name}}</p>
-      <p class="dept" @click="bindClick({ key:'dept', value: config.dept })">{{config.dept}}</p>
+      <p class="name" @click="bindClick({ key:'name', value: config })">{{config.name}}</p>
+      <p class="dept" @click="bindClick({ key:'dept', value: config })">{{config.dept}}</p>
     </div>
   </div>
 </template>
