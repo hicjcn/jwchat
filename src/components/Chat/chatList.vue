@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper" :style="boxSize" ref="scroller">
-    <div v-if="historyLoding" @click="$emit('loadHistory')">{{historyConfig.title}}</div>
+    <div v-if="historyLoding" @click="$emit('loadHistory')">{{historyConfig.tip}}</div>
     <div class="scroller">
       <div class="web__main" ref="main">
         <div
@@ -136,8 +136,8 @@ export default {
       return style
     },
     historyConfig () {
-      const { historyConfig: { title = "查看更多", callback, activate = false } } = this.config
-      return { title, callback, activate }
+      const { historyConfig: { tip = "", activate = false } = {} } = this.config
+      return { tip, activate }
     },
     isBottom () {
       return this.scroll && this.scroll.isBottom

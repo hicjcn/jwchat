@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="wrapper">
     <itemTalk />
-    <JwChat
+    <JwChat-index
       :config="config"
       :taleList="list"
       @enter="bindEnter"
@@ -9,12 +9,11 @@
       :toolConfig="tool"
       scrollType="norell"
       @clickTalk="talkEvent"
-      @loadHistory="bindLoadHistory"
     >
       <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
       <!-- <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" /> -->
       <b slot="tools">H</b>
-    </JwChat>
+    </JwChat-index>
   </div>
 </template>
 
@@ -28,8 +27,8 @@ export default {
       inputMsg: '',
       list: [],
       tool: {
-        show: ['file', 'history', 'img', ['文件1', '', '美图']],
-        showEmoji: false,
+        // show: ['file', 'history', 'img', ['文件1', '', '美图']],
+        // showEmoji: false,
         callback: this.toolEvent
       },
       rightConfig: {
@@ -73,7 +72,11 @@ export default {
         img: '/image/cover.png',
         name: 'JwChat',
         dept: '最简单、最便捷',
-        callback: this.bindCover
+        callback: this.bindCover,
+        historyConfig:{
+          tip: '加载更多',
+          callback: this.bindLoadHistory,
+        }
       },
     }
   },

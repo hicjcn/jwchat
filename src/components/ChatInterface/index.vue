@@ -14,6 +14,7 @@
           :scrollType="scrollType"
           :width="chatWidth"
           :height="chatHeight"
+          :config="chatConfig"
           @clickTalk="$emit('clickTalk',$event)"
         >
           <slot name="tools" slot="tools" />
@@ -81,6 +82,10 @@ export default {
       }
       const style = { height, width }
       return style
+    },
+    chatConfig () {
+      const { historyConfig = {} } = this.config || {}
+      return { historyConfig }
     },
   },
   watch: {
