@@ -98,8 +98,7 @@ export default {
       done();
     },
     showDialog ({ tag }) {
-      const { text } = this
-      const { src } = this.getData(text)
+      const { src } = this.getData
       const callback = () => {
         if (tag === 'img') {
           this.imgSrc = src;
@@ -121,9 +120,10 @@ export default {
       }
     },
     parseText () {
-      const { text } = this
+      let { text } = this
       if (!text) return
-      const html = emojiParser(text).replace(/<img src/g, '<img data-class="iconBox" src').replace(/\n/g,'<br/>')
+      text = text.replace(/\n/g,'<br/>')
+      const html = emojiParser(text).replace(/<img src/g, '<img data-class="iconBox" src')
       return html
     },
     //处理排版
