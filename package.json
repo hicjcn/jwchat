@@ -1,6 +1,6 @@
 {
   "name": "jwchat",
-  "version": "0.2.46",
+  "version": "0.2.47",
   "description": "vue chat commponent",
   "main": "lib/JwChat.umd.min.js",
   "private": false,
