@@ -5,8 +5,8 @@
       <div class="web__main" ref="main">
         <div
           class="web__main-item"
-          v-for="(item) in list"
-          :key="JSON.stringify(item)"
+          v-for="(item,k) in list"
+          :key="JSON.stringify(item)+k"
           :class="{'web__main-item--mine':item.mine}"
         >
           <div class="web__main-user">
