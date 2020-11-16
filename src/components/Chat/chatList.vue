@@ -291,7 +291,7 @@ export default {
 .web__msg--file {
   position: relative;
   max-width: 250px;
-  min-width: 200px;
+  min-width: 50px;
   width: 100%;
   margin: 10px 0;
   border: 1px solid #eee;
