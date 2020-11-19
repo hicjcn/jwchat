@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `
+<div class="wrapper">
+  <transition-stub mode="out-in" class="el-menu-demo">
+    <ul role="menubar" class="el-menu--horizontal el-menu" tabindex="0">
+      <li role="menuitem" tabindex="-1" class="el-menu-item is-active">快捷回复</li>
+      <li role="menuitem" tabindex="-1" class="el-menu-item" style="border-bottom-color: transparent;">超级回复</li> <i title="新增" class="addBtn el-icon-circle-plus-outline" style="visibility: visible;"></i>
+    </ul>
+  </transition-stub>
+  <!---->
+  <ul>
+    <li>
+      <div class="el-row">
+        <div class="el-col el-col-19">
+          <p>快捷回复1</p>
+        </div>
+        <div class="el-col el-col-5"><i title="发送" class="el-icon-circle-check"></i> <i title="删除" class="el-icon-circle-close"></i></div>
+      </div>
+    </li>
+    <li>
+      <div class="el-row">
+        <div class="el-col el-col-19">
+          <p>快捷回复2</p>
+        </div>
+        <div class="el-col el-col-5"><i title="发送" class="el-icon-circle-check"></i> <i title="删除" class="el-icon-circle-close"></i></div>
+      </div>
+    </li>
+    <li>
+      <div class="el-row">
+        <div class="el-col el-col-19">
+          <p>快捷回复3</p>
+        </div>
+        <div class="el-col el-col-5"><i title="发送" class="el-icon-circle-check"></i> <i title="删除" class="el-icon-circle-close"></i></div>
+      </div>
+    </li>
+    <li>
+      <div class="el-row">
+        <div class="el-col el-col-19">
+          <p>快捷回复4</p>
+        </div>
+        <div class="el-col el-col-5"><i title="发送" class="el-icon-circle-check"></i> <i title="删除" class="el-icon-circle-close"></i></div>
+      </div>
+    </li>
+    <li>
+      <div class="el-row">
+        <div class="el-col el-col-19">
+          <p>快捷回复5</p>
+        </div>
+        <div class="el-col el-col-5"><i title="发送" class="el-icon-circle-check"></i> <i title="删除" class="el-icon-circle-close"></i></div>
+      </div>
+    </li>
+    <li>
+      <div class="el-row">
+        <div class="el-col el-col-19">
+          <p>快捷回复6</p>
+        </div>
+        <div class="el-col el-col-5"><i title="发送" class="el-icon-circle-check"></i> <i title="删除" class="el-icon-circle-close"></i></div>
+      </div>
+    </li>
+  </ul>
+  <transition-stub name="dialog-fade">
+    <div class="el-dialog__wrapper" style="display: none;">
+      <div role="dialog" aria-modal="true" aria-label="新增快捷回复" class="el-dialog" style="margin-top: 15vh; width: 36%;">
+        <div class="el-dialog__header"><span class="el-dialog__title">新增快捷回复</span><button type="button" aria-label="Close" class="el-dialog__headerbtn"><i class="el-dialog__close el-icon el-icon-close"></i></button></div>
+        <!---->
+        <!---->
+      </div>
+    </div>
+  </transition-stub>
+</div>
+`;

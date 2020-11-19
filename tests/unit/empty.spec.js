@@ -16,7 +16,7 @@ describe('empty weiget', () => {
     const wrapper = mount(widget, { propsData: { size } })
     const icon = wrapper.find('i')
     const defaultClass = 'icon-empty'
-    const iconSize = icon.attributes('style')
+    const iconSize = icon.attributes().style
     expect(iconSize).toBe(`font-size: calc(${size} / 2);`)
     expect(icon.classes()).toEqual(['iconfont', defaultClass])
   })
