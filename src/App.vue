@@ -7,11 +7,11 @@
       @enter="bindEnter"
       v-model="inputMsg"
       :toolConfig="tool"
-      :showRightBox='false'
+      :showRightBox='true'
       scrollType="norell"
       @clickTalk="talkEvent"
     >
-      <!-- <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" /> -->
+      <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
       <!-- <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" /> -->
       <b slot="tools">H</b>
     </JwChat-index>

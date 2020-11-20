@@ -12,7 +12,7 @@
           v-model="msg"
           :toolConfig="toolConfig"
           :scrollType="scrollType"
-          :width="chatWidth"
+          :width="realWidth"
           :height="chatHeight"
           :config="chatConfig"
           @clickTalk="$emit('clickTalk',$event)"
@@ -21,7 +21,10 @@
         </JwChat>
       </div>
       <div class="rightBox" v-if="showRightBox">
-        <slot />
+        <span  @click="bindWitch">
+          <JwChat-icon class="switch" :type="switchIcon"/>
+        </span>
+        <slot v-if="switchBox"/>
       </div>
     </div>
   </div>
@@ -70,14 +73,14 @@ export default {
   data () {
     return {
       chatHeight: '',
-      chatWidth: "",
-      msg: ''
+      msg: '',
+      switchBox: true,
     }
   },
   computed: {
     faceSize () {
       let height = this.height
-      let width = this.width
+      let width = this.width + ''
       if (height.match(/\d$/)) {
         height += 'px'
       }
@@ -91,18 +94,22 @@ export default {
       const { historyConfig = {} } = this.config || {}
       return { historyConfig }
     },
+    switchIcon(){
+      let result = 'icon-jiantou_xiangzuoliangci'
+      if(this.switchBox) result = 'icon-jiantou_xiangyouliangci'
+      return result
+    },
+    realWidth(){
+      const width = this.width
+      let ratio = 1
+      if(this.showRightBox&&this.switchBox)  ratio = .7
+      return width * ratio+''
+    }
   },
   watch: {
     height: {
       handler () {
         this.chatHeight = this.height - 60 + ''
-      },
-      immediate: true
-    },
-    width: {
-      handler () {
-        const width = this.showRightBox ? this.width * .7:this.width
-        this.chatWidth = width + ''
       },
       immediate: true
     },
@@ -117,6 +124,13 @@ export default {
         this.$emit('input', this.msg);
       },
       immediate: true
+    },
+    showRightBox:{
+      handler (newval) {
+        if(typeof newval === 'boolean')
+          this.switchBox = newval
+      },
+      immediate: true
     }
   },
   methods: {
@@ -128,6 +142,9 @@ export default {
     },
     enter (msg) {
       this.$emit('enter', msg)
+    },
+    bindWitch(){
+      this.switchBox = !this.switchBox
     }
   }
 }
@@ -157,6 +174,17 @@ export default {
 .ChatPage .main .rightBox {
   box-shadow: 0 -3px 3px 0 rgba(0, 0, 0, 0.1);
   width: 45%;
-  overflow: auto;
+  /* overflow: auto; */
+  position: relative;
+}
+.switch {
+  position: absolute;
+  left: -1.2rem;
+  top: 20%;
+  background:rgba(204,204,204,0.5);
+  padding: 0.3rem 0 0.3rem 0.1rem;
+  border-radius: 100% 0 0 100%;
+  color:#fff;
+  cursor: pointer;
 }
 </style>
