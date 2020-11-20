@@ -1,12 +1,12 @@
 <template>
   <div class="wrapper" :style="boxSize" ref="scroller">
-    <div v-if="historyLoding" @click="$emit('loadHistory')">{{historyConfig.title}}</div>
+    <div v-if="historyLoding" @click="$emit('loadHistory')">{{historyConfig.tip}}</div>
     <div class="scroller">
       <div class="web__main" ref="main">
         <div
           class="web__main-item"
-          v-for="(item) in list"
-          :key="JSON.stringify(item.text)"
+          v-for="(item,k) in list"
+          :key="JSON.stringify(item)+k"
           :class="{'web__main-item--mine':item.mine}"
         >
           <div class="web__main-user">
@@ -136,8 +136,8 @@ export default {
       return style
     },
     historyConfig () {
-      const { historyConfig: { title = "查看更多", callback, activate = false } } = this.config
-      return { title, callback, activate }
+      const { historyConfig: { tip = "", activate = false } = {} } = this.config
+      return { tip, activate }
     },
     isBottom () {
       return this.scroll && this.scroll.isBottom
@@ -291,7 +291,7 @@ export default {
 .web__msg--file {
   position: relative;
   max-width: 250px;
-  min-width: 200px;
+  min-width: 50px;
   width: 100%;
   margin: 10px 0;
   border: 1px solid #eee;

@@ -14,12 +14,13 @@
           :scrollType="scrollType"
           :width="chatWidth"
           :height="chatHeight"
+          :config="chatConfig"
           @clickTalk="$emit('clickTalk',$event)"
         >
           <slot name="tools" slot="tools" />
         </JwChat>
       </div>
-      <div class="rightBox">
+      <div class="rightBox" v-if="showRightBox">
         <slot />
       </div>
     </div>
@@ -38,6 +39,10 @@ export default {
         dept: '最简单、最便捷',
         callback: () => { }
       })
+    },
+    showRightBox: {
+      type: Boolean,
+      default: true
     },
     taleList: {
       type: Array,
@@ -82,6 +87,10 @@ export default {
       const style = { height, width }
       return style
     },
+    chatConfig () {
+      const { historyConfig = {} } = this.config || {}
+      return { historyConfig }
+    },
   },
   watch: {
     height: {
@@ -92,7 +101,8 @@ export default {
     },
     width: {
       handler () {
-        this.chatWidth = this.width * .7 + ''
+        const width = this.showRightBox ? this.width * .7:this.width
+        this.chatWidth = width + ''
       },
       immediate: true
     },

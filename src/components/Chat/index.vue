@@ -4,8 +4,8 @@
       <chatList
         :list="taleList"
         @click="bindEvent"
-        @loadHistory="$emit('loadHistory')"
-        :config="{width,height:talkHeight,scrollToButton,scrollType}"
+        @loadHistory="loadHistoryHandler"
+        :config="chatListConfig"
       />
     </div>
     <div class="toolBox">
@@ -51,7 +51,8 @@ export default {
         show: ['file', 'video', 'img'],
         callback: Function
       })
-    }
+    },
+    config: {}
   },
   data () {
     return {
@@ -106,6 +107,10 @@ export default {
         height = `calc(${height} - 140px)`
       return height
     },
+    chatListConfig () {
+      const { width, talkHeight: height, scrollToButton, scrollType, config: { historyConfig = {} } = {} } = this
+      return { width, height, scrollToButton, scrollType, historyConfig }
+    }
   },
   methods: {
     bindEvent (play) {
@@ -120,9 +125,9 @@ export default {
     toButton () {
       this.scrollToButton = !this.scrollToButton
     },
-    loadHistoryHandler (status) {
-      console.log('状态', status)
-      this.$emit('loadHistory')
+    loadHistoryHandler () {
+      const { historyConfig: { callback = null } = {} } = this.chatListConfig
+      callback && callback()
     }
   },
 }
