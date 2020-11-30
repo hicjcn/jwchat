@@ -95,8 +95,8 @@ export default {
       return { historyConfig }
     },
     switchIcon(){
-      let result = 'icon-jiantou_xiangzuoliangci'
-      if(this.switchBox) result = 'icon-jiantou_xiangyouliangci'
+      let result = 'icon-jiantou-xiangzuo'
+      if(this.switchBox) result = 'icon-jiantou-xiangyou'
       return result
     },
     realWidth(){
@@ -150,7 +150,7 @@ export default {
 }
 </script>
 
-<style  scoped>
+<style  scoped lang="scss">
 .ChatPage {
   margin: 0 auto;
   background: #fff;
@@ -186,5 +186,8 @@ export default {
   border-radius: 100% 0 0 100%;
   color:#fff;
   cursor: pointer;
+  &:hover{
+    background:#409eff;
+  }
 }
 </style>
