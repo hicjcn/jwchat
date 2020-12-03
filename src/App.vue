@@ -11,8 +11,8 @@
       scrollType="norell"
       @clickTalk="talkEvent"
     >
-      <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
-      <!-- <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" /> -->
+      <!-- <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" /> -->
+      <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" />
       <b slot="tools">H</b>
     </JwChat-index>
   </div>

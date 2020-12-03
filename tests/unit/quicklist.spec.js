@@ -29,10 +29,18 @@ describe('QuickList 组件', () => {
 
   it('默认菜单选中', (done) => {
 
+    expect(wrapper.vm.activeIndex).toBe('1')
+
     const defaultMenu = wrapper.find('.el-menu-demo .is-active')
     expect(defaultMenu.text()).toBe(config.nav[0])
+
+    const quickNode = wrapper.findAll('ul p')
+    for (let i = 0; i < quickNode.length; i++) {
+      expect( quickNode.at(i).text()).toBe(Talelist[i])
+    }
+
     done()
-    
+
   })
 
   it('切换选中菜单',async ()=>{
@@ -41,20 +49,58 @@ describe('QuickList 组件', () => {
     
     // 模拟按钮的点击操作
     menus.at(1).trigger('click')
-    await sleep()
     expect(wrapper.vm.activeIndex).toBe('2')
     
+    await wrapper.vm.$nextTick()
+     
+    const defaultMenu = wrapper.find('.el-menu-demo .is-active')
+    expect(defaultMenu.text()).toBe(config.nav[1])
+
     menus.filter(w => w.text() == config.nav[0]).trigger('click')
     expect(wrapper.vm.activeIndex).toBe('1')
 
   })
 
-})
+  it('改变列表数据',async ()=>{
+    const chageList = [
+      '切换回复1',
+      '切换回复2',
+      '切换回复3',
+    ]
 
-function sleep(time=1000) {
-  return new Promise(resolve=>{
-    setTimeout(() => {
-      resolve()
-    }, time);
+    await wrapper.setProps({ Talelist: chageList })
+
+    const quickNode = wrapper.findAll('ul p')
+    for (let i = 0; i < quickNode.length; i++) {
+      expect( quickNode.at(i).text()).toBe(chageList[i])
+    }
+
   })
-}
+
+  it('新增数据功能',async ()=>{
+    expect(wrapper.vm.visible).toBe(false);
+    expect(wrapper.vm.itemQuick).toBe('');
+
+    const showBtn = wrapper.find('[title="新增"]')
+    showBtn.trigger('click')
+    await wrapper.vm.$nextTick()
+
+    
+    const crestedBox = wrapper.find('.el-dialog__wrapper')
+    expect(wrapper.vm.visible).toBe(true);
+    expect(crestedBox.isVisible()).toBe(true);
+
+    const inputBox = wrapper.find('.el-dialog__body textarea')
+
+    const testString = '测试添加的文字'
+    inputBox.setValue(testString)
+    expect(inputBox.element.value).toBe(wrapper.vm.itemQuick);
+
+    const btns = crestedBox.findAll('button')
+    await btns.at(2).trigger('click')
+    expect(wrapper.vm.itemQuick).toBe('');
+    expect(wrapper.vm.visible).toBe(false);
+    
+  })
+
+})
