@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `
+<div class="wrapper">
+  <div class="notice">
+    <div class="empty empty" style="width: 8rem;"><i class="iconfont icon-empty" style="font-size: calc(8rem / 2);"></i></div>
+    <p style="padding-left: 0.2rem;">群公告:</p>
+    <p style="font-size: 0.8rem; margin-top: 0.5rem; padding: 0px .2rem;"></p>
+  </div>
+  <div class="userList">
+    <div>组成员 (0)</div>
+    <ul></ul>
+  </div>
+</div>
+`;

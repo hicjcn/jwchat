@@ -4,7 +4,6 @@ import App from './App.vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import JwChat from '@/components'
-
 Vue.use(ElementUI)
 
 // import JwChat from '../lib/JwChat.common';

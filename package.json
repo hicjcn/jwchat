@@ -4,7 +4,6 @@
   "description": "vue chat commponent",
   "main": "lib/JwChat.umd.min.js",
   "private": false,
-  "description": "vue chat commponent",
   "author": "Bian <389701057@qq.com>",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -14,7 +13,6 @@
     "lib": "vue-cli-service build --target lib --name JwChat --dest lib src/components/index.js",
     "test:unit": "vue-cli-service test:unit"
   },
-  "main": "lib/JwChat.umd.min.js",
   "unpkg": "lib/JwChat.umd.js",
   "files": [
     "lib",
