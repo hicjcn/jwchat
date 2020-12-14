@@ -1,5 +1,5 @@
 <template>
-  <span class="wrapper">
+  <span class="item_msg">
     <span class="web__msg--audio" v-if="getTag === 'span'" v-html="parseText()" />
     <img
       class="web__msg--img"
@@ -23,6 +23,7 @@
       controls="controls"
     />
 
+    <!-- 查看区域 -->
     <el-dialog
       :visible.sync="show"
       width="40%"
@@ -188,7 +189,7 @@ export default {
 }
 </script>
 <style lange="scss" scoped>
-.wrapper {
+.item_msg {
   padding: 0px;
   margin: 0px;
 }

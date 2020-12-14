@@ -1,8 +1,21 @@
 <template>
   <div class="web__msg" @keyup.enter="handleSend">
-    <textarea v-model="currentMsg" rows="3" :placeholder="placeholder" class="web__msg-input"></textarea>
+    {{ insert }}
+    <textarea
+      v-model="currentMsg"
+      rows="3"
+      :placeholder="placeholder"
+      class="web__msg-input"
+      ref="msgBox"
+    />
     <div class="web__msg-menu">
-      <el-button class="web__msg-submit" type="primary" size="mini" @click="handleSend">发送</el-button>
+      <el-button
+        class="web__msg-submit"
+        type="primary"
+        size="mini"
+        @click="handleSend"
+        >发送</el-button
+      >
     </div>
   </div>
 </template>
@@ -16,12 +29,17 @@ export default {
       default: '请输入内容...'
     },
     value: {
+      type: String,
       default: ''
-    }
+    },
+    insert: {
+      type: String,
+      default: ''
+    },
   },
   data () {
     return {
-      currentMsg: this.msg
+      currentMsg: ""
     }
   },
   watch: {
@@ -37,6 +55,11 @@ export default {
         this.$emit('input', msg)
       },
       immediate: true
+    },
+    insert (newval) {
+      if (newval) {
+        this.joinToMsg(newval)
+      }
     }
   },
   methods: {
@@ -48,85 +71,77 @@ export default {
       this.$nextTick(() => {
         this.currentMsg = ''
       })
+    },
+    joinToMsg (str) {
+      /* eslint-disable */
+      const myField = this.$refs.msgBox
+      console.log(myField);
+      let afterMsg = this.currentMsg
+      //IE浏览器
+      if (document.selection) {
+        var sel = null
+        myField.focus();
+        sel = document.selection.createRange();
+        sel.text = str;
+        sel.select();
+      }
+
+      //火狐/网景 浏览器
+      else if (myField.selectionStart || myField.selectionStart == '0') {
+        //得到光标前的位置
+        var startPos = myField.selectionStart;
+        //得到光标后的位置
+        var endPos = myField.selectionEnd;
+        // 在加入数据之前获得滚动条的高度
+        var restoreTop = myField.scrollTop;
+        afterMsg = afterMsg.substring(0, startPos) + str + afterMsg.substring(endPos, afterMsg.length);
+        //如果滚动条高度大于0
+        if (restoreTop > 0) {
+          // 返回
+          myField.scrollTop = restoreTop;
+        }
+        myField.focus();
+        myField.selectionStart = startPos + str.length;
+        myField.selectionEnd = startPos + str.length;
+      }
+      else {
+        afterMsg += str;
+        myField.focus();
+      }
+      this.currentMsg = afterMsg
     }
   },
 }
 </script>
-<style scoped>
+<style scoped lang="scss">
 .web__msg {
   padding: 0 10px;
   height: auto;
   overflow: hidden;
-}
-.web__msg--img,
-.web__msg--video,
-.web__msg--file {
-  position: relative;
-  max-width: 250px;
-  min-width: 200px;
-  width: 100%;
-  margin: 10px 0;
-  border: 1px solid #eee;
-  overflow: hidden;
-  border-radius: 5px;
-  cursor: pointer;
-  display: block;
-}
-
-.web__msg .web__msg {
-  height: 150px;
-  background-color: #fff;
-}
-.web__msg .web__msg span {
-  box-sizing: border-box;
-  padding: 3px 5px;
-  color: #333;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: center;
-  height: calc(100% - 80px);
-  overflow: hidden;
-  font-size: 13px;
-  text-align: center;
-}
-
-.web__msg .web__msg h2 {
-  margin: 0;
-  width: 100%;
-  text-align: center;
-  line-height: 80px;
-  background-color: #409eff;
-  color: #fff;
-}
-
-.web__msg--map {
-  height: 160px;
-}
-
-.web__msg-input {
-  display: block;
-  width: 100%;
-  height: 60px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  box-sizing: border-box;
-  resize: none;
-  outline: 0;
-  background-color: #fff;
-  border: 0;
-  word-break: break-all;
-  font-size: 13px;
-  line-height: 17px;
-  -webkit-appearance: none;
-}
-.web__msg-menu {
-  text-align: right;
-}
-.web__msg-submit {
-  display: inline-block;
-  outline: none;
-  cursor: pointer;
-  text-align: center;
+  &-input {
+    display: block;
+    width: 100%;
+    height: 60px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    resize: none;
+    outline: 0;
+    background-color: #fff;
+    border: 0;
+    word-break: break-all;
+    font-size: 13px;
+    line-height: 17px;
+    -webkit-appearance: none;
+  }
+  &-menu {
+    text-align: right;
+  }
+  .web__msg-submit {
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+  }
 }
 </style>

@@ -13,7 +13,11 @@
     >
       <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
       <!-- <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" /> -->
-      <b slot="tools">H</b>
+      <template slot="tools">
+        <div style="width:20rem;text-align:right;" @click="toolEvent(12)">
+          <JwChat-icon type="icon-lishi" title="自定义"/>
+        </div>
+      </template>
     </JwChat-index>
   </div>
 </template>

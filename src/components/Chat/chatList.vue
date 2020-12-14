@@ -36,15 +36,7 @@ import itemTalk from './itemTalk'
 export default {
   name: 'JwChat_list',
   components: { itemTalk },
-  filters: {
-    setWidth (value) {
-      let width = value
-      if (`${value}`.match(/^\d+$/)) {
-        width = value + 'px'
-      }
-      return width
-    }
-  },
+  filters: {},
   props: {
     pageConfig: {
       type: Object,
@@ -78,10 +70,12 @@ export default {
   watch: {
     load (newval) {
       if (newval) {
-        setTimeout(() => {
-          this.scroll && this.scroll.refresh()
-          this.load = false
-        }, 1000);
+        // this.$nextTick(() => {
+          setTimeout(() => {
+            this.scroll && this.scroll.refresh()
+            this.load = false
+          }, 100);
+        // })
       }
     },
     list (newval) {
@@ -103,7 +97,7 @@ export default {
             if (this.scrollType === 'scroll') {
               this.scrollBottom()
             }
-          }, 300);
+          }, 500);
         })
       }
     },
@@ -157,7 +151,7 @@ export default {
         this.scroll.refresh()
         setTimeout(() => {
           this.scroll.scrollTo(0, this.scroll.maxScrollY, 200)
-        }, 800);
+        }, 0);
       }
     },
     bindClick (type, data) {
@@ -282,13 +276,15 @@ export default {
   }
 }
 </script>
-<style>
-.iScrollVerticalScrollbar.iScrollLoneScrollbar {
+
+<style  scoped lang="scss">
+/deep/.iScrollVerticalScrollbar.iScrollLoneScrollbar {
   z-index: 1 !important;
 }
-.web__msg--img,
-.web__msg--video,
-.web__msg--file {
+
+/deep/.web__msg--img,
+/deep/.web__msg--video,
+/deep/.web__msg--file {
   position: relative;
   max-width: 250px;
   min-width: 50px;
@@ -300,6 +296,7 @@ export default {
   cursor: pointer;
   display: block;
 }
+
 .web__msg--img[data-class="iconBox"] {
   max-width: 24px;
   min-width: unset;
@@ -308,11 +305,7 @@ export default {
   vertical-align: bottom;
   display: inline-block;
 }
-</style>
-<style  scoped lang="scss">
-.wrapper >>> .iScrollVerticalScrollbar.iScrollLoneScrollbar {
-  z-index: 1 !important;
-}
+
 .downBtn {
   position: absolute;
   cursor: pointer;
@@ -346,6 +339,7 @@ export default {
     transform: translate(-50%, -50%);
   }
 }
+
 .wrapper {
   position: relative;
   width: 525px;
