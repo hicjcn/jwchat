@@ -8,7 +8,7 @@
       v-model="inputMsg"
       :toolConfig="tool"
       :showRightBox='true'
-      scrollType="noscroll"
+      scrollType="noroll"
       @clickTalk="talkEvent"
     >
       <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
@@ -28,7 +28,6 @@ export default {
   components: { itemTalk },
   data () {
     return {
-      num: 5000,
       inputMsg: '',
       list: [],
       tool: {
@@ -87,6 +86,11 @@ export default {
     }
   },
   methods: {
+    /**
+     * @description: 点击加载更多的回调函数
+     * @param {*}
+     * @return {*}
+     */
     bindLoadHistory () {
       const history = new Array(3).fill().map((i, j) => {
         return {
@@ -100,9 +104,6 @@ export default {
       let list = history.concat(this.list)
       this.list = list
       console.log('加载历史', list, history)
-    },
-    change () {
-      this.num++
     },
     talkEvent (play) {
       console.log(play)
@@ -119,11 +120,17 @@ export default {
       }
       this.list.push(msgObj)
     },
+    /**
+     * @description: 
+     * @param {*} type 当前点击的按钮
+     * @param {*} plyload 附加文件或者需要处理的数据
+     * @return {*}
+     */
     toolEvent (type, plyload) {
       console.log('tools', type, plyload)
     },
-    bindCover (type) {
-      console.log('header', type)
+    bindCover (event) {
+      console.log('header', event)
     },
     rightClick (type) {
       console.log('rigth', type)

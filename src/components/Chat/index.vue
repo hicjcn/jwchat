@@ -49,6 +49,7 @@ export default {
       type: Object,
       default: () => ({
         show: ['file', 'video', 'img'],
+        // showEmoji: true,
         callback: Function
       })
     },
