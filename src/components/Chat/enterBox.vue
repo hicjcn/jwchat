@@ -1,6 +1,5 @@
 <template>
   <div class="web__msg" @keyup.enter="handleSend">
-    {{ insert }}
     <textarea
       v-model="currentMsg"
       rows="3"
@@ -137,7 +136,7 @@ export default {
   &-menu {
     text-align: right;
   }
-  .web__msg-submit {
+  &-submit {
     display: inline-block;
     outline: none;
     cursor: pointer;

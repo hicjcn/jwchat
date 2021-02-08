@@ -3,21 +3,49 @@ import IScroll from 'iscroll'
 
 class Scroll extends IScroll {
   domPotision = []
-  isCroll = null
-  previousPostion = 0
   beforeNode = null
 
   constructor(node, options) {
     super(node, options)
   }
 
-  setPosition (postion, node) {
-    // this._findDom(postion, node)
-    this.addPostion(postion, node)
-  }
+  /**
+   * @description: 更新并保存数据
+   * @param { nodes, dataList } params //传入要保存的节点和要保存的数据
+   * @return {*}
+   */
+  saveNodes (params) {
+    const {nodes, dataList } = params
+    let result = []
+    const previous = this.domPotision
+    nodes.forEach((node, index) => {
+      const top = node.offsetTop
+      const data = dataList[index]
+      const dataStr = JSON.stringify(data)
 
-  get nodePosition () {
-    return this.domPotision
+      let item = {
+        top,
+        node,
+        read: false,
+        data: dataStr 
+      }
+
+      // 是否是存在的数据
+      const resultKey = this.isBing(dataStr)
+      if(resultKey>-1){
+        const { read: preRead = false } = previous[resultKey] || {}
+        item.read = preRead
+      }
+            
+      result.push(item)
+    })
+    this.domPotision = result
+
+    // 找到最后一次保存的节点，并把节点之前的数据设置为已读
+    if(!this.beforeNode) return
+    const { data } = this.beforeNode
+    const resultKey = this.isBing(data)
+    this.read(resultKey)
   }
 
   get unread () {
@@ -38,35 +66,17 @@ class Scroll extends IScroll {
     return top
   }
 
-  addPostion (top, node) {
-    if (!this.domPotision.find(i => {
-      if (i.node === node) return i
-    })) {
-      this.domPotision.push({ node, read: false, top })
-    }
-  }
-
-  resetTop () {
-    const postion = this.domPotision
-    if (!postion) return
-    const newPosition = postion.map(({ node, read }) => {
-      return {
-        node, read, top: node.offsetTop
-      }
+  isBing(flag){
+    let result = -1
+    this.domPotision.forEach((i, k) => {
+      const {data} = i
+      if(data===flag) return result = k
     })
-    newPosition.sort((a, b) => a.top - b.top)
-    this.domPotision = newPosition
-    const index = this._findIndex()
-    index > -1 && this.read(index)
-  }
-
-  _findIndex () {
-    const beforeNode = this.beforeNode
-    return this.domPotision.findIndex(i => i.node == beforeNode.node)
+    return result
   }
 
   read (index) {
-    const key = index || this.findDom()
+    const key = index || this.scrollPositionDom()
     let bottom = this.isBottom
 
     this.domPotision.forEach((i, j) => {
@@ -83,28 +93,22 @@ class Scroll extends IScroll {
     return result
   }
 
-  findDom () {
+  /**
+   * @description: 判断当前的滚动位置是处于哪个元素内
+   * @param {*}
+   * @return {*}
+   */
+  scrollPositionDom () {
     const { y } = this
     let currentTop = Math.abs(y)
     if (currentTop == 0) return 0
     const doms = this.domPotision
     let result = -1
 
-    // doms.forEach((i, j) => {
-    //   const { top: t, node } = i
-    //   const size = node.offsetHeight
-    //   if (result < 0 && currentTop < t + size) {
-    //     result = j
-    //     if (currentTop > t) result += 1
-    //   }
-    // })
-
     doms.forEach((i, j) => {
       const { top } = i
       if (result === -1 || currentTop >= top) {
         result = j + 1
-        // currentTop = top
-        // if (currentTop > top) result += 1
       }
     })
 
@@ -112,20 +116,9 @@ class Scroll extends IScroll {
   }
 
   savePosition () {
-    const { y } = this
-    this.previousPostion = y
-    this.savseCurrentNode()
-  }
-
-  savseCurrentNode () {
-    const nodeIndex = this.findDom()
+    const nodeIndex = this.scrollPositionDom()
     this.beforeNode = this.domPotision[nodeIndex]
-  }
-
-  toBeforePosition () {
-    // scrollToElement(el, time, offsetX, offsetY, easing)
-    const { node } = this.beforeNode
-    this.scrollToElement(node, 0, 0, -30)
+    this.read()
   }
 }
 

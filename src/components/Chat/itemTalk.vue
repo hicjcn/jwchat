@@ -1,6 +1,6 @@
 <template>
   <span class="item_msg">
-    <span class="web__msg--audio" v-if="getTag === 'span'" v-html="parseText()" />
+    <span v-if="getTag === 'span'" v-html="parseText()" />
     <img
       class="web__msg--img"
       v-if="getTag === 'img'"
@@ -25,6 +25,7 @@
 
     <!-- 查看区域 -->
     <el-dialog
+      v-if="['video','img'].includes(getTag)"
       :visible.sync="show"
       width="40%"
       append-to-body
@@ -185,12 +186,38 @@ export default {
        }, 200)
        return result;
      }, */
+  },
+  mounted(){
+    // console.log('加载完成');
+    this.$emit('loadDone', true)
   }
 }
 </script>
-<style lange="scss" scoped>
+<style lang="scss" scoped>
 .item_msg {
   padding: 0px;
   margin: 0px;
+  .web__msg--img,
+  .web__msg--video,
+  .web__msg--file {
+    position: relative;
+    max-width: 250px;
+    min-width: 50px;
+    width: 100%;
+    margin: 10px 0;
+    border: 1px solid #eee;
+    overflow: hidden;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+  }
+  .web__msg--img[data-class="iconBox"] {
+    max-width: 24px;
+    min-width: unset;
+    border: none;
+    margin: 0;
+    vertical-align: bottom;
+    display: inline-block;
+  }
 }
 </style>

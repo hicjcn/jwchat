@@ -8,7 +8,7 @@
       <div class="chatBox">
         <JwChat
           :taleList="taleList"
-          @enter="enter"
+          @enter="$emit('enter', $event)"
           v-model="msg"
           :toolConfig="toolConfig"
           :scrollType="scrollType"
@@ -21,7 +21,7 @@
         </JwChat>
       </div>
       <div class="rightBox" v-if="showRightBox">
-        <span  @click="bindWitch">
+        <span  @click="switchBox = !switchBox">
           <JwChat-icon class="switch" :type="switchIcon"/>
         </span>
         <slot v-if="switchBox"/>
@@ -139,12 +139,6 @@ export default {
       if (callback) {
         callback(type)
       }
-    },
-    enter (msg) {
-      this.$emit('enter', msg)
-    },
-    bindWitch(){
-      this.switchBox = !this.switchBox
     }
   }
 }
@@ -155,39 +149,43 @@ export default {
   margin: 0 auto;
   background: #fff;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-}
-.ChatPage .header {
-  background-color: #409eff;
-  display: flex;
-  margin: 0 auto;
-  padding-left: 12px;
-  align-items: center;
-  height: 60px;
-  position: relative;
-  color: #fff;
-}
 
-.ChatPage .main {
-  display: flex;
-  height: calc(100% - 60px);
-}
-.ChatPage .main .rightBox {
-  box-shadow: 0 -3px 3px 0 rgba(0, 0, 0, 0.1);
-  width: 45%;
-  /* overflow: auto; */
-  position: relative;
-}
-.switch {
-  position: absolute;
-  left: -1.2rem;
-  top: 20%;
-  background:rgba(204,204,204,0.5);
-  padding: 0.3rem 0 0.3rem 0.1rem;
-  border-radius: 100% 0 0 100%;
-  color:#fff;
-  cursor: pointer;
-  &:hover{
-    background:#409eff;
+  .header {
+    background-color: #409eff;
+    display: flex;
+    margin: 0 auto;
+    padding-left: 12px;
+    align-items: center;
+    height: 60px;
+    position: relative;
+    color: #fff;
+  }
+
+  .main {
+    display: flex;
+    height: calc(100% - 60px);
+
+    .rightBox {
+      box-shadow: 0 -3px 3px 0 rgba(0, 0, 0, 0.1);
+      width: 45%;
+      position: relative;
+
+      .switch {
+        position: absolute;
+        left: -1.2rem;
+        top: 20%;
+        background:rgba(204,204,204,0.5);
+        padding: 0.3rem 0 0.3rem 0.1rem;
+        border-radius: 100% 0 0 100%;
+        color:#fff;
+        cursor: pointer;
+        &:hover{
+          background:#409eff;
+        }
+      }
+
+    }
   }
 }
+
 </style>

@@ -8,7 +8,7 @@
       v-model="inputMsg"
       :toolConfig="tool"
       :showRightBox='true'
-      scrollType="scroll"
+      scrollType="noscroll"
       @clickTalk="talkEvent"
     >
       <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
@@ -79,6 +79,7 @@ export default {
         dept: '最简单、最便捷',
         callback: this.bindCover,
         historyConfig:{
+          show: true,
           tip: '加载更多',
           callback: this.bindLoadHistory,
         }
@@ -132,6 +133,7 @@ export default {
     }
   },
   mounted () {
+    const img = 'https://www.baidu.com/img/flexible/logo/pc/result.png'
     this.list = [
       {
         "date": "2020/04/25 21:19:07",
@@ -149,7 +151,7 @@ export default {
       },
       {
         "date": "2020/04/25 21:19:07",
-        "text": { "text": "<img data-src='/image/three.jpeg'/>" },
+        "text": { "text": "<img data-src='"+img+"'/>" },
         "mine": false,
         "name": "只盼流星不盼雨",
         "img": "/image/two.jpeg"

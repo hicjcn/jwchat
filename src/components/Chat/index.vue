@@ -1,9 +1,9 @@
 <template>
   <div class="chatPage" :style="setStyle">
-    <div class="taleBox" ref="scrollNode">
+    <div class="taleBox">
       <chatList
         :list="taleList"
-        @click="bindEvent"
+        @click="$emit('clickTalk', $event)"
         @loadHistory="loadHistoryHandler"
         :config="chatListConfig"
       />
@@ -12,7 +12,7 @@
       <tools :tools="toolConfig" class="tools" @emoji="bindEmoji">
         <slot name="tools" slot="tools" />
       </tools>
-      <EnterBox @submit="enter" v-model="msg" :insert="insert"/>
+      <EnterBox @submit="$emit('enter', $event)" v-model="msg" :insert="insert"/>
     </div>
   </div>
 </template>
@@ -57,16 +57,10 @@ export default {
   data () {
     return {
       msg: '',
-      scrollToButton: false,
       insert: ''
     }
   },
   watch: {
-    scroll (newVal) {
-      if (typeof (newVal) === 'number') {
-        this.setScroll(newVal)
-      }
-    },
     value: {
       handler () {
         this.msg = this.value;
@@ -78,13 +72,6 @@ export default {
         this.$emit('input', this.msg);
       },
       immediate: true
-    },
-    scrollToButton (newVal) {
-      if (newVal) {
-        setTimeout(() => {
-          this.scrollToButton = false
-        }, 0);
-      }
     }
   },
   computed: {
@@ -114,20 +101,11 @@ export default {
     }
   },
   methods: {
-    bindEvent (play) {
-      this.$emit('clickTalk', play)
-    },
     bindEmoji (emoji) {
       this.insert = emoji
       this.$nextTick(()=>{
          this.insert = ""
       })
-    },
-    enter (msg) {
-      this.$emit('enter', msg)
-    },
-    toButton () {
-      this.scrollToButton = !this.scrollToButton
     },
     loadHistoryHandler () {
       const { historyConfig: { callback = null } = {} } = this.chatListConfig
@@ -142,14 +120,14 @@ export default {
   position: relative;
   background: #fff;
   overflow: hidden;
-}
-.taleBox {
-  height: calc(100% - 140px);
-  min-height: 100px;
-  overflow: hidden;
-}
-.toolBox {
-  height: 140px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  .taleBox {
+    height: calc(100% - 140px);
+    min-height: 100px;
+    overflow: hidden;
+  }
+  .toolBox {
+    height: 140px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  }
 }
 </style>
