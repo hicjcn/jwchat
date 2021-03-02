@@ -11,7 +11,8 @@
     "lint": "vue-cli-service lint",
     "build:lib": "webpack ---mode production  --display-error-details --config webpack.config.js",
     "lib": "vue-cli-service build --target lib --name JwChat --dest lib src/components/index.js",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "unit": "jest --config test/unit/jest.conf.js --coverage"
   },
   "unpkg": "lib/JwChat.umd.js",
   "files": [
@@ -26,17 +27,21 @@
     "wechat-emoji-parser": "^1.1.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.5",
     "@vue/cli-plugin-babel": "^4.3.1",
     "@vue/cli-plugin-eslint": "^4.3.1",
     "@vue/cli-plugin-unit-jest": "^4.5.8",
     "@vue/cli-service": "^4.3.1",
     "@vue/test-utils": "^1.0.3",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.1.0",
     "core-js": "^3.6.5",
     "eslint": "^6.8.0",
     "eslint-plugin-vue": "^6.2.2",
+    "jest": "^26.1.0",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",
+    "vue-jest": "^3.0.6",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {

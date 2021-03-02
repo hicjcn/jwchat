@@ -18,7 +18,10 @@
           </div>
           <div class="web__main-text">
             <div class="web__main-arrow"></div>
-            <itemTalk v-if="item.text.text" :text="item.text.text" />
+            <itemTalk v-if="item.text.text" :text="item.text.text" 
+            @systemEvent="taskEvent"/>
+            <systemTalk v-if="item.text.system" :text="item.text.system"
+             @systemEvent="systemEvent"/>
           </div>
         </div>
       </div>
@@ -33,10 +36,12 @@
 import Scroll from '@/utils/scroll'
 import Remind from '@/utils/remind'
 import itemTalk from './itemTalk'
-
+import systemTalk from './systemTalk'
+// TODO: 提示功能单独拿出来 
+// TODO: 历史模块 拿出来
 export default {
   name: 'JwChat_list',
-  components: { itemTalk },
+  components: { itemTalk, systemTalk },
   filters: {},
   props: {
     pageConfig: {
@@ -184,6 +189,12 @@ export default {
           callback&&callback()
         }
       }, 500)
+    },
+    systemEvent(itemData){
+      this.$emit('click', { type:'systemItem', data: itemData })
+    },
+    taskEvent(itemData){
+       this.$emit('click', { type:'taskItem', data: itemData })
     }
   },
   mounted () {

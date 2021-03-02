@@ -11,8 +11,8 @@
       scrollType="noroll"
       @clickTalk="talkEvent"
     >
-      <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
-      <!-- <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" /> -->
+      <!-- <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" /> -->
+      <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" />
       <template slot="tools">
         <div style="width:20rem;text-align:right;" @click="toolEvent(12)">
           <JwChat-icon type="icon-lishi" title="自定义"/>
@@ -41,13 +41,21 @@ export default {
         list: [
           {
             name: 'JwChat',
-            "img": "image/three.jpeg"
+            "img": "image/three.jpeg",
+            id:1,
           },
-          {
+           {
+             id:2,
             name: 'JwChat',
             "img": "image/three.jpeg"
           },
           {
+             id:3,
+            name: 'JwChat',
+            "img": "image/three.jpeg"
+          },
+          {
+            id:4,
             name: '留恋人间不羡仙',
             "img": "image/one.jpeg"
           },
@@ -169,7 +177,32 @@ export default {
         "mine": true,
         "name": "JwChat",
         "img": "/image/three.jpeg"
-      },
+      },{
+        "date": "2021/03/02 13:14:21",
+        "mine": false,
+        "name": "留恋人间不羡仙",
+        "img": "/image/one.jpeg",
+        "text": {
+          system: {
+            title: '在接入人工前，智能助手将为您首次应答。',
+            subtitle: '猜您想问:',
+            content: [
+              {
+                id: `system1`,
+                text: '组件如何使用'
+              },
+              {
+                id: `system2`,
+                text: '组件参数在哪里查看'
+              },
+              {
+                id: 'system',
+                text: '我可不可把组件用在商业'
+              }
+            ]
+          }
+        }
+      }
     ]
   }
 }

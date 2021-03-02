@@ -1,6 +1,6 @@
 <template>
-  <span class="item_msg">
-    <span v-if="getTag === 'span'" v-html="parseText()" />
+  <span class="item_msg" @click="itemCallback">
+    <span v-if="getTag === 'span'" v-html="parseText()"/>
     <img
       class="web__msg--img"
       v-if="getTag === 'img'"
@@ -121,6 +121,9 @@ export default {
         callback();
       }
     },
+    itemCallback(){
+      this.$emit('systemEvent', this.text)
+    },
     parseText () {
       let { text } = this
       if (!text) return
@@ -197,10 +200,11 @@ export default {
 .item_msg {
   padding: 0px;
   margin: 0px;
+  display: inline-block;
+  display: flex;
   .web__msg--img,
   .web__msg--video,
   .web__msg--file {
-    position: relative;
     max-width: 250px;
     min-width: 50px;
     width: 100%;
