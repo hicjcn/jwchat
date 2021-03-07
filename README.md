@@ -1,12 +1,21 @@
 # JwChat
 
+<p align="center">
+  <a href="https://gitee.com/CodeGI/chat" rel="nofollow">
+    <img src="https://img.shields.io/badge/JwChat-0.3.0-blue" alt="JwChat css js vue 聊天组件">
+  </a>
+</p>
 #### 介绍
+
 **一款基于Vue和ElementUI极简的聊天框组件**
 本项目是一款极简的数据驱动为主的聊天框组件。
 新增表情包可自动匹配微信表情。
 新增聊天窗口配置组件，可以自由配置 顶部状态栏 和 右侧信息栏
 
 ![](./document/img/20200730.gif)
+
+
+![](./document/img/20210307.gif)
 
 #### 安装
 
@@ -57,6 +66,11 @@
 #### 文档
 * [**官方文档**](https://codegi.gitee.io/jwchatdoc/)
 
+#### 跟新公告
+
+- `+新增`  多窗口聊天
+- `+新增` 会话列表系统问询
+- `/修复` BUG
 
 #### 参与贡献
 
