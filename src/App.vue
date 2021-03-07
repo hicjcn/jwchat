@@ -1,6 +1,5 @@
 <template>
   <div id="app" class="wrapper">
-    <itemTalk />
     <JwChat-index
       :config="config"
       :taleList="list"
@@ -9,6 +8,7 @@
       :toolConfig="tool"
       :showRightBox='true'
       scrollType="noroll"
+      :winBarConfig="winBarConfig"
       @clickTalk="talkEvent"
     >
       <!-- <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" /> -->
@@ -23,9 +23,8 @@
 </template>
 
 <script>
-import itemTalk from '@/components/Chat/itemTalk'
 export default {
-  components: { itemTalk },
+  components: { },
   data () {
     return {
       inputMsg: '',
@@ -91,6 +90,43 @@ export default {
           callback: this.bindLoadHistory,
         }
       },
+      winBarConfig: {
+        active: 'win01',
+        width: '160px',
+        listHeight: '60px',
+        list: [ {
+          id: 'win00',
+          img: 'image/cover.png',
+          name: 'JwChat',
+          dept: '最简单、最便捷'
+        },
+        {
+          id: 'win01',
+          img: 'image/three.jpeg',
+          name: '阳光明媚爱万物',
+          dept: '沙拉黑油'
+        },
+        {
+          id: 'win02',
+          img: 'image/two.jpeg',
+          name: '只盼流星不盼雨',
+          dept: '最后说的话'
+        },
+        {
+          id: 'win03',
+          img: 'image/one.jpeg',
+          name: '留恋人间不羡仙',
+          dept: '这里可以放万物'
+        },
+        {
+          id: 'win04',
+          img: 'image/three.jpeg',
+          name: '阳光明媚爱万物',
+          dept: '官方客服'
+        }],
+        callback: this.bindWinBar,
+
+      }
     }
   },
   methods: {
@@ -145,6 +181,108 @@ export default {
     },
     bindTalk (play) {
       console.log('talk', play)
+    },
+    bindWinBar (play = {}) {
+      const {type, data={}} = play
+      console.log(play);
+      if(type==='winBar'){
+        const { id, dept, name, img } = data
+        this.config = {...this.config,  id, dept, name, img}
+        this.winBarConfig.active = id
+        if(id==='win00'){
+          const img = 'https://www.baidu.com/img/flexible/logo/pc/result.png'
+          this.list = [
+            {
+              "date": "2020/04/25 21:19:07",
+              "text": { "text": "起床不" },
+              "mine": false,
+              "name": "留恋人间不羡仙",
+              "img": "/image/one.jpeg"
+            },
+            {
+              "date": "2020/04/25 21:19:07",
+              "text": { "text": "<audio data-src='https://www.w3school.com.cn/i/horse.mp3'/>" },
+              "mine": false,
+              "name": "只盼流星不盼雨",
+              "img": "/image/two.jpeg"
+            },
+            {
+              "date": "2020/04/25 21:19:07",
+              "text": { "text": "<img data-src='"+img+"'/>" },
+              "mine": false,
+              "name": "只盼流星不盼雨",
+              "img": "/image/two.jpeg"
+            },
+            {
+              "date": "2020/04/16 21:19:07",
+              "text": { "text": "<video data-src='https://www.w3school.com.cn/i/movie.mp4' controls='controls' />" },
+              "mine": true,
+              "name": "JwChat",
+              "img": "/image/three.jpeg"
+            },{
+              "date": "2021/03/02 13:14:21",
+              "mine": false,
+              "name": "留恋人间不羡仙",
+              "img": "/image/one.jpeg",
+              "text": {
+                system: {
+                  title: '在接入人工前，智能助手将为您首次应答。',
+                  subtitle: '猜您想问:',
+                  content: [
+                    {
+                      id: `system1`,
+                      text: '组件如何使用'
+                    },
+                    {
+                      id: `system2`,
+                      text: '组件参数在哪里查看'
+                    },
+                    {
+                      id: 'system',
+                      text: '我可不可把组件用在商业'
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        } else
+          this.list = [{
+            "date": "2021/03/02 13:14:21",
+            "mine": false,
+            "name": "留恋人间不羡仙",
+            "img": "/image/one.jpeg",
+            "text": {
+              system: {
+                title: '在接入人工前，智能助手将为您首次应答。',
+                subtitle: '猜您想问:',
+                content: [
+                  {
+                    id: `system1`,
+                    text: '组件如何使用'
+                  },
+                  {
+                    id: `system2`,
+                    text: '组件参数在哪里查看'
+                  },
+                  {
+                    id: 'system',
+                    text: '我可不可把组件用在商业'
+                  }
+                ]
+              }
+            }
+          }]
+      }
+      if(type==='winBtn'){
+        const { target: {id } = {} } = data
+        const {list} = this.winBarConfig
+        this.winBarConfig.list =list.reduce((p,i)=>{
+          if(id!=i.id)
+          p.push( i )
+          return p
+        },[])
+      }
     }
   },
   mounted () {

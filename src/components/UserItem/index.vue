@@ -52,41 +52,41 @@ export default {
   },
 }
 </script>
-<style scoped>
+<style lang='scss' scoped>
 .item {
   display: flex;
   align-items: center;
   position: relative;
-}
-.item .cover {
-  border-radius: 50%;
-  margin-right: 12px;
-  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-.item .info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  .cover {
+    border-radius: 50%;
+    margin-right: 12px;
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    p {
+      margin: 0;
+      margin: 0;
+      padding: 0;
+      /* width: 175px; */
+      text-overflow: ellipsis;
+      overflow: hidden;
+      text-align: left;
+      white-space: nowrap;
+      font-size: 13px;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.8;
+      }
+      &:last-child {
+        font-size: 12px;
+      }
+    }
+  }
 }
 
-.item .info p {
-  margin: 0;
-  margin: 0;
-  padding: 0;
-  width: 175px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  text-align: left;
-  white-space: nowrap;
-  font-size: 13px;
-  cursor: pointer;
-}
 
-.item .info p:hover {
-  opacity: 0.8;
-}
-.item .info p:last-child {
-  font-size: 12px;
-}
 </style>

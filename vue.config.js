@@ -5,7 +5,7 @@ const banner =
   ' JwChat.js v' +
   version +
   '\n' +
-  ' (c) 2017-' +
+  ' (c) 2020-' +
   new Date().getFullYear() +
   ' codeGI\n' +
   ' Released under the MIT License.\n';

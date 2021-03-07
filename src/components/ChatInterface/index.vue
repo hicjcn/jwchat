@@ -1,5 +1,6 @@
 <template>
   <div class="ChatPage" :style="faceSize">
+    <WinBar v-if="JSON.stringify(winBarConfig)!=='{}'" class="winBar"  :config="winBarConfig" @click="winBarClick"/>
     <div class="header">
       <JwChat-item :config="config" @click="bindClick" />
       <slot name="header" />
@@ -31,8 +32,12 @@
 </template>
 
 <script>
+import WinBar from './windowBar'
 export default {
   name: "JwChat-index",
+  components:{
+    WinBar
+  },
   props: {
     config: {
       type: Object,
@@ -65,6 +70,10 @@ export default {
     },
     toolConfig: {
       type: Object
+    },
+    winBarConfig:{
+      type: Object,
+      default: ()=>({})
     },
     scrollType: {
       default: "noroll"
@@ -139,6 +148,12 @@ export default {
       if (callback) {
         callback(type)
       }
+    },
+    winBarClick(play) {
+      const {callback = null} = this.winBarConfig
+      if(callback){
+        callback(play)
+      }
     }
   }
 }
@@ -149,7 +164,11 @@ export default {
   margin: 0 auto;
   background: #fff;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-
+  position: relative;
+  .winBar{
+    position: absolute;
+    transform: translateX(-100%);
+  }
   .header {
     background-color: #409eff;
     display: flex;

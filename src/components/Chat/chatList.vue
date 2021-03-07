@@ -188,7 +188,7 @@ export default {
           that.scroll.refresh()
           callback&&callback()
         }
-      }, 500)
+      }, 50)
     },
     systemEvent(itemData){
       this.$emit('click', { type:'systemItem', data: itemData })
