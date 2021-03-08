@@ -5,6 +5,7 @@
     <img src="https://img.shields.io/badge/JwChat-0.3.0-blue" alt="JwChat css js vue 聊天组件">
   </a>
 </p>
+
 #### 介绍
 
 **一款基于Vue和ElementUI极简的聊天框组件**
@@ -12,7 +13,7 @@
 新增表情包可自动匹配微信表情。
 新增聊天窗口配置组件，可以自由配置 顶部状态栏 和 右侧信息栏
 
-![](https://gitee.com/CodeGI/chat/raw/master/document/img/20200730.gif)
+![](https://img-blog.csdnimg.cn/20210307230254986.gif)
 
 
 ![](./document/img/20210307.gif)
