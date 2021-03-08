@@ -16,7 +16,7 @@
 ![](https://img-blog.csdnimg.cn/20210307230254986.gif)
 
 
-![](./document/img/20210307.gif)
+![](https://img-blog.csdnimg.cn/20210307230254368.gif)
 
 #### 安装
 
