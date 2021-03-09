@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-02 21:17:22
- * @LastEditTime: 2021-03-02 22:43:16
+ * @LastEditTime: 2021-03-09 22:34:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \JChat\src\components\Chat\sysTalk.vue
@@ -28,6 +28,11 @@ export default {
     itemCallback(itemData){
       this.$emit('systemEvent', itemData)
     }
+  },
+  mounted(){
+    this.$nextTick(() => {
+      this.$emit('loadDone', {type: 'system', target: this.text})
+    })
   }
 }
 </script>

@@ -7,6 +7,7 @@
       :src="getData.src"
       alt
       @click="showDialog({tag:'img'})"
+      @load="load('img')"
     />
     <video
       class="web__msg--video"
@@ -14,6 +15,7 @@
       :src="getData.src"
       controls="controls"
       @click="showDialog({tag:'video'})"
+      @canplaythrough="load('video')"
     />
     <audio
       class="web__msg--audio"
@@ -21,6 +23,7 @@
       style="width:20rem;height:20px;"
       :src="getData.src"
       controls="controls"
+      @canplaythrough="load('audio')"
     />
 
     <!-- 查看区域 -->
@@ -63,6 +66,7 @@ export default {
       imgSrc: '',
       videoSrc: '',
       audioSrc: '',
+      loadState: false
     }
   },
   computed: {
@@ -71,7 +75,7 @@ export default {
       let tag = 'span'
       let type = ''
 
-      const isTag = str.match(/(?!^<)[A-Z|a-z]+/)
+      const isTag = str.match(/(?<=^<)[A-Z|a-z]+/)
       isTag && (type = isTag[0])
       if (this.tags.includes(type)) {
         tag = type
@@ -93,6 +97,11 @@ export default {
     },
   },
   methods: {
+    load(type){
+      if(this.loadState) return
+      this.loadState = true
+      this.$emit('loadDone', { type, target: this.text })
+    },
     handleClose (done) {
       this.imgSrc = undefined;
       this.videoSrc = undefined;
@@ -191,8 +200,11 @@ export default {
      }, */
   },
   mounted(){
-    // console.log('加载完成');
-    this.$emit('loadDone', true)
+    const type = this.getTag
+    if (this.tags.includes(type))  return
+    this.$nextTick(() => {
+      this.$emit('loadDone', {type, target: this.text})
+    })
   }
 }
 </script>

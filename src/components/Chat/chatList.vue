@@ -1,6 +1,8 @@
 <template>
   <div class="wrapper" :style="boxSize" ref="scroller">
-    <div v-if="historyLoding" @click="$emit('loadHistory')">{{historyConfig.tip}}</div>
+    <div v-if="historyConfig.show&&historyLoding" @click="handleHistory">
+      {{historyConfig.tip}}
+    </div>
     <div class="scroller">
       <div class="web__main" ref="main">
         <div
@@ -19,9 +21,9 @@
           <div class="web__main-text">
             <div class="web__main-arrow"></div>
             <itemTalk v-if="item.text.text" :text="item.text.text" 
-            @systemEvent="taskEvent"/>
+            @systemEvent="taskEvent" @loadDone="loadDone"/>
             <systemTalk v-if="item.text.system" :text="item.text.system"
-             @systemEvent="systemEvent"/>
+             @systemEvent="systemEvent" @loadDone="loadDone"/>
           </div>
         </div>
       </div>
@@ -42,7 +44,6 @@ import systemTalk from './systemTalk'
 export default {
   name: 'JwChat_list',
   components: { itemTalk, systemTalk },
-  filters: {},
   props: {
     pageConfig: {
       type: Object,
@@ -68,24 +69,37 @@ export default {
       remind: null, // 消息提示
       scrollTop: false,
       historyLoding: false,
-      complete: null
+      listNum: 0,
+      allLoad: false,
+      stopScroll: false,
     }
   },
   watch: {
     list (newval) {
       if (newval) {
-        this.$nextTick(() => {
-          let callback = null
-          
-          if (!this.historyLoding&&this.scrollType === 'scroll') {
-            callback = this.scrollBottom
-          }
-          if (this.historyLoding) {
-            this.resetHistoryFlag()
-          }
-
-          this.scrollRefresh(callback)
-        })
+        // 数据是否加载阈值
+        if(this.historyLoding){
+          this.listNum = 0
+          this.stopScroll = true
+        }
+        this.allLoad = false
+      }
+    },
+    listNum(newVal){
+      if(newVal){
+        if(this.list.length === newVal)
+          this.allLoad = true
+      }
+    },
+    allLoad(newVal){
+      if(newVal){
+        this.allLoad = false
+        let callback = null
+        if (this.scrollType === 'scroll') {
+          callback = this.scrollBottom
+        }
+        this.childnodeLoad()
+        this.scrollRefresh(callback)
       }
     },
     'config.scrollToButton' (newval) {
@@ -116,8 +130,8 @@ export default {
       return style
     },
     historyConfig () {
-      const { historyConfig: { tip = "", activate = false } = {} } = this.config
-      return { tip, activate }
+      const { historyConfig: { tip = "历史消息", show = false, } = {} } = this.config
+      return { tip, show }
     },
     scrollType () {
       const { scrollType: type = "noroll" } = this.config
@@ -129,7 +143,16 @@ export default {
     }
   },
   methods: {
+    loadDone(){
+      this.listNum += 1
+      this.scroll.refresh()
+    },
     scrollBottom () {
+      const stop = this.stopScroll
+      if(stop) 
+        return this.$nextTick(()=>{
+          this.stopScroll=false
+        })
       if (this.scroll) {
         this.scroll.scrollTo(0, this.scroll.maxScrollY, 200)
       }
@@ -151,6 +174,14 @@ export default {
         that.showHistoryBtn()
         if (that.historyLoding) return
         that.scroll.savePosition() // 保存当前滚动位置
+      });
+      let timer = null
+      this.scroll.on('scroll', function () {
+        clearTimeout(timer)
+        that.stopScroll = true
+        timer = setTimeout(()=>{
+          that.stopScroll = false
+        },500)
       });
     },
     showHistoryBtn () {
@@ -179,22 +210,22 @@ export default {
     },
     scrollRefresh (callback = null) {
       if(!this.scroll) return
-      const that = this
-      that.complete = setInterval(function () {
-        // 判断文档和所有子资源(图片、音视频等)已完成加载
-        if (document.readyState === 'complete') {
-          window.clearInterval(that.complete)
-          that.childnodeLoad()
-          that.scroll.refresh()
-          callback&&callback()
-        }
-      }, 50)
+      this.scroll.refresh()
+      this.$nextTick(()=>{
+        callback&&callback()
+      })
     },
     systemEvent(itemData){
       this.$emit('click', { type:'systemItem', data: itemData })
     },
     taskEvent(itemData){
        this.$emit('click', { type:'taskItem', data: itemData })
+    },
+    handleHistory(){
+      this.$emit('loadHistory')
+      this.$nextTick(()=>{
+          this.resetHistoryFlag()
+      })
     }
   },
   mounted () {
