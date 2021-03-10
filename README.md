@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://gitee.com/CodeGI/chat" rel="nofollow">
-    <img src="https://img.shields.io/badge/JwChat-0.3.0-blue" alt="JwChat css js vue 聊天组件">
+    <img src="https://img.shields.io/badge/JwChat-0.3.1-blue" alt="JwChat css js vue 聊天组件">
   </a>
 </p>
 
@@ -80,10 +80,10 @@
 3.  提交代码
 4.  新建 Pull Request
 
-#### 声明
+#### 推荐项目
 
-* 本代码借鉴于[AVue](https://avuejs.com/)
-
+* [AVue](https://avuejs.com/)**本代码借鉴于**
+* [JPower](https://gitee.com/gdzWork/JPower)
 
 #### 交流学习
 
