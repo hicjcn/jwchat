@@ -16,6 +16,7 @@
           :width="realWidth"
           :height="chatHeight"
           :config="chatConfig"
+          :quickList="quickList"
           @clickTalk="$emit('clickTalk',$event)"
         >
           <slot name="tools" slot="tools" />
@@ -113,6 +114,10 @@ export default {
       let ratio = 1
       if(this.showRightBox&&this.switchBox)  ratio = .7
       return width * ratio+''
+    },
+    quickList(){
+      const { quickList=[]} = this.config
+      return quickList
     }
   },
   watch: {

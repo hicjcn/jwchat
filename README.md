@@ -82,7 +82,7 @@
 
 #### 推荐项目
 
-* [AVue](https://avuejs.com/)**本代码借鉴于**
+* [AVue](https://avuejs.com/) **本代码借鉴项目**
 * [JPower](https://gitee.com/gdzWork/JPower)
 
 #### 交流学习

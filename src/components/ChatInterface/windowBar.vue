@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-04 17:23:51
- * @LastEditTime: 2021-03-06 23:00:52
+ * @LastEditTime: 2021-03-14 17:37:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \JChat\src\components\ChatInterface\windowBar.vue

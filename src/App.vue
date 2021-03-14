@@ -7,7 +7,7 @@
       v-model="inputMsg"
       :toolConfig="tool"
       :showRightBox='true'
-      scrollType="noroll"
+      scrollType="scroll"
       :winBarConfig="winBarConfig"
       @clickTalk="talkEvent"
     >
@@ -88,7 +88,19 @@ export default {
           show: true,
           tip: '加载更多',
           callback: this.bindLoadHistory,
-        }
+        },
+        quickList: [
+          {text: '这里是jwchat，您想了解什么问题。'},
+          {text: 'jwchat是最好的聊天组件'},
+          {text: '谁将烟焚散，散了纵横的牵绊；听弦断，断那三千痴缠。'},
+          {text: '长夏逝去。山野间的初秋悄然涉足。'},
+          {text: '江南风骨，天水成碧，天教心愿与身违。'},
+          {text: '总在不经意的年生。回首彼岸。纵然发现光景绵长。'},
+          {text: '外面的烟花奋力的燃着，屋里的人激情的说着情话'},
+          {text: '假如你是云，我就是雨，一生相伴，风风雨雨；'},
+          {text: '即使泪水在眼中打转，我依旧可以笑的很美，这是你学不来的坚强。'},
+          {text: ' 因为不知来生来世会不会遇到你，所以今生今世我会加倍爱你。'},
+        ]
       },
       winBarConfig: {
         active: 'win01',
@@ -98,19 +110,22 @@ export default {
           id: 'win00',
           img: 'image/cover.png',
           name: 'JwChat',
-          dept: '最简单、最便捷'
+          dept: '最简单、最便捷',
+          readNum: 1
         },
         {
           id: 'win01',
           img: 'image/three.jpeg',
           name: '阳光明媚爱万物',
-          dept: '沙拉黑油'
+          dept: '沙拉黑油',
+          readNum: 12
         },
         {
           id: 'win02',
           img: 'image/two.jpeg',
           name: '只盼流星不盼雨',
-          dept: '最后说的话'
+          dept: '最后说的话',
+          readNum: 12
         },
         {
           id: 'win03',
@@ -152,8 +167,9 @@ export default {
     talkEvent (play) {
       console.log(play)
     },
-    bindEnter () {
+    bindEnter (str) {
       const msg = this.inputMsg
+      console.log(msg, str);
       if (!msg) return;
       const msgObj = {
         "date": "2020/05/20 23:19:07",

@@ -12,6 +12,7 @@
       <tools :tools="toolConfig" class="tools" @emoji="bindEmoji">
         <slot name="tools" slot="tools" />
       </tools>
+      <quickList :list="quickList" :msg="msg" class="quickList" @submit="quickSubmit"/>
       <EnterBox @submit="$emit('enter', $event)" v-model="msg" :insert="insert"/>
     </div>
   </div>
@@ -21,9 +22,10 @@
 import EnterBox from './enterBox.vue'
 import chatList from './chatList.vue'
 import tools from './tools.vue'
+import quickList from './quickList.vue'
 export default {
   name: "JwChat",
-  components: { EnterBox, chatList, tools },
+  components: { EnterBox, chatList, tools, quickList },
   props: {
     taleList: {
       type: Array,
@@ -53,7 +55,11 @@ export default {
         callback: Function
       })
     },
-    config: {}
+    config: {},
+    quickList: {
+      type: Array,
+      default: ()=>([])
+    }
   },
   data () {
     return {
@@ -111,6 +117,13 @@ export default {
     loadHistoryHandler () {
       const { historyConfig: { callback = null } = {} } = this.chatListConfig
       callback && callback()
+    },
+    quickSubmit(str){
+      this.msg = str
+      this.$nextTick(()=>{
+        this.$emit('enter', str)
+        this.msg = ''
+      })
     }
   },
 }
@@ -129,6 +142,13 @@ export default {
   .toolBox {
     height: 140px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+    position: relative;
+    .quickList{
+      transform: translateY(-100%);
+      background: #fff;
+      position: absolute;
+      z-index: 5;
+    }
   }
 }
 </style>
