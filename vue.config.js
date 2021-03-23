@@ -11,6 +11,7 @@ const banner =
   ' Released under the MIT License.\n';
 
 module.exports = {
+  publicPath: './',
   css: {
     extract: false
   },

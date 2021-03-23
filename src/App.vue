@@ -5,12 +5,13 @@
       :taleList="list"
       @enter="bindEnter"
       v-model="inputMsg"
-      :toolConfig="tool"
       :showRightBox='true'
       scrollType="scroll"
       :winBarConfig="winBarConfig"
+      :quickList="config.quickList"
       @clickTalk="talkEvent"
     >
+      <!-- :toolConfig="tool" -->
       <!-- <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" /> -->
       <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" />
       <template slot="tools">
@@ -80,7 +81,7 @@ export default {
         '快捷回复6',
       ],
       config: {
-        img: '/image/cover.png',
+        img: 'image/cover.png',
         name: 'JwChat',
         dept: '最简单、最便捷',
         callback: this.bindCover,
@@ -213,33 +214,33 @@ export default {
               "text": { "text": "起床不" },
               "mine": false,
               "name": "留恋人间不羡仙",
-              "img": "/image/one.jpeg"
+              "img": "image/one.jpeg"
             },
             {
               "date": "2020/04/25 21:19:07",
               "text": { "text": "<audio data-src='https://www.w3school.com.cn/i/horse.mp3'/>" },
               "mine": false,
               "name": "只盼流星不盼雨",
-              "img": "/image/two.jpeg"
+              "img": "image/two.jpeg"
             },
             {
               "date": "2020/04/25 21:19:07",
               "text": { "text": "<img data-src='"+img+"'/>" },
               "mine": false,
               "name": "只盼流星不盼雨",
-              "img": "/image/two.jpeg"
+              "img": "image/two.jpeg"
             },
             {
               "date": "2020/04/16 21:19:07",
               "text": { "text": "<video data-src='https://www.w3school.com.cn/i/movie.mp4' controls='controls' />" },
               "mine": true,
               "name": "JwChat",
-              "img": "/image/three.jpeg"
+              "img": "image/three.jpeg"
             },{
               "date": "2021/03/02 13:14:21",
               "mine": false,
               "name": "留恋人间不羡仙",
-              "img": "/image/one.jpeg",
+              "img": "image/one.jpeg",
               "text": {
                 system: {
                   title: '在接入人工前，智能助手将为您首次应答。',
@@ -267,7 +268,7 @@ export default {
             "date": "2021/03/02 13:14:21",
             "mine": false,
             "name": "留恋人间不羡仙",
-            "img": "/image/one.jpeg",
+            "img": "image/one.jpeg",
             "text": {
               system: {
                 title: '在接入人工前，智能助手将为您首次应答。',
@@ -309,33 +310,33 @@ export default {
         "text": { "text": "起床不" },
         "mine": false,
         "name": "留恋人间不羡仙",
-        "img": "/image/one.jpeg"
+        "img": "image/one.jpeg"
       },
       {
         "date": "2020/04/25 21:19:07",
         "text": { "text": "<audio data-src='https://www.w3school.com.cn/i/horse.mp3'/>" },
         "mine": false,
         "name": "只盼流星不盼雨",
-        "img": "/image/two.jpeg"
+        "img": "image/two.jpeg"
       },
       {
         "date": "2020/04/25 21:19:07",
         "text": { "text": "<img data-src='"+img+"'/>" },
         "mine": false,
         "name": "只盼流星不盼雨",
-        "img": "/image/two.jpeg"
+        "img": "image/two.jpeg"
       },
       {
         "date": "2020/04/16 21:19:07",
         "text": { "text": "<video data-src='https://www.w3school.com.cn/i/movie.mp4' controls='controls' />" },
         "mine": true,
         "name": "JwChat",
-        "img": "/image/three.jpeg"
+        "img": "image/three.jpeg"
       },{
         "date": "2021/03/02 13:14:21",
         "mine": false,
         "name": "留恋人间不羡仙",
-        "img": "/image/one.jpeg",
+        "img": "image/one.jpeg",
         "text": {
           system: {
             title: '在接入人工前，智能助手将为您首次应答。',

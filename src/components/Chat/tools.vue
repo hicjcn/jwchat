@@ -36,7 +36,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          show: [],
+          show: ['file'],
           showEmoji: true,
           callback: () => { }
         }
@@ -65,18 +65,21 @@ export default {
     showkeys () {
       let keys = Object.keys(this.toolConfig)
       const { show = [] } = this.tools || {}
+        console.log(this.toolConfig,this.tools);
+      let _key = []
       if (show.length > 0) {
-        let _key = []
         show.forEach(i => {
           if (Array.isArray(i)) {
             this.newTitle = i
             return
           }
-          _key.push(i)
+          if(keys.includes(i))
+           _key.push(i)
         })
-        keys = _key
+        // keys = _key
       }
-      return keys
+      console.log(_key);
+      return _key
     }
   },
   methods: {

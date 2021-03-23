@@ -48,12 +48,12 @@ export default {
       default: ''
     },
     toolConfig: {
-      type: Object,
-      default: () => ({
-        show: ['file', 'video', 'img'],
-        // showEmoji: true,
-        callback: Function
-      })
+      type: Object
+      // default: () => ({
+      //   show: [],
+      //   showEmoji: true,
+      //   callback: Function
+      // })
     },
     config: {},
     quickList: {
