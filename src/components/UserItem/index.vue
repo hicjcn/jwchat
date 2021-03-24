@@ -1,14 +1,14 @@
 <template>
   <div class="item">
-  <el-badge :value="config.readNum" class="item">
-    <img
-      v-if="config.img"
-      :src="config.img"
-      :style="coverSize"
-      class="cover"
-      @click="bindClick({ key:'cover', value: config })"
-    />
-  </el-badge>
+    <el-badge :value="config.readNum">
+      <img
+        v-if="config.img"
+        :src="config.img"
+        :style="coverSize"
+        class="cover"
+        @click="bindClick({ key:'cover', value: config })"
+      />
+    </el-badge>
     <div class="info">
       <p class="name" @click="bindClick({ key:'name', value: config })">{{config.name}}</p>
       <p class="dept" @click="bindClick({ key:'dept', value: config })">{{config.dept}}</p>

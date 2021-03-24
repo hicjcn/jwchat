@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-04 17:23:51
- * @LastEditTime: 2021-03-14 17:37:18
+ * @LastEditTime: 2021-03-24 22:14:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \JChat\src\components\ChatInterface\windowBar.vue
@@ -203,7 +203,7 @@ export default {
   .winItem {
     display: flex;
     align-items: center;
-    justify-content: center;
+    // justify-content: center;
     position: relative;
     transition: transform 0.6s;
     background: #fff;
