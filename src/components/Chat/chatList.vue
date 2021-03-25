@@ -77,19 +77,21 @@ export default {
   watch: {
     list (newval) {
       if (newval) {
+        this.listNum = 0
         // 数据是否加载阈值
         if(this.historyLoding){
-          this.listNum = 0
           this.stopScroll = true
         }
         this.allLoad = false
       }
     },
     listNum(newVal){
-      if(newVal){
-        if(this.list.length === newVal)
+      // if(newVal){
+        if(this.list.length === newVal){
+          this.listNum = 0
           this.allLoad = true
-      }
+        }
+      // }
     },
     allLoad(newVal){
       if(newVal){

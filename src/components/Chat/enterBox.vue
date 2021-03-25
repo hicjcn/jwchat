@@ -74,7 +74,6 @@ export default {
     joinToMsg (str) {
       /* eslint-disable */
       const myField = this.$refs.msgBox
-      console.log(myField);
       let afterMsg = this.currentMsg
       //IE浏览器
       if (document.selection) {

@@ -65,7 +65,6 @@ export default {
     showkeys () {
       let keys = Object.keys(this.toolConfig)
       const { show = [] } = this.tools || {}
-        console.log(this.toolConfig,this.tools);
       let _key = []
       if (show.length > 0) {
         show.forEach(i => {
@@ -78,7 +77,6 @@ export default {
         })
         // keys = _key
       }
-      console.log(_key);
       return _key
     }
   },

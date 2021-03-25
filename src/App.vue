@@ -1,12 +1,13 @@
 <template>
   <div id="app" class="wrapper">
+    <el-button @click="emitList">信息来发哦</el-button>
     <JwChat-index
       :config="config"
       :taleList="list"
       @enter="bindEnter"
       v-model="inputMsg"
       :showRightBox='true'
-      scrollType="scroll"
+      scrollType="noroll"
       :winBarConfig="winBarConfig"
       :quickList="config.quickList"
       @clickTalk="talkEvent"
@@ -24,6 +25,76 @@
 </template>
 
 <script>
+const img = 'https://www.baidu.com/img/flexible/logo/pc/result.png'
+const listData = [
+  {
+    "date": "2020/04/25 21:19:07",
+    "text": { "text": "起床不" },
+    "mine": false,
+    "name": "留恋人间不羡仙",
+    "img": "image/one.jpeg"
+  },
+  {
+    "date": "2020/04/25 21:19:07",
+    "text": { "text": "<audio data-src='https://www.w3school.com.cn/i/horse.mp3'/>" },
+    "mine": false,
+    "name": "只盼流星不盼雨",
+    "img": "image/two.jpeg"
+  },
+  {
+    "date": "2020/04/25 21:19:07",
+    "text": { "text": "<img data-src='"+img+"'/>" },
+    "mine": false,
+    "name": "只盼流星不盼雨",
+    "img": "image/two.jpeg"
+  },
+  {
+    "date": "2020/04/16 21:19:07",
+    "text": { "text": "<video data-src='https://www.w3school.com.cn/i/movie.mp4' controls='controls' />" },
+    "mine": true,
+    "name": "JwChat",
+    "img": "image/three.jpeg"
+  },{
+    "date": "2021/03/02 13:14:21",
+    "mine": false,
+    "name": "留恋人间不羡仙",
+    "img": "image/one.jpeg",
+    "text": {
+      system: {
+        title: '在接入人工前，智能助手将为您首次应答。',
+        subtitle: '猜您想问:',
+        content: [
+          {
+            id: `system1`,
+            text: '组件如何使用'
+          },
+          {
+            id: `system2`,
+            text: '组件参数在哪里查看'
+          },
+          {
+            id: 'system',
+            text: '我可不可把组件用在商业'
+          }
+        ]
+      }
+    }
+  }
+]
+function getListArr(size) {
+  const listSize = listData.length
+  if(!size){
+    size = listSize
+  }
+  let result = []
+  for (let i = 0; i < size; i++) {
+    const item = listData[Math.random()*listSize>>0]
+    item.id = i
+    console.log(JSON.stringify(item.id))
+    result.push(item)
+  }
+  return result
+}
 export default {
   components: { },
   data () {
@@ -146,6 +217,9 @@ export default {
     }
   },
   methods: {
+    emitList() {
+      this.list = getListArr().concat(getListArr())
+    },
     /**
      * @description: 点击加载更多的回调函数
      * @param {*}
@@ -207,89 +281,9 @@ export default {
         this.config = {...this.config,  id, dept, name, img}
         this.winBarConfig.active = id
         if(id==='win00'){
-          const img = 'https://www.baidu.com/img/flexible/logo/pc/result.png'
-          this.list = [
-            {
-              "date": "2020/04/25 21:19:07",
-              "text": { "text": "起床不" },
-              "mine": false,
-              "name": "留恋人间不羡仙",
-              "img": "image/one.jpeg"
-            },
-            {
-              "date": "2020/04/25 21:19:07",
-              "text": { "text": "<audio data-src='https://www.w3school.com.cn/i/horse.mp3'/>" },
-              "mine": false,
-              "name": "只盼流星不盼雨",
-              "img": "image/two.jpeg"
-            },
-            {
-              "date": "2020/04/25 21:19:07",
-              "text": { "text": "<img data-src='"+img+"'/>" },
-              "mine": false,
-              "name": "只盼流星不盼雨",
-              "img": "image/two.jpeg"
-            },
-            {
-              "date": "2020/04/16 21:19:07",
-              "text": { "text": "<video data-src='https://www.w3school.com.cn/i/movie.mp4' controls='controls' />" },
-              "mine": true,
-              "name": "JwChat",
-              "img": "image/three.jpeg"
-            },{
-              "date": "2021/03/02 13:14:21",
-              "mine": false,
-              "name": "留恋人间不羡仙",
-              "img": "image/one.jpeg",
-              "text": {
-                system: {
-                  title: '在接入人工前，智能助手将为您首次应答。',
-                  subtitle: '猜您想问:',
-                  content: [
-                    {
-                      id: `system1`,
-                      text: '组件如何使用'
-                    },
-                    {
-                      id: `system2`,
-                      text: '组件参数在哪里查看'
-                    },
-                    {
-                      id: 'system',
-                      text: '我可不可把组件用在商业'
-                    }
-                  ]
-                }
-              }
-            }
-          ]
+          this.list = getListArr()
         } else
-          this.list = [{
-            "date": "2021/03/02 13:14:21",
-            "mine": false,
-            "name": "留恋人间不羡仙",
-            "img": "image/one.jpeg",
-            "text": {
-              system: {
-                title: '在接入人工前，智能助手将为您首次应答。',
-                subtitle: '猜您想问:',
-                content: [
-                  {
-                    id: `system1`,
-                    text: '组件如何使用'
-                  },
-                  {
-                    id: `system2`,
-                    text: '组件参数在哪里查看'
-                  },
-                  {
-                    id: 'system',
-                    text: '我可不可把组件用在商业'
-                  }
-                ]
-              }
-            }
-          }]
+          this.list = getListArr(Math.random()*4>>0)
       }
       if(type==='winBtn'){
         const { target: {id } = {} } = data
@@ -303,62 +297,7 @@ export default {
     }
   },
   mounted () {
-    const img = 'https://www.baidu.com/img/flexible/logo/pc/result.png'
-    this.list = [
-      {
-        "date": "2020/04/25 21:19:07",
-        "text": { "text": "起床不" },
-        "mine": false,
-        "name": "留恋人间不羡仙",
-        "img": "image/one.jpeg"
-      },
-      {
-        "date": "2020/04/25 21:19:07",
-        "text": { "text": "<audio data-src='https://www.w3school.com.cn/i/horse.mp3'/>" },
-        "mine": false,
-        "name": "只盼流星不盼雨",
-        "img": "image/two.jpeg"
-      },
-      {
-        "date": "2020/04/25 21:19:07",
-        "text": { "text": "<img data-src='"+img+"'/>" },
-        "mine": false,
-        "name": "只盼流星不盼雨",
-        "img": "image/two.jpeg"
-      },
-      {
-        "date": "2020/04/16 21:19:07",
-        "text": { "text": "<video data-src='https://www.w3school.com.cn/i/movie.mp4' controls='controls' />" },
-        "mine": true,
-        "name": "JwChat",
-        "img": "image/three.jpeg"
-      },{
-        "date": "2021/03/02 13:14:21",
-        "mine": false,
-        "name": "留恋人间不羡仙",
-        "img": "image/one.jpeg",
-        "text": {
-          system: {
-            title: '在接入人工前，智能助手将为您首次应答。',
-            subtitle: '猜您想问:',
-            content: [
-              {
-                id: `system1`,
-                text: '组件如何使用'
-              },
-              {
-                id: `system2`,
-                text: '组件参数在哪里查看'
-              },
-              {
-                id: 'system',
-                text: '我可不可把组件用在商业'
-              }
-            ]
-          }
-        }
-      }
-    ]
+    this.list = getListArr()
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-04 17:23:51
- * @LastEditTime: 2021-03-24 22:14:41
+ * @LastEditTime: 2021-03-25 16:09:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \JChat\src\components\ChatInterface\windowBar.vue
@@ -21,7 +21,7 @@
           <JwChat-item :config="item"/>
           <div class="itemOperation">
             <!-- <el-button size="mini">置顶</el-button> -->
-            <el-button size="mini" type="danger" @click.stop="bindOperation({name: '删除', id:1, type: 'reomve', target: item})">删除</el-button>
+            <el-button size="mini" type="danger" @click.stop="bindOperation({ type: 'remove', target: item})">删除</el-button>
           </div>
         </div>
         <template v-if="!winList.length">
