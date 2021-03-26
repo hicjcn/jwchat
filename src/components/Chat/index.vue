@@ -118,10 +118,11 @@ export default {
       const { historyConfig: { callback = null } = {} } = this.chatListConfig
       callback && callback()
     },
-    quickSubmit(str){
-      this.msg = str
+    quickSubmit(target){
+      const { text } = target
+      this.msg = text
       this.$nextTick(()=>{
-        this.$emit('enter', str)
+        this.$emit('enter', target)
         this.msg = ''
       })
     }

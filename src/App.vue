@@ -1,6 +1,5 @@
 <template>
   <div id="app" class="wrapper">
-    <el-button @click="emitList">信息来发哦</el-button>
     <JwChat-index
       :config="config"
       :taleList="list"
@@ -89,8 +88,7 @@ function getListArr(size) {
   let result = []
   for (let i = 0; i < size; i++) {
     const item = listData[Math.random()*listSize>>0]
-    item.id = i
-    console.log(JSON.stringify(item.id))
+    item.id = Math.random().toString(16).substr(-6)
     result.push(item)
   }
   return result
@@ -162,16 +160,16 @@ export default {
           callback: this.bindLoadHistory,
         },
         quickList: [
-          {text: '这里是jwchat，您想了解什么问题。'},
-          {text: 'jwchat是最好的聊天组件'},
-          {text: '谁将烟焚散，散了纵横的牵绊；听弦断，断那三千痴缠。'},
-          {text: '长夏逝去。山野间的初秋悄然涉足。'},
-          {text: '江南风骨，天水成碧，天教心愿与身违。'},
-          {text: '总在不经意的年生。回首彼岸。纵然发现光景绵长。'},
-          {text: '外面的烟花奋力的燃着，屋里的人激情的说着情话'},
-          {text: '假如你是云，我就是雨，一生相伴，风风雨雨；'},
-          {text: '即使泪水在眼中打转，我依旧可以笑的很美，这是你学不来的坚强。'},
-          {text: ' 因为不知来生来世会不会遇到你，所以今生今世我会加倍爱你。'},
+          {text: '这里是jwchat，您想了解什么问题。', id:3},
+          {text: 'jwchat是最好的聊天组件', id:4},
+          {text: '谁将烟焚散，散了纵横的牵绊；听弦断，断那三千痴缠。', id:5},
+          {text: '长夏逝去。山野间的初秋悄然涉足。', id:6},
+          {text: '江南风骨，天水成碧，天教心愿与身违。', id:7},
+          {text: '总在不经意的年生。回首彼岸。纵然发现光景绵长。', id:8},
+          {text: '外面的烟花奋力的燃着，屋里的人激情的说着情话', id:10},
+          {text: '假如你是云，我就是雨，一生相伴，风风雨雨；', id:11},
+          {text: '即使泪水在眼中打转，我依旧可以笑的很美，这是你学不来的坚强。', id:12},
+          {text: ' 因为不知来生来世会不会遇到你，所以今生今世我会加倍爱你。', id:13},
         ]
       },
       winBarConfig: {
@@ -217,9 +215,6 @@ export default {
     }
   },
   methods: {
-    emitList() {
-      this.list = getListArr().concat(getListArr())
-    },
     /**
      * @description: 点击加载更多的回调函数
      * @param {*}

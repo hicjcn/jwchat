@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-14 14:38:32
- * @LastEditTime: 2021-03-14 17:55:26
+ * @LastEditTime: 2021-03-26 09:11:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \JChat\src\components\Chat\quickList.vue
@@ -56,8 +56,7 @@ export default {
   },
   methods: {
     submit (target) {
-      const { text } = target
-      this.$emit('submit',text)
+      this.$emit('submit',target)
     }
   }
 }

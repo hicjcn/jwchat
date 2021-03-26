@@ -14,7 +14,7 @@
           <div class="web__main-user">
             <img :src="item.img" @click="$emit('click', { type:'img', data:item })" />
             <cite @click="$emit('click', { type:'nickname', data:item })">
-              {{item.name}}
+              {{item.name}}{{item.id}}
               <i>{{item.date}}</i>
             </cite>
           </div>
