@@ -6,7 +6,7 @@
       @enter="bindEnter"
       v-model="inputMsg"
       :showRightBox='true'
-      scrollType="noroll"
+      scrollType="scroll"
       :winBarConfig="winBarConfig"
       :quickList="config.quickList"
       @clickTalk="talkEvent"
@@ -26,6 +26,22 @@
 <script>
 const img = 'https://www.baidu.com/img/flexible/logo/pc/result.png'
 const listData = [
+  {
+    "date": "2020/04/25 21:19:07",
+    "text": {
+      "text": "<i class='el-icon-document-checked' style='font-size:2rem;'/>",
+      "subLink":{
+         "text": "a.txt",
+         "prop": {
+           underline: false
+         }
+      },
+
+    },
+    "mine": false,
+    "name": "留恋人间不羡仙",
+    "img": "image/one.jpeg"
+  },
   {
     "date": "2020/04/25 21:19:07",
     "text": { "text": "起床不" },

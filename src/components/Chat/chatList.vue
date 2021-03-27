@@ -14,7 +14,7 @@
           <div class="web__main-user">
             <img :src="item.img" @click="$emit('click', { type:'img', data:item })" />
             <cite @click="$emit('click', { type:'nickname', data:item })">
-              {{item.name}}{{item.id}}
+              {{item.name}}
               <i>{{item.date}}</i>
             </cite>
           </div>
@@ -24,6 +24,10 @@
             @systemEvent="taskEvent" @loadDone="loadDone"/>
             <systemTalk v-if="item.text.system" :text="item.text.system"
              @systemEvent="systemEvent" @loadDone="loadDone"/>
+            <el-link @click="taskEvent(item.text)" v-if="item.text.subLink"
+             v-bind="item.text.subLink.prop" class="itemChild">
+               {{item.text.subLink.text}}
+            </el-link>
           </div>
         </div>
       </div>
@@ -69,39 +73,16 @@ export default {
       remind: null, // 消息提示
       scrollTop: false,
       historyLoding: false,
-      listNum: 0,
-      allLoad: false,
       stopScroll: false,
+      stopScrollTimer: null
     }
   },
   watch: {
     list (newval) {
       if (newval) {
-        this.listNum = 0
-        // 数据是否加载阈值
         if(this.historyLoding){
           this.stopScroll = true
         }
-        this.allLoad = false
-      }
-    },
-    listNum(newVal){
-      // if(newVal){
-        if(this.list.length === newVal){
-          this.listNum = 0
-          this.allLoad = true
-        }
-      // }
-    },
-    allLoad(newVal){
-      if(newVal){
-        this.allLoad = false
-        let callback = null
-        if (this.scrollType === 'scroll') {
-          callback = this.scrollBottom
-        }
-        this.childnodeLoad()
-        this.scrollRefresh(callback)
       }
     },
     'config.scrollToButton' (newval) {
@@ -146,15 +127,21 @@ export default {
   },
   methods: {
     loadDone(){
-      this.listNum += 1
-      this.scroll.refresh()
+      let callback = this.scrollBottom
+      if (this.scrollType === 'noroll'){
+        this.stopScroll = true
+        callback = null
+      }
+      this.scrollRefresh(callback)
+      this.childnodeLoad()
     },
     scrollBottom () {
       const stop = this.stopScroll
-      if(stop) 
-        return this.$nextTick(()=>{
+      clearTimeout(this.stopScrollTimer)
+      if(stop || this.historyLoding) 
+        return this.stopScrollTimer = setTimeout(()=>{
           this.stopScroll=false
-        })
+        }, 500)
       if (this.scroll) {
         this.scroll.scrollTo(0, this.scroll.maxScrollY, 200)
       }
@@ -204,7 +191,7 @@ export default {
       this.historyLoding = false
     },
     childnodeLoad () {
-      if (this.scrollType === 'scroll') return
+      if (this.scrollType !== 'noroll') return
       const parent = this.$refs.main
       if (!parent) return
       const childs = parent.children
@@ -213,8 +200,8 @@ export default {
     scrollRefresh (callback = null) {
       if(!this.scroll) return
       this.scroll.refresh()
-      this.$nextTick(()=>{
-        callback&&callback()
+      callback && this.$nextTick(()=>{
+        callback()
       })
     },
     systemEvent(itemData){
