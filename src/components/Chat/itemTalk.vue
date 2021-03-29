@@ -72,15 +72,19 @@ export default {
   computed: {
     getTag () {
       const str = this.text || ""
-      let tag = 'span'
-      let type = ''
-
-      const isTag = str.match(/(?<=^<)[A-Z|a-z]+/)
-      isTag && (type = isTag[0])
-      if (this.tags.includes(type)) {
-        tag = type
-      }
-      return tag
+			console.log(this.text)
+			let tag = "span"
+			let type = ""
+			let _str = ""
+			if (str.match(/<\/?[^>]+>/)) {
+				_str = str.match(/<\/?[^>]+>/)[0]
+			}
+			let isTag = _str.split(" ")[0].replace(/<|>/, "") || ""
+			isTag && (type = isTag)
+			if (this.tags.includes(type)) {
+				tag = type
+			}
+			return tag
     },
     getData () {
       const str = this.text || ""
