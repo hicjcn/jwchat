@@ -283,6 +283,19 @@ export default {
     },
     bindTalk (play) {
       console.log('talk', play)
+      const { key, value } = play
+      if(key === 'navIndex')
+        this.talk = [1,1,1,1,1,1,1,1].reduce((p)=>{
+          p.push('随机修改颜色 #'+Math.random().toString(16).substr(-6))
+          return p
+        },[])
+      if(key === 'select') {
+        this.inputMsg = value
+        this.bindEnter()
+      }
+      if(key === 'delIndex') {
+        this.talk.splice(value,1)
+      }
     },
     bindWinBar (play = {}) {
       const {type, data={}} = play
