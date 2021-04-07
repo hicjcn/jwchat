@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-04 17:23:51
- * @LastEditTime: 2021-03-25 16:09:23
+ * @LastEditTime: 2021-04-07 21:27:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \JChat\src\components\ChatInterface\windowBar.vue
@@ -208,6 +208,7 @@ export default {
     transition: transform 0.6s;
     background: #fff;
     user-select: none;
+    border: 1px solid #f9f9f9;
     &:hover{
       background: #f9f9f9;
       .itemOperation{
