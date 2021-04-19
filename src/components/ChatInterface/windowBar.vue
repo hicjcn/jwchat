@@ -1,27 +1,25 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-04 17:23:51
- * @LastEditTime: 2021-04-07 21:27:32
+ * @LastEditTime: 2021-04-19 21:26:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \JChat\src\components\ChatInterface\windowBar.vue
 -->
 <template>
-  <div class="windowBar" :style="winBarStyle" @mouseup="moveEnd">
+  <div class="windowBar" :style="winBarStyle">
     <!-- <div class="toolBarBox">
       <img src="image/three.jpeg" alt="">
     </div> -->
     <div class="winBarBox" ref="windowBar">
-     <div>
         <div
           v-for="item in winList" :key="item.id" :ref="`winItem${item.id}`"
-          :class="{'winItem':true,'winActive': activeItem == item.id}" :style="winItemStyle" 
-          @click.stop="bindClick(item)"  @mousedown.stop="moveStart($event,item)"
-          @mousemove="moveObj.id == item.id?bindMove($event):''" >
+          @click.stop="bindClick(item)" :style="winItemStyle"
+          :class="{'winItem':true,'winActive': activeItem == item.id}" >
           <JwChat-item :config="item"/>
           <div class="itemOperation">
-            <!-- <el-button size="mini">置顶</el-button> -->
-            <el-button size="mini" type="danger" @click.stop="bindOperation({ type: 'remove', target: item})">删除</el-button>
+            <el-button type="info" icon="el-icon-close" circle size="mini"
+             @click.stop="bindOperation({ type: 'remove', target: item})" />
           </div>
         </div>
         <template v-if="!winList.length">
@@ -31,7 +29,6 @@
           </el-divider>
         </template>
      </div>
-    </div>
   </div>
 </template>
 
@@ -119,50 +116,6 @@ export default {
       this.doneMove(true)
       this.$emit('click',{type: 'winBtn', data: play})
     },
-    moveStart(event, play) {
-      this.doneMove(true)
-      const { id } = play
-      const { x, y } = event
-      this.moveObj = {
-        x, y, id,
-        move: true,
-        showOperation: false
-      }
-    },
-    moveEnd(){
-      this.doneMove()
-    },
-    bindMove($event){
-      const { move = false, id, x: beforeX, showOperation } = this.moveObj
-      if(move){
-        const { x } = $event
-        let movePosition = x - beforeX
-        this.$refs[`winItem${id}`][0].style.transform = `translateX(${movePosition}px)`
-        if (!showOperation && (movePosition < -20 || movePosition > 100)) {
-          this.moveObj.showOperation = true
-          this.moveObj.moveLeft = movePosition > 0 ? false : true
-        }
-        if(showOperation){
-          this.doneMove()
-        } 
-      }
-    },
-    doneMove(immediate=false) {
-      const {  id, moveLeft } = this.moveObj
-      this.moveObj.move =false
-      if(!id) return
-      const doneCallback = ()=>{
-        let result = 0
-        if(moveLeft) result = -70
-        if(immediate) result = 0
-        const dom =  this.$refs[`winItem${id}`]
-        if(!dom.length) return
-        dom[0].style.transform = `translateX(${result}px)`
-      }
-      clearTimeout( this.operationTimer)
-      if(immediate) return doneCallback()
-      this.operationTimer = setTimeout(doneCallback, 1000)
-    },
     scrollRefresh () {
       if(!this.scroll) return
       const that = this
@@ -203,36 +156,41 @@ export default {
   .winItem {
     display: flex;
     align-items: center;
-    // justify-content: center;
     position: relative;
     transition: transform 0.6s;
     background: #fff;
     user-select: none;
     border: 1px solid #f9f9f9;
+    overflow: hidden;
     &:hover{
       background: #f9f9f9;
       .itemOperation{
-        background: #f9f9f9;
+        opacity: 1;
+        transform: translateY(0);
       }
     }
     &.winActive{
       background: #f0f0f0;
-      .itemOperation{
-        background: #f0f0f0;
-      }
     }
     .itemOperation{
       position: absolute;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
       height: 100%;
       padding: 0 5px;
       right: 0;
-      transform: translateX(100%);
+      opacity: 0;
+      transform: translateY(100%);
       right: 0;
       /deep/ .el-button{
         margin: 0;
+        padding: .06rem;
+        margin-bottom: .4rem;
+        &:hover{
+          background-color: #f56c6c;
+          border-color: #f56c6c;
+        }
       }
     }
   }
