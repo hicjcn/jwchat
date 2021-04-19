@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://gitee.com/CodeGI/chat" rel="nofollow">
-    <img src="https://img.shields.io/badge/JwChat-0.3.6-blue" alt="JwChat css js vue 聊天组件">
+    <img src="https://img.shields.io/badge/JwChat-0.3.7-blue" alt="JwChat css js vue 聊天组件">
   </a>
 </p>
 
@@ -69,7 +69,7 @@
 
 #### 跟新公告
 
-- `+ 新增` 完成文件显示
+- `/ 修改` 样式优化
 
 #### 参与贡献
 
