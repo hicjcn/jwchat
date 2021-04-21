@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-04 17:23:51
- * @LastEditTime: 2021-04-19 21:26:37
+ * @LastEditTime: 2021-04-21 11:09:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \JChat\src\components\ChatInterface\windowBar.vue
@@ -113,7 +113,6 @@ export default {
       this.$emit('click',{type: 'winBar', data: play})
     },
     bindOperation(play) {
-      this.doneMove(true)
       this.$emit('click',{type: 'winBtn', data: play})
     },
     scrollRefresh () {
