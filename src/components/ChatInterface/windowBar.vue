@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-04 17:23:51
- * @LastEditTime: 2021-04-21 11:09:42
+ * @LastEditTime: 2021-04-25 15:21:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \JChat\src\components\ChatInterface\windowBar.vue
@@ -12,6 +12,7 @@
       <img src="image/three.jpeg" alt="">
     </div> -->
     <div class="winBarBox" ref="windowBar">
+      <div>
         <div
           v-for="item in winList" :key="item.id" :ref="`winItem${item.id}`"
           @click.stop="bindClick(item)" :style="winItemStyle"
@@ -28,7 +29,8 @@
             <span style="font-size: 0.2rem;">暂无会话</span>
           </el-divider>
         </template>
-     </div>
+      </div>
+    </div>
   </div>
 </template>
 

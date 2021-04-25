@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <el-badge :value="config.readNum">
+    <el-badge :value="config.readNum" :hidden="config.readNum<1">
       <img
         v-if="config.img"
         :src="config.img"

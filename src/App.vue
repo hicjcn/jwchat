@@ -217,7 +217,8 @@ export default {
           id: 'win03',
           img: 'image/one.jpeg',
           name: '留恋人间不羡仙',
-          dept: '这里可以放万物'
+          dept: '这里可以放万物',
+           readNum: 0
         },
         {
           id: 'win04',
