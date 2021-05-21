@@ -5,31 +5,34 @@
     </div>
     <div class="scroller">
       <div class="web__main" ref="main">
-        <div
-          class="web__main-item"
-          v-for="(item,k) in list"
-          :key="JSON.stringify(item)+k"
-          :class="{'web__main-item--mine':item.mine}"
-        >
-          <div class="web__main-user">
-            <img :src="item.img" @click="$emit('click', { type:'img', data:item })" />
-            <cite @click="$emit('click', { type:'nickname', data:item })">
-              {{item.name}}
-              <i>{{item.date}}</i>
-            </cite>
+        <template  v-for="(item,k) in list">
+          <el-divider v-if="item.type==='tip'" :key="JSON.stringify(item)+k">{{item.text}}</el-divider>
+          <div
+            v-else
+            class="web__main-item"
+            :key="JSON.stringify(item)+k"
+            :class="{'web__main-item--mine':item.mine}"
+          >
+              <div class="web__main-user">
+                <img :src="item.img" @click="$emit('click', { type:'img', data:item })" />
+                <cite @click="$emit('click', { type:'nickname', data:item })">
+                  {{item.name}}
+                  <i>{{item.date}}</i>
+                </cite>
+              </div>
+              <div class="web__main-text">
+                <div class="web__main-arrow"></div>
+                <itemTalk v-if="item.text.text" :text="item.text.text" 
+                @systemEvent="taskEvent" @loadDone="loadDone"/>
+                <systemTalk v-if="item.text.system" :text="item.text.system"
+                @systemEvent="systemEvent" @loadDone="loadDone"/>
+                <el-link @click="taskEvent(item.text)" v-if="item.text.subLink"
+                v-bind="item.text.subLink.prop" class="itemChild">
+                  {{item.text.subLink.text}}
+                </el-link>
+              </div>
           </div>
-          <div class="web__main-text">
-            <div class="web__main-arrow"></div>
-            <itemTalk v-if="item.text.text" :text="item.text.text" 
-            @systemEvent="taskEvent" @loadDone="loadDone"/>
-            <systemTalk v-if="item.text.system" :text="item.text.system"
-             @systemEvent="systemEvent" @loadDone="loadDone"/>
-            <el-link @click="taskEvent(item.text)" v-if="item.text.subLink"
-             v-bind="item.text.subLink.prop" class="itemChild">
-               {{item.text.subLink.text}}
-            </el-link>
-          </div>
-        </div>
+        </template>
       </div>
     </div>
     <div class="downBtn" v-if="!(scroll && scroll.isBottom)" @click="scrollBottom">
@@ -290,7 +293,10 @@ export default {
       min-height: 68px;
       text-align: left;
     }
-
+    .sysTip{
+      font-size: 1rem;
+      text-align: center;
+    }
     .web__main-user,
     .web__main-text {
       display: inline-block;

@@ -43,11 +43,15 @@ const listData = [
     "img": "image/one.jpeg"
   },
   {
-    "date": "2020/04/25 21:19:07",
+    "date": "",
     "text": { "text": "起床不" },
     "mine": false,
     "name": "留恋人间不羡仙",
     "img": "image/one.jpeg"
+  },
+  {
+    "text": "2020/04/25 21:19:07",
+    "type": 'tip'
   },
   {
     "date": "2020/04/25 21:19:07",
