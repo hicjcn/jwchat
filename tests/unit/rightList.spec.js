@@ -1,6 +1,6 @@
 import '../util.js'
 
-import { mount  } from '@vue/test-utils'
+import { mount,shallowMount  } from '@vue/test-utils'
 import widget from '@/components/RightList/index.vue'
 
 describe('RightList 组件', () => {
@@ -33,4 +33,12 @@ describe('RightList 组件', () => {
   const wrapper = mount(widget, { propsData: { config } })
   // 使用 jest 我们可以创建HTML输出的截图文件
   expect(wrapper.html()).toMatchSnapshot()
+
+  it('Right weiget',()=>{
+    const notice = '公告'
+    config.notice = notice
+    const wrapper = shallowMount(widget, { propsData: { config } })
+   
+    expect(wrapper.vm.info.notice).toBe(notice)
+  })
 })
