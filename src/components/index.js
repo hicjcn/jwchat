@@ -45,3 +45,10 @@ export default {
   // 组件列表
   ...components
 }
+
+// module.exports = {
+//   install,
+//   ...components
+// };
+
+// module.exports.default = module.exports;

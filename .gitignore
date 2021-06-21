@@ -2,7 +2,8 @@
 node_modules
 /dist
 lib
-
+/tests/unit/coverage
+/tests/unit/__snapshots__
 # local env files
 .env.local
 .env.*.local
