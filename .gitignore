@@ -4,6 +4,7 @@ node_modules
 lib
 /tests/unit/coverage
 /tests/unit/__snapshots__
+/docs/.vuepress/dist
 # local env files
 .env.local
 .env.*.local
