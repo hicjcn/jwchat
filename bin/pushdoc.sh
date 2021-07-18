@@ -9,6 +9,6 @@ git add .
 
 git commit -m "+"
 
-git remote add origin https://gitee.com/jw-chat/gitpull.git
+git remote add origin https://gitee.com/CodeGI/JwChatDoc.git
 
 git push -f origin master
