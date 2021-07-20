@@ -1,5 +1,4 @@
 <template>
-<!-- TODO:参数配置 list中需要加一个id防止key重复 -->
   <div class="wrapper">
     <div class="notice" style="resolve">
       <JwChat-empty class="empty" v-if="!info.notice" size="8rem" />

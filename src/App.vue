@@ -128,30 +128,30 @@ export default {
         listTip: '当前在线',
         notice: '【公告】这是一款高度自由的聊天组件，基于AVue、Vue、Element-ui开发。点个赞再走吧 ',
         list: [
-          // {
-          //   name: 'JwChat',
-          //   "img": "image/three.jpeg",
-          //   id:1,
-          // },
-          //  {
-          //    id:2,
-          //   name: 'JwChat',
-          //   "img": "image/three.jpeg"
-          // },
-          // {
-          //    id:3,
-          //   name: 'JwChat',
-          //   "img": "image/three.jpeg"
-          // },
-          // {
-          //   id:4,
-          //   name: '留恋人间不羡仙',
-          //   "img": "image/one.jpeg"
-          // },
-          // {
-          //   name: '只盼流星不盼雨',
-          //   "img": "image/two.jpeg"
-          // }
+          {
+            name: 'JwChat',
+            "img": "image/three.jpeg",
+            id:1,
+          },
+           {
+             id:2,
+            name: 'JwChat',
+            "img": "image/three.jpeg"
+          },
+          {
+             id:3,
+            name: 'JwChat',
+            "img": "image/three.jpeg"
+          },
+          {
+            id:4,
+            name: '留恋人间不羡仙',
+            "img": "image/one.jpeg"
+          },
+          {
+            name: '只盼流星不盼雨',
+            "img": "image/two.jpeg"
+          }
         ]
       },
       quickConfig: {

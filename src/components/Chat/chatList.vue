@@ -46,7 +46,6 @@ import Scroll from '@/utils/scroll'
 import Remind from '@/utils/remind'
 import itemTalk from './itemTalk'
 import systemTalk from './systemTalk'
-// TODO: 提示功能单独拿出来 
 // TODO: 历史模块 拿出来
 export default {
   name: 'JwChat_list',
