@@ -103,8 +103,8 @@ export default {
       return height
     },
     chatListConfig () {
-      const { width, talkHeight: height, scrollToButton, scrollType, config: { historyConfig = {} } = {} } = this
-      return { width, height, scrollToButton, scrollType, historyConfig }
+      const { width, talkHeight: height, scrollType, config: { historyConfig = {} } = {} } = this
+      return { width, height, scrollType, historyConfig }
     }
   },
   methods: {

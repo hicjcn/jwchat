@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper" :style="boxSize" ref="scroller">
-    <div v-if="historyConfig.show&&historyLoding" @click="handleHistory">
+    <div v-if="showHistoryBox" @click="handleHistoryBtn">
       {{historyConfig.tip}}
     </div>
     <div class="scroller">
@@ -35,7 +35,7 @@
         </template>
       </div>
     </div>
-    <div class="downBtn" v-if="!(scroll && scroll.isBottom)" @click="scrollBottom">
+    <div class="downBtn" v-if="showDownBtn" @click="scrollBottom">
       <span v-if="unread">{{unread}}</span>
     </div>
   </div>
@@ -43,64 +43,41 @@
 
 <script>
 import Scroll from '@/utils/scroll'
-import Remind from '@/utils/remind'
+// import Remind from '@/utils/remind'
 import itemTalk from './itemTalk'
 import systemTalk from './systemTalk'
-// TODO: 历史模块 拿出来
 export default {
   name: 'JwChat_list',
   components: { itemTalk, systemTalk },
   props: {
-    pageConfig: {
-      type: Object,
-      default: () => ({
-        width: "100vw"
-      })
-    },
     list: {
       type: Array,
       default: () => ([])
     },
     config: {
       type: Object,
-      default: () => ({
-        width: '525px',
-        height: '382px'
-      })
+      default: () => ({})
     }
   },
   data () {
     return {
       scroll: null,
-      remind: null, // 消息提示
-      scrollTop: false,
-      historyLoding: false,
+      // remind: null, // 消息提示
+      checkScrollTimer: null, 
+      showHistory: false,
       stopScroll: false,
-      stopScrollTimer: null
     }
   },
   watch: {
-    list (newval) {
-      if (newval) {
-        if(this.historyLoding){
-          this.stopScroll = true
-        }
-      }
-    },
-    'config.scrollToButton' (newval) {
-      if (newval) {
-        this.scrollBottom()
-      }
-    },
-    unread (newval) {
-      newval && Remind.showBrowser.call(this)
-      if(!this.remind) return
-      if (newval) {
-        this.remind.changeTitle(newval)
-      } else {
-        this.remind.resetTitle()
-      }
-    },
+    // unread (newval) {
+    //   newval && Remind.showBrowser.call(this)
+    //   if(!this.remind) return
+    //   if (newval) {
+    //     this.remind.changeTitle(newval)
+    //   } else {
+    //     this.remind.resetTitle()
+    //   }
+    // },
   },
   computed: {
     boxSize () {
@@ -111,39 +88,45 @@ export default {
       if (`${width}`.match(/\d$/)) {
         width += 'px'
       }
-      const style = { height, width }
-      return style
+      return { height, width }
     },
     historyConfig () {
-      const { historyConfig: { tip = "历史消息", show = false, } = {} } = this.config
+      const { tip = "历史消息", show = false, } = this.config.historyConfig || {}
       return { tip, show }
     },
     scrollType () {
-      const { scrollType: type = "noroll" } = this.config
-      return type
+      const { scrollType = "noroll" } = this.config
+      return scrollType
     },
     unread () {
       const { unread = 0 } = this.scroll || {}
       return unread
+    },
+    showHistoryBox(){
+      const configShow = this.historyConfig.show
+      if(configShow) return this.showHistory
+      return false
+    },
+    showDownBtn(){
+      if(this.scroll) return !this.scroll.isBottom
+      return false
     }
   },
   methods: {
     loadDone(){
       let callback = this.scrollBottom
       if (this.scrollType === 'noroll'){
-        this.stopScroll = true
+        this.setScrollFlag(1500)
         callback = null
       }
       this.scrollRefresh(callback)
       this.childnodeLoad()
     },
     scrollBottom () {
-      const stop = this.stopScroll
-      clearTimeout(this.stopScrollTimer)
-      if(stop || this.historyLoding) 
-        return this.stopScrollTimer = setTimeout(()=>{
-          this.stopScroll=false
-        }, 500)
+      if(this.stopScroll) {
+        this.setScrollFlag()
+        return 
+      }
       if (this.scroll) {
         this.scroll.scrollTo(0, this.scroll.maxScrollY, 200)
       }
@@ -162,35 +145,39 @@ export default {
       });
       // scroll done callback
       this.scroll.on('scrollEnd', function () {
-        that.showHistoryBtn()
-        if (that.historyLoding) return
+        that.recordLocation()
+        if (that.showHistoryBox) return
         that.scroll.savePosition() // 保存当前滚动位置
       });
-      let timer = null
       this.scroll.on('scroll', function () {
-        clearTimeout(timer)
-        that.stopScroll = true
-        timer = setTimeout(()=>{
-          that.stopScroll = false
-        },500)
+        this.setScrollFlag()
       });
     },
-    showHistoryBtn () {
+    recordLocation () {
       const { isTop } = this.scroll
       // 当前滚动条是否在顶端
-      if (isTop) {
-        if (this.scrollTop) {
-          this.historyLoding = true
-        }
-        else
-          this.scrollTop = true
+      if(!isTop) return
+      if (this.checkScrollTimer) {
+        this.showHistory = true
+        clearTimeout(this.checkScrollTimer)
+        setTimeout(()=>{
+          this.resetHistoryFlag()
+        },3000)
         return
       }
-      this.resetHistoryFlag()
+      this.checkScrollTimer = setTimeout(()=>{
+        this.resetHistoryFlag()
+      },3000)
     },
     resetHistoryFlag () {
-      this.scrollTop = false
-      this.historyLoding = false
+      this.checkScrollTimer = null
+      this.showHistory = false
+    },
+    setScrollFlag(time=500){
+      clearTimeout(this.stopScroll)
+      this.stopScroll = setTimeout(()=>{
+        this.stopScroll=false
+      }, time)
     },
     childnodeLoad () {
       if (this.scrollType !== 'noroll') return
@@ -212,10 +199,12 @@ export default {
     taskEvent(itemData){
        this.$emit('click', { type:'taskItem', data: itemData })
     },
-    handleHistory(){
+    handleHistoryBtn(){
       this.$emit('loadHistory')
+      this.stopScroll = true
       this.$nextTick(()=>{
           this.resetHistoryFlag()
+          this.stopScroll = false
       })
     }
   },

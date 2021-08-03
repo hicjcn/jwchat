@@ -7,10 +7,10 @@
       v-model="inputMsg"
       :showRightBox='true'
       scrollType="scroll"
-      :winBarConfig="winBarConfig"
       :quickList="config.quickList"
       @clickTalk="talkEvent"
     >
+      <!-- :winBarConfig="winBarConfig" -->
       <!-- :toolConfig="tool" -->
       <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
       <!-- <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" /> -->
@@ -107,7 +107,7 @@ function getListArr(size) {
   }
   let result = []
   for (let i = 0; i < size; i++) {
-    const item = listData[Math.random()*listSize>>0]
+    const item = listData[i]//[Math.random()*listSize>>0]
     item.id = Math.random().toString(16).substr(-6)
     result.push(item)
   }
