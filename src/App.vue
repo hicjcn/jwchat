@@ -127,6 +127,7 @@ export default {
       rightConfig: {
         listTip: '当前在线',
         notice: '【公告】这是一款高度自由的聊天组件，基于AVue、Vue、Element-ui开发。点个赞再走吧 ',
+        filterTip: '好友过滤',
         list: [
           {
             name: 'JwChat',

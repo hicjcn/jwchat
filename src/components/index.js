@@ -6,7 +6,6 @@ import UserItem from './UserItem'
 import Empty from './Empty'
 import RightList from './RightList'
 import QuickTalk from './QuickTalk'
-import UserCard from './UserCard'
 
 // 以数组结构保存组件，便于遍历
 const components = [
@@ -17,7 +16,6 @@ const components = [
   Empty,
   RightList,
   QuickTalk,
-  UserCard,
 ]
 
 // 定义 install 方法
