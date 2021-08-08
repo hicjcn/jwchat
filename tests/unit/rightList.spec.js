@@ -37,9 +37,9 @@ describe('RightList 组件', () => {
     const notice = '公告'
     config.notice = notice
     let wrapper = null
-    beforeEach(() => {
-      wrapper = shallowMount(widget, { propsData: { config } })
-    })
+    // beforeEach(() => {
+    wrapper = shallowMount(widget, { propsData: { config } })
+    // })
     // console.log(wrapper.props());
    
     expect(wrapper.vm.info.notice).toBe(notice)
@@ -51,10 +51,10 @@ describe('RightList 组件', () => {
   })
 
   it('切换公告',async ()=>{
-    // wrapper.setData({
-    //   'config.notice': '12'
-    // })
+    wrapper.setData({
+      'config': {notice:'12'}
+    })
     await wrapper.vm.$nextTick()
-    expect(wrapper.vm.info.notice).toBe('12')
+    expect(wrapper.vm.config.notice).toBe('12')
   })
 })
