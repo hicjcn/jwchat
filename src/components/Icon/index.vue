@@ -1,8 +1,12 @@
 <template>
-  <i :class="['iconfont', type ]"></i>
+  <!-- <i :class="['iconfont', 'icon-wenjian' ]"></i> -->
+  <svg class="icon" aria-hidden="true">
+    <use :xlink:href="`#${type}`"></use>
+  </svg>
 </template>
 
 <script>
+import './fonts/iconfont'
 export default {
   name: 'JwChat-icon',
   props: {
@@ -15,8 +19,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import './fonts/iconfont.css';
-.iconfont{
-  cursor: pointer;
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
 }
 </style>

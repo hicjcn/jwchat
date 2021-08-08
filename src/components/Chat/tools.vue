@@ -9,7 +9,7 @@
             <img v-else :src="emoji[item]" />
           </li>
         </ul>
-        <JwChat-icon slot="reference" type="icon-xiaolian" title="表情" />
+        <JwChat-icon class="toolIcon" slot="reference" type="icon-xiaolian" title="表情" />
       </el-popover>
     </template>
     <template v-for="(item,k) in showkeys">
@@ -18,7 +18,7 @@
         :key="item"
       >
         <span @click="bindButton(item)">
-          <JwChat-icon :type="toolConfig[item].icon" :title="iconTitle(item,k)" />
+          <JwChat-icon class="toolIcon" :type="toolConfig[item].icon" :title="iconTitle(item,k)" />
         </span>
       </span>
       <i :key="item" v-else :class="item" @click="bindButton(item)"></i>
@@ -139,13 +139,13 @@ export default {
   align-items: center;
   height: 30px;
 }
-i {
+.toolIcon {
   padding-left: 6px;
   font-size: 20px;
   color: #888a91;
-}
-i:hover {
-  color: #76b1f9;
+  &:hover {
+    color: #76b1f9;
+  }
 }
 .emjioBox {
   background: #fff;
