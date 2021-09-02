@@ -358,14 +358,14 @@ export default {
 ### Attribute
 
 | 参数       | 说明             | 类型   | 可选值 | 默认值 |
-| ---------- | :--------------- | ------ | ------ | ------ |
+| :--------: | :--------------: | :----: | :----: | :----: |
 | v-model    | 输入框中的文字   | String | -      | ""     |
 | taleList   | 会话内容         | Array  | -      | []     |
 | toolConfig | 工具烂配置       | Object | -      | {}     |
 | width      | JwChat界面框宽度 | string | -      | 750px  |
 | height     | JwChat界面框高度 | string | -      | 570px  |
-| config     | 组件配置        | Object | -      | {}     |
-| scrollType | 消息自动到低    | String | scroll | noroll |
+| config     | 聊天组件基础配置    | Object | -      | {}     |
+| scrollType |     滚动类型     | String  | scroll (滚动到最新消息) | noroll (停留当期位置) |
 | showRightBox | 显示右边内容 | Boolean | false | true |
 | winBarConfig | 多窗口配置 | Object | - | {} |
 
@@ -432,22 +432,7 @@ export default {
 
 ### `toolConfig` 说明
 
-``` js
-{
-    // 现在只配置了 ["file", "video", "img", "hongbao", "more", "history"]
-    show: ['file', 'history', 'img', ['文件1', '', '美图']],// 二级数组中放自定义名称
-    showEmoji: true, // 是否显示表情图标
-     /**
-     * @description: 点击按钮的回调函数
-     * @param {*} type 当前点击的按钮
-     * @param {*} plyload 附加文件或者需要处理的数据
-     * @return {*}
-     */
-	callback: toolEvent (type, plyload) {
-   		console.log('tools', type, plyload)
-	}    
-}
-```
+**具体请查看 `chat` 组件介绍**
 
 ### `winBarConfig` 说明
 
@@ -496,6 +481,4 @@ export default {
   }
 }
 ```
-
-### 
 

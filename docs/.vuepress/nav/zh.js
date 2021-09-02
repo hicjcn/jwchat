@@ -8,6 +8,10 @@ module.exports = [
     link: '/component/'
   },
   {
+    text: '更新',
+    link: '/updateTip/'
+  },
+  {
     text: '项目地址',
     link: 'https://gitee.com/CodeGI/chat'
   },

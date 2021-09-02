@@ -31,10 +31,6 @@ export default {
       type: Array,
       default: () => ([])
     },
-    scroll: {
-      type: Number,
-      default: -1
-    },
     height: {
       default: '500px'
     },

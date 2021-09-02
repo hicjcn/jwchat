@@ -29,6 +29,7 @@ module.exports = ctx => ({
         sidebar: {
           '/component/': getComponentSidebar(),
           '/guide/': getGuideSidebar('指南'),
+          // '/updateTip/': getGuideSidebar('指南'),
         },
       }
     }
@@ -69,16 +70,13 @@ module.exports = ctx => ({
 
 function getComponentSidebar () {
   return [
-    '',
+    // '',
     'chat',
     'chatIndex',
     'rightbox',
     'talk',
     'user',
-    'usercard',
     'empty',
-    'count',
-    'login',
   ]
 }
 

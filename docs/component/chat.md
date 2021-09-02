@@ -306,15 +306,15 @@ export default {
 ### Attribute
 
 | 参数       | 说明           | 类型   | 可选值 | 默认值 |
-| ---------- | :------------- | ------ | ------ | ------ |
+| :--------: | :------------: | :----: | :----: | :----: |
 | v-model    | 输入框中的文字 | String | -      | ""     |
 | taleList   | 要渲染的数据 | Array  | -      | []     |
 | toolConfig | 工具栏配置     | Object | -      | {}     |
 | width      | 聊天框宽度     | string | -      | 550px  |
 | height     | 聊天框高度     | string | -      | 500px  |
 | config     | 组件配置项     | Object | -      | {}     |
-| scrollType | 消息自动到低    | String | scroll | noroll |
-| quickList | 自动匹配快捷回复    | Array | - | [] |
+| scrollType | 滚动类型 | String | scroll (滚动到最新消息) | noroll (停留当期位置) |
+| quickList | 快捷回复-根据输入内容显示 | Array | - | [] |
 
 ### Methods
 

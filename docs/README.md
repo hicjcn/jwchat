@@ -19,7 +19,7 @@ footer: MIT Licensed | Copyright (c) 2020 四铢半两
 新项目 各位走过路过的靓仔 [关注一哈](https://gitee.com/CodeGI/chat) [赞一哈](https://gitee.com/CodeGI/chat)
 :::
 
-![](/image/bg.webp)
+<!-- ![](/image/bg.webp) -->
 <!-- ![](~@dome/bg.webp) -->
 ### 快速安装
 

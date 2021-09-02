@@ -9,9 +9,9 @@
       scrollType="scroll"
       :quickList="config.quickList"
       @clickTalk="talkEvent"
+      :toolConfig="tool"
     >
       <!-- :winBarConfig="winBarConfig" -->
-      <!-- :toolConfig="tool" -->
       <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
       <!-- <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" /> -->
       <template slot="tools">
@@ -120,7 +120,7 @@ export default {
       inputMsg: '',
       list: [],
       tool: {
-        // show: ['file', 'history', 'img', ['文件1', '', '美图']],
+        show: ['file', 'history', 'img', ['文件1', '', '美图']],
         // showEmoji: false,
         callback: this.toolEvent
       },

@@ -5,4 +5,6 @@ yarn build
 vuepress build docs
 
 node ./bin/copydist.js
+
+node ./bin/pushdoc.sh
    
