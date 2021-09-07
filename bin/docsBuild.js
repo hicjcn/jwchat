@@ -42,8 +42,10 @@ execSync(`git config user.name "四铢半两"`)
 execSync(`git config user.email "389701057@qq.com"`)
 execSync(`git add -A`)
 execSync(`git commit -m "+"`)
-execSync(`git remote add origin https://gitee.com/CodeGI/JwChatDoc.git`)
-execSync(`git push -f origin master`)
+// execSync(`git remote add origin https://gitee.com/CodeGI/JwChatDoc.git`)
+// execSync(`git push -f origin master`)
+execSync(`git push -f https://gitee.com/CodeGI/JwChatDoc.git master`)
+
 
 
 
