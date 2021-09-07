@@ -1,4 +1,7 @@
-cd ./docs/.vuepress/dist
+
+cd /docs/'.vuepress'/dist
+
+ls
 
 git init
 

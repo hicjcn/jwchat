@@ -3,11 +3,11 @@
  */
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import JwChat from '../../lib/JwChat.umd.js'
+// import JwChat from '../../lib/JwChat.umd.js'
 
 export default ({ Vue, isServer }) => {
   Vue.use(Element)
-  Vue.use(JwChat)
+  // Vue.use(JwChat)
   Vue.mixin({
     mounted () {
       import('../../lib/JwChat.umd.js').then(function (module) {
