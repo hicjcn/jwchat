@@ -31,10 +31,6 @@ export default {
       type: Array,
       default: () => ([])
     },
-    scroll: {
-      type: Number,
-      default: -1
-    },
     height: {
       default: '500px'
     },
@@ -103,8 +99,8 @@ export default {
       return height
     },
     chatListConfig () {
-      const { width, talkHeight: height, scrollToButton, scrollType, config: { historyConfig = {} } = {} } = this
-      return { width, height, scrollToButton, scrollType, historyConfig }
+      const { width, talkHeight: height, scrollType, config: { historyConfig = {} } = {} } = this
+      return { width, height, scrollType, historyConfig }
     }
   },
   methods: {

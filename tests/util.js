@@ -6,3 +6,10 @@ import JwChat from '@/components'
 Vue.use(ElementUI)
 Vue.use(JwChat)
 
+export function sleepTime(time=1000){
+  return new Promise(resolve=>{
+    setTimeout(()=>{
+      resolve()
+    },time)
+  })
+}

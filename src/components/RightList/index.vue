@@ -1,5 +1,4 @@
 <template>
-<!-- TODO:参数配置 list中需要加一个id防止key重复 -->
   <div class="wrapper">
     <div class="notice" style="resolve">
       <JwChat-empty class="empty" v-if="!info.notice" size="8rem" />
@@ -7,9 +6,10 @@
       <p style="font-size:0.8rem;margin-top:0.5rem;padding:0 .2rem">{{info.notice}}</p>
     </div>
     <div class="userList">
-      <div>{{info.listTip}} ({{info.list.length}})</div>
+      <div>{{info.listTip}} ({{dataList.length}})</div>
       <ul>
-        <li v-for="(item,k) in info.list" :key="k">
+        <li><el-input :placeholder="info.filterTip" v-model="filter" clearable size="mini"/></li>
+        <li v-for="(item,k) in dataList" :key="k">
           <JwChat-item size="25" :config="item" @click="bindClick" />
         </li>
       </ul>
@@ -23,25 +23,34 @@ export default {
   props: {
     config: Object
   },
+  data(){
+    return {
+      filter:''
+    }
+  },
   computed: {
     info () {
-      const config = this.config
-      let tip = '群公告:'
-      let notice = ''
-      let listTip = '组成员'
-      let list = []
-      if (this.config) {
-        config.tip && (tip = config.tip)
-        config.notice && (notice = config.notice)
-        config.listTip && (listTip = config.listTip)
-        config.list && (list = config.list)
-      }
+      const { tip = '群公告:', notice = '', listTip = '组成员', filterTip = '搜索好友' } = this.config
       return {
         tip,
         notice,
         listTip,
-        list
+        filterTip
       }
+    },
+    dataList(){
+      const { list=[] } = this.config
+      const filter = this.filter
+			if(!filter) return list
+
+			const filterArr = []
+			const reg = new RegExp(filter,'g')
+			list.forEach(i=>{
+				const {name} = i
+				if(reg.test(name)) filterArr.push(i)
+			})
+
+      return filterArr
     }
   },
   methods: {
@@ -59,28 +68,26 @@ export default {
   width: 0;
   min-width: 220px;
   margin: 0 auto;
-}
-li {
-  list-style: none;
-}
-.notice {
-  height: 30%;
-  text-align: left;
-  position: relative;
-  .empty {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+  .notice {
+    height: 30%;
+    text-align: left;
+    position: relative;
+    .empty {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
-}
-.userList {
-  height: 70%;
-  text-align: left;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-.userList li {
-  height: 2rem;
-  line-height: 2rem;
-  padding: 0.2rem;
+  .userList {
+    height: 70%;
+    text-align: left;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    li {
+      list-style: none;
+      height: 2rem;
+      line-height: 2rem;
+      padding: 0.2rem;
+    }
+  }
 }
 </style>
