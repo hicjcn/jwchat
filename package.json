@@ -8,8 +8,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "docs:build": "sh ./bin/docsbuild.sh",
-    "docs:dev": "node ./bin/copyimage.js && vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:dev": "cp -r ./public/image/ ./docs/.vuepress/public/image/ && vuepress dev docs",
     "lib": "vue-cli-service build --target lib --name JwChat --dest lib src/components/index.js",
     "test:unit": "vue-cli-service test:unit"
   },
