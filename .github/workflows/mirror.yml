@@ -1,0 +1,20 @@
+name: other git mirror
+
+on: [ push, delete, create ]
+
+jobs:
+  gitlab:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+
+      - name: 'to getlab'
+        uses: wearerequired/git-mirror-action@v1
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_TOKEN }}
+        with:
+          source-repo: ${{ secrets.SOURCE_REPO }}
+          destination-repo: "git@gitee.com:CodeGI/chat.git"
+
+
