@@ -1,10 +1,10 @@
 # JwChat
 
-<p align="center">
+<!-- <p align="center">
   <a href="https://gitee.com/CodeGI/chat" rel="nofollow">
     <img src="https://img.shields.io/badge/JwChat-NPM-red" alt="JwChat css js vue 聊天组件">
   </a>
-</p>
+</p> -->
 
 #### 介绍
 
