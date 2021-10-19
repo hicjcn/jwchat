@@ -33,10 +33,12 @@ module.exports = {
     externals: isProduction? utils.externalModules: {}
   },
   chainWebpack: config => {
+    if(process.env.npm_lifecycle_event!=='lib') {
       config.plugin('html').tap(opts => {
-          opts[0].cdnConfig = utils.cdnConfig, // cdn配置
-          opts[0].isExternal = isProduction //是否加载js，dev下默认不加载
-          return opts
+        opts[0].cdnConfig = utils.cdnConfig, // cdn配置
+        opts[0].isExternal = isProduction //是否加载js，dev下默认不加载
+        return opts
       })
-   }
+    }
+  }
 };
