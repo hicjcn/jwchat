@@ -8,6 +8,7 @@
     <div class="main">
       <div class="chatBox">
         <JwChat
+          ref="jwChat"
           :taleList="taleList"
           @enter="$emit('enter', $event)"
           v-model="msg"
@@ -159,6 +160,9 @@ export default {
       if(callback){
         callback(play)
       }
+    },
+    finishPullDown(){
+      this.$refs.jwChat.finishPullDown()
     }
   }
 }

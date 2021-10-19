@@ -1,0 +1,27 @@
+name: Npm 
+
+on:
+  push:
+    tags:
+      - v*.*.*
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: |
+         yarn
+         yarn lib
+      - id: publish
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+
+      - if: steps.publish.outputs.type != 'none'
+        run: |
+          echo "Version changed: ${{ steps.publish.outputs.old-version }} => ${{ steps.publish.outputs.version }}"
+          echo "tag ${{steps.outputs.tag}}:: type ${{steps.outputs.type}}"

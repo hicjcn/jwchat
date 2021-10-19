@@ -1,6 +1,6 @@
 {
   "name": "jwchat",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": false,
   "description": "vue chat commponent",
   "author": "Bian <389701057@qq.com>",
@@ -8,8 +8,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "docs:build": "sh ./bin/docsbuild.sh",
-    "docs:dev": "node ./bin/copyimage.js && vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:dev": "cp -r ./public/image/ ./docs/.vuepress/public/image/ && vuepress dev docs",
     "lib": "vue-cli-service build --target lib --name JwChat --dest lib src/components/index.js",
     "test:unit": "vue-cli-service test:unit"
   },
@@ -21,10 +21,15 @@
     "LICENSE"
   ],
   "dependencies": {
+    "@better-scroll/core": "^2.4.2",
+    "@better-scroll/mouse-wheel": "^2.4.2",
+    "@better-scroll/observe-dom": "^2.4.2",
+    "@better-scroll/observe-image": "^2.4.2",
+    "@better-scroll/pull-down": "^2.4.2",
+    "@better-scroll/scroll-bar": "^2.4.2",
     "async-validator": "1.11.5",
     "babel-core": "7.0.0-bridge.0",
     "element-ui": "^2.13.1",
-    "iscroll": "^5.2.0",
     "vue": "^2.6.11",
     "wechat-emoji-parser": "^1.1.0"
   },

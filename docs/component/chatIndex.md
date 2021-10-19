@@ -361,7 +361,7 @@ export default {
 | :--------: | :--------------: | :----: | :----: | :----: |
 | v-model    | 输入框中的文字   | String | -      | ""     |
 | taleList   | 会话内容         | Array  | -      | []     |
-| toolConfig | 工具烂配置       | Object | -      | {}     |
+| toolConfig | 工具栏配置       | Object | -      | {}     |
 | width      | JwChat界面框宽度 | string | -      | 750px  |
 | height     | JwChat界面框高度 | string | -      | 570px  |
 | config     | 聊天组件基础配置    | Object | -      | {}     |

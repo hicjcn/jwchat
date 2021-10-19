@@ -6,7 +6,20 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <!-- 使用CDN的CSS文件 -->
     <!-- <script src="https://cdn.bootcdn.net/ajax/libs/echarts/4.7.0/echarts-en.common.min.js"></script> -->
+    <% if( htmlWebpackPlugin.options.isExternal){htmlWebpackPlugin.options.cdnConfig.forEach(function(item){ %>
+      <% if(item.css){ %>
+        <link href="<%= item.css %>" rel="preload" as="style" />
+        <link href="<%= item.css %>" rel="stylesheet" />
+      <% }%>
+      <% if(item.js){ %>
+        <link href="<%= item.js %>" rel="preload" as="script">
+      <% }%>
+    <% })} %>
+    <% if( htmlWebpackPlugin.options.isExternal){htmlWebpackPlugin.options.cdnConfig.forEach(function(item){ if(item.js){ %>
+      <script type="text/javascript" src="<%= item.js %>"></script>
+    <% }})} %>
   </head>
   <body>
     <noscript>

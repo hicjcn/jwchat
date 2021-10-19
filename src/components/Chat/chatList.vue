@@ -1,10 +1,10 @@
 <template>
-  <div class="wrapper" :style="boxSize" ref="scroller">
-    <div v-if="showHistoryBox" @click="handleHistoryBtn">
-      {{historyConfig.tip}}
-    </div>
-    <div class="scroller">
+  <div class="wrapper" :style="boxSize">
+    <div class="scroller" ref="scroller">
       <div class="web__main" ref="main">
+        <div class="pulldown-wrapper">
+          <div v-html="historyConfig.tip"></div>
+        </div>
         <template  v-for="(item,k) in list">
           <el-divider v-if="item.type==='tip'" :key="JSON.stringify(item)+k">{{item.text}}</el-divider>
           <div
@@ -63,21 +63,8 @@ export default {
     return {
       scroll: null,
       // remind: null, // 消息提示
-      checkScrollTimer: null, 
-      showHistory: false,
       stopScroll: false,
     }
-  },
-  watch: {
-    // unread (newval) {
-    //   newval && Remind.showBrowser.call(this)
-    //   if(!this.remind) return
-    //   if (newval) {
-    //     this.remind.changeTitle(newval)
-    //   } else {
-    //     this.remind.resetTitle()
-    //   }
-    // },
   },
   computed: {
     boxSize () {
@@ -91,8 +78,9 @@ export default {
       return { height, width }
     },
     historyConfig () {
-      const { tip = "历史消息", show = false, } = this.config.historyConfig || {}
-      return { tip, show }
+      const { tip = "", show = false, } = this.config.historyConfig || {}
+      const { tipText } = this.scroll||{}
+      return { tip: tip||tipText , show }
     },
     scrollType () {
       const { scrollType = "noroll" } = this.config
@@ -102,96 +90,56 @@ export default {
       const { unread = 0 } = this.scroll || {}
       return unread
     },
-    showHistoryBox(){
-      const configShow = this.historyConfig.show
-      if(configShow) return this.showHistory
-      return false
-    },
     showDownBtn(){
       if(this.scroll) return !this.scroll.isBottom
       return false
     }
   },
+  watch: {
+    // unread (newval) {
+    //   newval && Remind.showBrowser.call(this)
+    //   if(!this.remind) return
+    //   if (newval) {
+    //     this.remind.changeTitle(newval)
+    //   } else {
+    //     this.remind.resetTitle()
+    //   }
+    // },
+    boxSize(){
+       this.scroll.refresh()
+    }
+  },
   methods: {
     loadDone(){
-      let callback = this.scrollBottom
-      if (this.scrollType === 'noroll'){
-        this.setScrollFlag(1500)
-        callback = null
-      }
-      this.scrollRefresh(callback)
-      this.childnodeLoad()
+      // console.log('节点加载完成')
     },
     scrollBottom () {
-      if(this.stopScroll) {
-        this.setScrollFlag()
-        return 
-      }
       if (this.scroll) {
-        this.scroll.scrollTo(0, this.scroll.maxScrollY, 200)
+        this.scroll.scrollBottom()
       }
     },
     createScroll () {
-      const that = this
-      const dom = this.$refs.scroller
-      this.scroll = new Scroll(dom, {
-        click: true,
-        scrollbars: true,
-        mouseWheel: true,
-        preventDefault: false,
-        interactiveScrollbars: true,
-        hijackInternalLinks: true,
-        // useTransform: false,
-      });
-      // scroll done callback
-      this.scroll.on('scrollEnd', function () {
-        that.recordLocation()
-        if (that.showHistoryBox) return
-        that.scroll.savePosition() // 保存当前滚动位置
-      });
-      this.scroll.on('scroll', function () {
-        this.setScrollFlag()
-      });
+      this.scroll = new Scroll(this.$refs.scroller, {
+          scrollType: this.scrollType,
+          pullingDown: this.historyConfig.show
+        })
+      // 保存数据
+      this.scroll.on('refresh',  this.childnodeLoad)
+      // 刷新
+      this.scroll.on('pullingDown', this.pullingDownHandler)
     },
-    recordLocation () {
-      const { isTop } = this.scroll
-      // 当前滚动条是否在顶端
-      if(!isTop) return
-      if (this.checkScrollTimer) {
-        this.showHistory = true
-        clearTimeout(this.checkScrollTimer)
-        setTimeout(()=>{
-          this.resetHistoryFlag()
-        },3000)
-        return
-      }
-      this.checkScrollTimer = setTimeout(()=>{
-        this.resetHistoryFlag()
-      },3000)
-    },
-    resetHistoryFlag () {
-      this.checkScrollTimer = null
-      this.showHistory = false
-    },
-    setScrollFlag(time=500){
-      clearTimeout(this.stopScroll)
-      this.stopScroll = setTimeout(()=>{
-        this.stopScroll=false
-      }, time)
+    finishPullDown(){
+      this.scroll.finishPullDown()
     },
     childnodeLoad () {
       if (this.scrollType !== 'noroll') return
       const parent = this.$refs.main
       if (!parent) return
-      const childs = parent.children
+      const [,...childs] = parent.children
       this.scroll.saveNodes({ nodes:childs, dataList: this.list })
     },
-    scrollRefresh (callback = null) {
-      if(!this.scroll) return
-      this.scroll.refresh()
-      callback && this.$nextTick(()=>{
-        callback()
-      })
+    pullingDownHandler() {
+      this.$emit('loadHistory')
     },
     systemEvent(itemData){
       this.$emit('click', { type:'systemItem', data: itemData })
@@ -199,14 +147,6 @@ export default {
     taskEvent(itemData){
        this.$emit('click', { type:'taskItem', data: itemData })
     },
-    handleHistoryBtn(){
-      this.$emit('loadHistory')
-      this.stopScroll = true
-      this.$nextTick(()=>{
-          this.resetHistoryFlag()
-          this.stopScroll = false
-      })
-    }
   },
   mounted () {
     this.createScroll()
@@ -261,8 +201,11 @@ export default {
       transform: translate(-50%, -50%);
     }
   }
-
-  .scroller {
+  .scroller{
+    height: 100%;
+    width: 100%;
+  }
+  .web__main {
     position: absolute;
     width: calc(100% - 1.5rem);
     padding: 0.5rem;
@@ -417,5 +360,14 @@ export default {
     }
   }
 }
+.pulldown-wrapper{
+  position: absolute;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  transform: translateY(-100%) translateZ(0);
+  text-align: center;
+  color: #999;
+  }
 
 </style>

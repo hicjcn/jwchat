@@ -1,0 +1,52 @@
+name: gitee Page
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  build_vuepress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: build
+        run: |
+          yarn
+          npm run lib
+          npm run build
+          cp -r ./public/image/ ./docs/.vuepress/public/image/
+          npm run docs:build
+          cp -r ./dist/ ./docs/.vuepress/dist/demo/
+
+      - name: deploy_vuepress
+        run: |
+          cd docs/.vuepress/dist
+          git init
+          git config user.name "四铢半两"
+          git config user.email "389701057@qq.com"
+          git add .
+          git commit -m 'deploy'
+          git remote add origin https://CodeGI:${{ secrets.GITEE_PASSWORD }}@gitee.com/CodeGI/JwChatDoc.git
+          # git push -u origin master -f
+          # git push -u origin master
+          git push -f git@gitee.com:CodeGI/JwChatDoc.git master:master
+          # cd - # 退回开始所在目录
+          rm -rf docs/.vuepress/dist
+
+  reload-pages:
+    needs: build_vuepress
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Gitee Pages
+        uses: yanglbme/gitee-pages-action@main
+        with:
+          # 注意替换为你的 Gitee 用户名
+          gitee-username: codegi
+          # 注意在 Settings->Secrets 配置 GITEE_PASSWORD
+          gitee-password: ${{ secrets.GITEE_PASSWORD }}
+          # 注意替换为你的 Gitee 仓库，仓库名严格区分大小写，请准确填写，否则会出错
+          gitee-repo: CodeGI/JwChatDoc
+          # 要部署的分支，默认是 master，若是其他分支，则需要指定（指定的分支必须存在）
+          branch: master
+          # directory: src #要部署的分支上的目录

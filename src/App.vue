@@ -1,17 +1,18 @@
 <template>
   <div id="app" class="wrapper">
     <JwChat-index
+      ref="jwChat"
       :config="config"
       :taleList="list"
       @enter="bindEnter"
       v-model="inputMsg"
       :showRightBox='true'
-      scrollType="scroll"
+      scrollType="noroll"
       :quickList="config.quickList"
       @clickTalk="talkEvent"
       :toolConfig="tool"
+      :winBarConfig="winBarConfig"
     >
-      <!-- :winBarConfig="winBarConfig" -->
       <JwChat-rightbox class="rightSlot" :config="rightConfig" @click="rightClick" />
       <!-- <JwChat-talk class="rightSlot" :Talelist="talk" :config="quickConfig" @event="bindTalk" /> -->
       <template slot="tools">
@@ -177,7 +178,7 @@ export default {
         callback: this.bindCover,
         historyConfig:{
           show: true,
-          tip: '加载更多',
+          tip: '加载更多提示框,可以直接使用组件的',
           callback: this.bindLoadHistory,
         },
         quickList: [
@@ -242,7 +243,7 @@ export default {
      * @param {*}
      * @return {*}
      */
-    bindLoadHistory () {
+    async bindLoadHistory () {
       const history = new Array(3).fill().map((i, j) => {
         return {
           "date": "2020/05/20 23:19:07",
@@ -255,6 +256,11 @@ export default {
       let list = history.concat(this.list)
       this.list = list
       console.log('加载历史', list, history)
+     //  加载完成后通知组件关闭加载动画
+      this.config.historyConfig.tip = '加载完成'
+      this.$nextTick(()=>{
+        this.$refs.jwChat.finishPullDown()
+      })
     },
     talkEvent (play) {
       console.log(play)
