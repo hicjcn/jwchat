@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-03-04 17:23:51
- * @LastEditTime: 2021-04-25 15:21:17
+ * @LastEditTime: 2021-10-19 11:18:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \JChat\src\components\ChatInterface\windowBar.vue
@@ -98,14 +98,8 @@ export default {
   },
   mounted () {
     const dom = this.$refs.windowBar
-    this.scroll = new Scroll(dom, {
-      click: true,
-      scrollbars: true,
-      mouseWheel: true,
-      preventDefault: false,
-      interactiveScrollbars: true,
-      hijackInternalLinks: true,
-      mouseWheelSpeed: 1
+    this.scroll = new Scroll(dom,{
+      pullingDown:false
     })
   },
   methods: {

@@ -2,6 +2,7 @@
   <div class="chatPage" :style="setStyle">
     <div class="taleBox">
       <chatList
+        ref="chatList"
         :list="taleList"
         @click="$emit('clickTalk', $event)"
         @loadHistory="loadHistoryHandler"
@@ -121,6 +122,9 @@ export default {
         this.$emit('enter', target)
         this.msg = ''
       })
+    },
+    finishPullDown(){
+      this.$refs.chatList.finishPullDown()
     }
   },
 }

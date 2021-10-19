@@ -1,12 +1,103 @@
 'use strict'
-import IScroll from 'iscroll'
+import BScroll from '@better-scroll/core'
+import MouseWheel from '@better-scroll/mouse-wheel'
+import ScrollBar from '@better-scroll/scroll-bar'
+import ObserveDOM from '@better-scroll/observe-dom'
+import ObserveImage from '@better-scroll/observe-image'
+import PullDown from '@better-scroll/pull-down'
 
-class Scroll extends IScroll {
+
+BScroll.use(MouseWheel) // 鼠标
+BScroll.use(ScrollBar) // 滚动条
+BScroll.use(ObserveDOM) // 自动reset
+BScroll.use(ObserveImage) // 图片加载
+BScroll.use(PullDown) // 下拉加载
+
+const PHASE = {
+  moving: {
+    enter: 'enter',
+    leave: 'leave'
+  },
+  fetching: 'fetching',
+  succeed: 'succeed'
+}
+class Scroll {
   domPotision = []
   beforeNode = null
+  viewName = null
+  tipText = ''
+  scrollType=""
+  constructor( viewName, userConfig={} ) {
+    const { scrollType, pullingDown = {
+        threshold: 70,
+        stop: 56
+      } 
+    } = userConfig
+    console.log(userConfig);
+    scrollType&&(this.scrollType = scrollType)
+    this.viewName = viewName
 
-  constructor(node, options) {
-    super(node, options)
+    const _scroll = new BScroll(viewName, {
+      scrollY: true,
+      click: true,
+      probeType: 3,
+      observeDOM: true,
+      mouseWheel: true,
+      observeImage: true,
+      scrollbar: {
+        fade: false,
+        interactive: true,
+        scrollbarTrackClickable: true
+      },
+      // pullDownRefresh: true,
+      pullDownRefresh: pullingDown
+    });
+    _scroll.on('scrollEnd', () => {
+      this.savePosition() // 保存当前滚动位置
+    });
+    if(pullingDown){
+      _scroll.on('enterThreshold', () => {
+        this.setTipText(PHASE.moving.enter)
+      })
+      _scroll.on('leaveThreshold', () => {
+        this.setTipText(PHASE.moving.leave)
+      })
+    }
+    this.Scroll = _scroll
+  }
+  refresh(){
+    this.Scroll.refresh()
+  }
+  setTipText(phase = PHASE.default) {
+    const ARROW_BOTTOM = '<svg width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M367.997 338.75l-95.998 95.997V17.503h-32v417.242l-95.996-95.995l-22.627 22.627L256 496l134.624-134.623l-22.627-22.627z"></path></svg>'
+    const ARROW_UP = '<svg width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M390.624 150.625L256 16L121.376 150.625l22.628 22.627l95.997-95.998v417.982h32V77.257l95.995 95.995l22.628-22.627z"></path></svg>'
+
+    const TEXTS_MAP = {
+      'enter': `${ARROW_BOTTOM} 下拉`,
+      'leave': `${ARROW_UP} 刷新`,
+      'fetching': '加载中...',
+      'succeed': '刷新完成'
+    }
+    this.tipText = TEXTS_MAP[phase]
+  }
+
+  finishPullDown(){
+    this.setTipText(PHASE.succeed)
+    // tell BetterScroll to finish pull down
+    this.Scroll.finishPullDown()
+  }
+  pullingDownHandler() {
+    this.savePosition(0) // 保存当前滚动位置
+    this.setTipText(PHASE.fetching)
+  }
+  
+  on(fnName, callback){
+    this.Scroll.on(fnName, () => {
+      if(fnName==='pullingDown'){
+       this.pullingDownHandler()
+      }
+      callback()
+    })
   }
 
   /**
@@ -14,38 +105,32 @@ class Scroll extends IScroll {
    * @param { nodes, dataList } params //传入要保存的节点和要保存的数据
    * @return {*}
    */
-  saveNodes (params) {
-    const {nodes, dataList } = params
+  saveNodes =  (params={}) => {
+    const {nodes=[], dataList } = params
     let result = []
     const previous = this.domPotision
-    nodes.forEach((node, index) => {
-      const top = node.offsetTop
-      const data = dataList[index]
-      const dataStr = JSON.stringify(data)
-
-      let item = {
-        top,
-        node,
-        read: false,
-        data: dataStr 
+    for (const key in nodes) {
+      if (Object.hasOwnProperty.call(nodes, key)) {
+        const node = nodes[key]
+        const dataStr = JSON.stringify(dataList[key])
+        const top = node.offsetTop
+        let item = {
+          top,
+          node,
+          read: false,
+          data: dataStr 
+        }
+         // 是否是存在的数据
+        const resultKey = previous.findIndex(i => i.data === dataStr)
+        if(typeof resultKey === 'number' && resultKey> -1){
+          let { read = false } = previous[resultKey] || {}
+          item.read = read
+        }
+        result.push(item)
       }
-
-      // 是否是存在的数据
-      const resultKey = this.isBing(dataStr)
-      if(resultKey>-1){
-        const { read: preRead = false } = previous[resultKey] || {}
-        item.read = preRead
-      }
-            
-      result.push(item)
-    })
+    }
     this.domPotision = result
-
-    // 找到最后一次保存的节点，并把节点之前的数据设置为已读
-    if(!this.beforeNode) return
-    const { data } = this.beforeNode
-    const resultKey = this.isBing(data)
-    this.read(resultKey)
+    this.readState()
   }
 
   get unread () {
@@ -59,28 +144,26 @@ class Scroll extends IScroll {
     return result
   }
 
-  get isTop () {
-    let top = false
-    let { y } = this
-    if (y === 0) top = true
-    return top
-  }
-
-  isBing(flag){
-    let result = -1
-    this.domPotision.forEach((i, k) => {
-      const {data} = i
-      if(data===flag) return result = k
-    })
-    return result
-  }
-
-  read (index) {
-    const key = index || this.scrollPositionDom()
-    let bottom = this.isBottom
-
-    this.domPotision.forEach((i, j) => {
-      if (bottom || key > j) {
+  /**
+   * @description: 设置是否已读
+   * @param {*}
+   * @return {*}
+   */  
+  readState () {
+    const { y } = this.Scroll
+    let currentTop = Math.abs(y)
+    const viewSize = this.viewName.clientHeight || 0
+    let resultKey = -1
+    if(this.beforeNode){
+      // 查询之前保存的节点
+      resultKey = this.domPotision.findIndex(i => i.data === this.beforeNode.data)
+    }
+    this.domPotision.forEach((i,j) => {
+      const { top, node } = i
+      const itemDomSize = node.clientHeight
+      // 判断元素是否在视窗中
+      // 元素显示 超过.9 定为已读
+      if (currentTop + viewSize > top + itemDomSize * .9 ||resultKey > j) {
         i.read = true
       }
     })
@@ -88,9 +171,13 @@ class Scroll extends IScroll {
 
   get isBottom () {
     let result = false
-    const { y, maxScrollY } = this
+    const { y, maxScrollY } = this.Scroll
     result = Math.abs(y) >= Math.abs(maxScrollY)
     return result
+  }
+
+  scrollBottom(){
+    this.Scroll.scrollTo(0, this.Scroll.maxScrollY, 200)
   }
 
   /**
@@ -99,15 +186,16 @@ class Scroll extends IScroll {
    * @return {*}
    */
   scrollPositionDom () {
-    const { y } = this
+    const { y } = this.Scroll
+    if(y >= 0) return 0 //大于0表示在上拉
     let currentTop = Math.abs(y)
-    if (currentTop == 0) return 0
     const doms = this.domPotision
     let result = -1
 
     doms.forEach((i, j) => {
       const { top } = i
-      if (result === -1 || currentTop >= top) {
+      if(result===-1) result = j
+      if ( currentTop >= top) {
         result = j + 1
       }
     })
@@ -118,7 +206,6 @@ class Scroll extends IScroll {
   savePosition () {
     const nodeIndex = this.scrollPositionDom()
     this.beforeNode = this.domPotision[nodeIndex]
-    this.read()
   }
 }
 
