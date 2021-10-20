@@ -18,19 +18,29 @@ jobs:
           cp -r ./public/image/ ./docs/.vuepress/public/image/
           npm run docs:build
           cp -r ./dist/ ./docs/.vuepress/dist/demo/
+      # - name: addtoken
+      #   env:
+      #     ACTION_DEPLOY_KEY: ${{ secrets.SSH_TOKEN }} # 拿到仓库配置的私钥：HEXO_DEPLOY_KEY
+      #   run: |
+      #     # set up private key for push code
+      #     mkdir -p ~/.ssh/
+      #     echo "$ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa # 配置秘钥
+      #     chmod 700 ~/.ssh
+      #     chmod 600 ~/.ssh/id_rsa
+      #     # ssh-keyscan github.com >> ~/.ssh/known_hosts
 
       - name: deploy_vuepress
         run: |
           cd docs/.vuepress/dist
           git init
-          git config user.name "四铢半两"
-          git config user.email "389701057@qq.com"
+          git config --global user.name "codegi"
+          git config --global user.email "389701057@qq.com"
           git add .
           git commit -m 'deploy'
           git remote add origin https://CodeGI:${{ secrets.GITEE_PASSWORD }}@gitee.com/CodeGI/JwChatDoc.git
-          # git push -u origin master -f
-          # git push -u origin master
-          git push -f git@gitee.com:CodeGI/JwChatDoc.git master:master
+          git push -u origin master -f
+          git push -u origin master
+          # git push -f https://gitee.com/CodeGI/JwChatDoc.git master:master
           # cd - # 退回开始所在目录
           rm -rf docs/.vuepress/dist
 
