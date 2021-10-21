@@ -6,6 +6,15 @@ on:
 
 jobs:
 
+  autoTag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: Klemensas/action-autotag@stable
+        with:
+          GITHUB_TOKEN: "${{ secrets.STORE_TOKEN }}"
+          tag_prefix: "v"
+
   build_vuepress:
     runs-on: ubuntu-latest
     steps:

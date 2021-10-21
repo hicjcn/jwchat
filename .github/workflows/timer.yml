@@ -1,0 +1,42 @@
+name: timer mirror
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  runTimer:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        commit-message: update authors
+        title: Update AUTHORS
+        body: Credit new contributors by updating AUTHORS
+        base: timer
+    - name: write content
+      run: |
+        git checkout timer
+        node index.js
+        git config user.name "timer"
+        git config user.email "389701057@qq.com"
+        git add -A
+        git commit -m 'deploy'
+        git push origin timer
+        
+  toGitee:
+    needs: runTimer
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+
+      - name: 'to getlab'
+        uses: wearerequired/git-mirror-action@v1
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_TOKEN }}
+        with:
+          source-repo: ${{ secrets.SOURCE_REPO }}
+          destination-repo: "git@gitee.com:CodeGI/chat.git"

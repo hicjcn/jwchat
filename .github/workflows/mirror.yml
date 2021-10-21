@@ -3,7 +3,7 @@ name: other git mirror
 on: [ push, delete, create ]
 
 jobs:
-  gitlab:
+  toGitee:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
