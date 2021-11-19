@@ -7,7 +7,7 @@
       @enter="bindEnter"
       v-model="inputMsg"
       :showRightBox='true'
-      scrollType="noroll"
+      scrollType="scroll"
       :quickList="config.quickList"
       @clickTalk="talkEvent"
       :toolConfig="tool"

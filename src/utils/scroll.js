@@ -27,13 +27,14 @@ class Scroll {
   viewName = null
   tipText = ''
   scrollType=""
+  isLoding = false
   constructor( viewName, userConfig={} ) {
     const { scrollType, pullingDown = {
         threshold: 70,
         stop: 56
       } 
     } = userConfig
-    console.log(userConfig);
+
     scrollType&&(this.scrollType = scrollType)
     this.viewName = viewName
 
@@ -53,10 +54,12 @@ class Scroll {
       pullDownRefresh: pullingDown
     });
     _scroll.on('scrollEnd', () => {
+      this.setLoding(false)
       this.savePosition() // 保存当前滚动位置
     });
     if(pullingDown){
       _scroll.on('enterThreshold', () => {
+        this.setLoding(true)
         this.setTipText(PHASE.moving.enter)
       })
       _scroll.on('leaveThreshold', () => {
@@ -86,6 +89,11 @@ class Scroll {
     // tell BetterScroll to finish pull down
     this.Scroll.finishPullDown()
   }
+
+  setLoding(state) {
+    this.isLoding = state
+  }
+
   pullingDownHandler() {
     this.savePosition(0) // 保存当前滚动位置
     this.setTipText(PHASE.fetching)

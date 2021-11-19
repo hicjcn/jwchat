@@ -111,12 +111,15 @@ export default {
   },
   methods: {
     loadDone(){
-      // console.log('节点加载完成')
+      if(this.scrollType == 'scroll') {
+        this.scrollBottom()
+      }
     },
     scrollBottom () {
-      if (this.scroll) {
-        this.scroll.scrollBottom()
-      }
+      if (!this.scroll) return
+      if(this.scroll.isLoding) return
+      this.scroll.refresh()
+      this.scroll.scrollBottom()
     },
     createScroll () {
       this.scroll = new Scroll(this.$refs.scroller, {

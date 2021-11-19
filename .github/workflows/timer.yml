@@ -25,15 +25,14 @@ jobs:
         git add -A
         git commit -m 'deploy'
         git push origin timer
-        
+
   toGitee:
     needs: runTimer
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v2
-
-      - name: 'to getlab'
+      - name: 'to getee'
         uses: wearerequired/git-mirror-action@v1
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_TOKEN }}
