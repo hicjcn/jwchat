@@ -51,7 +51,8 @@ class Scroll {
         scrollbarTrackClickable: true
       },
       // pullDownRefresh: true,
-      pullDownRefresh: pullingDown
+      pullDownRefresh: pullingDown,
+      preventDefault: false
     });
     _scroll.on('scrollEnd', () => {
       this.setLoding(false)
