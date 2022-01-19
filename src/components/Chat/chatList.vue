@@ -30,6 +30,8 @@
                 v-bind="item.text.subLink.prop" class="itemChild">
                   {{item.text.subLink.text}}
                 </el-link>
+                <shopTalk v-if="item.text.shop" :text="item.text.shop" 
+                @systemEvent="taskEvent" @loadDone="loadDone"/>
               </div>
           </div>
         </template>
@@ -46,9 +48,10 @@ import Scroll from '@/utils/scroll'
 // import Remind from '@/utils/remind'
 import itemTalk from './itemTalk'
 import systemTalk from './systemTalk'
+import shopTalk from './shopTalk'
 export default {
   name: 'JwChat_list',
-  components: { itemTalk, systemTalk },
+  components: { itemTalk, systemTalk, shopTalk },
   props: {
     list: {
       type: Array,

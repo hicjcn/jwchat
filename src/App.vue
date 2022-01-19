@@ -99,6 +99,28 @@ const listData = [
         ]
       }
     }
+  },
+  {
+    "date": "2020/04/25 21:19:07",
+    "mine": false,
+    "name": "留恋人间不羡仙",
+    "img": "image/one.jpeg",
+    "text": {
+      shop: {
+        title: `2022年寒假读一本好书小学生三四五六年级课外读
+        物阅读书籍经典儿童文学 回到远古和神仙们聊天 王云超著`,
+        describe: '购买1-3件时享受单件价￥18.20，超出数量以结算价为准，仅限购买一次:',
+        price: '999.99',
+        cover: 'image/two.jpeg',
+        // queue: 'col',
+        // queue: 'row',
+        tags: [
+          {name:'第二件半价'},
+          {name:'送50元优惠'},
+          {name:'满1件,送50元优惠'},
+        ]
+      }
+    }
   }
 ]
 function getListArr(size) {
