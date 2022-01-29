@@ -7,17 +7,20 @@
     </div>
     <div class="userList">
       <div>{{info.listTip}} ({{dataList.length}})</div>
-      <ul>
-        <li><el-input :placeholder="info.filterTip" v-model="filter" clearable size="mini"/></li>
-        <li v-for="(item,k) in dataList" :key="k">
-          <JwChat-item size="25" :config="item" @click="bindClick" />
-        </li>
-      </ul>
+      <div><el-input :placeholder="info.filterTip" v-model="filter" clearable size="mini"/></div>
+      <div ref="listBox" class="listBox">
+        <ul>
+          <li v-for="(item,k) in dataList" :key="k">
+            <JwChat-item size="25" :config="item" @click="bindClick" />
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import Scroll from '@/utils/scroll'
 export default {
   name: 'JwChat-rightbox',
   props: {
@@ -25,8 +28,26 @@ export default {
   },
   data(){
     return {
-      filter:''
+      filter:'',
+      scroll: null,
     }
+  },
+  watch:{
+    'config.list': {
+      handler(newVal) {
+        if(newVal){
+          this.scrollRefresh()
+        }
+      },
+      deep:true,
+      immediate:true
+    }
+  },
+  mounted(){
+    const dom = this.$refs.listBox
+    this.scroll = new Scroll(dom,{
+      pullingDown:false
+    })
   },
   computed: {
     info () {
@@ -56,7 +77,18 @@ export default {
   methods: {
     bindClick (type) {
       this.$emit('click', type)
-    }
+    },
+    scrollRefresh () {
+      if(!this.scroll) return
+      const that = this
+      that.complete = setInterval(function () {
+        // 判断文档和所有子资源(图片、音视频等)已完成加载
+        if (document.readyState === 'complete') {
+          window.clearInterval(that.complete)
+          that.scroll.refresh()
+        }
+      }, 50)
+    },
   }
 }
 </script>
@@ -82,6 +114,17 @@ export default {
     height: 70%;
     text-align: left;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
+    &>div{
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: start;
+    }
+    .listBox{
+      overflow: hidden;
+      height: calc(100% - 60px);
+      position: relative;
+    }
     li {
       list-style: none;
       height: 2rem;

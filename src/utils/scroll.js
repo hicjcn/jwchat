@@ -31,7 +31,8 @@ class Scroll {
   constructor( viewName, userConfig={} ) {
     const { scrollType, pullingDown = {
         threshold: 70,
-        stop: 56
+        stop: 56,
+        mouseWheel: true,
       } 
     } = userConfig
 
